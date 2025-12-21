@@ -47,13 +47,13 @@ normative:
 
   RFC5322:
 
-  RFC6352:
+  CardDAV: RFC6352
 
-  RFC8621:
+  JMAP: RFC8621
 
-  RFC8984:
+  JSCalendar: RFC8984
 
-  RFC9553:
+  JSContact: RFC9553
 
   RFC9610:
 
@@ -61,23 +61,23 @@ informative:
 
   RFC822:
 
-  RFC3501:
+  IMAP4: RFC3501
 
   RFC2822:
 
-  RFC4155:
+  MBOX: RFC4155
 
   RFC4314:
 
-  RFC4791:
+  CalDAV: RFC4791
 
-  RFC5545:
+  iCalendar: RFC5545
 
   RFC5598:
 
   RFC6154:
 
-  RFC6350:
+  vCard: RFC6350
 
   RFC7162:
 
@@ -113,7 +113,7 @@ This document proposes the Personal Data Portability Archive format (PDPA), suit
 
 # Introduction
 
-As part of communication protocols, the IETF has standardized a number of data formats such as the Internet Message Format {{RFC5322}}, vCard {{RFC6350}}, iCalendar {{RFC5545}}, or, more recently, JSContact {{RFC9553}} and JSCalendar {{RFC8984}}.
+As part of communication protocols, the IETF has standardized a number of data formats such as the Internet Message Format {{RFC5322}},  {{vCard}},  {{iCalendar}}, or, more recently, {{JSContact}} and {{JSCalendar}}.
 
 While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands for an open standard archive format which can deal with different types of personal data in a homogeneous fashion.
 
@@ -194,7 +194,7 @@ Dedicated JMAP API methods for exporting and importing the format described here
 
 Due to its specifics and ubiquitous usage, the Internet Message Format {{RFC5322}}; latest revision of {{RFC2822}}/{{RFC822}} should be the core of representing individual email data.
 
-This specification should ideally describe mappings between PDPA and existing mailbox persistence schemes such as Maildir or MBOX {{RFC4155}}.
+This specification should ideally describe mappings between PDPA and existing mailbox persistence schemes such as Maildir or {{MBOX}}.
 
 ### Interoperability
 
@@ -424,15 +424,15 @@ Each folder metatadata is described by "folder.json", which has the following fo
 
 | Attribute Name    | Type     | Mandatory? | Comment |
 | ----------------- | :------: | ---------- | ------- |
-| allowed_keywords | array of strings (IMAP keywords) | No |PERMANENTFLAGS minus "\\*" {{RFC3501}}
-| last_uid | unsigned 32 bit integer | Yes | Last UID assigned in the folder. It is UIDNEXT value minus 1 {{RFC3501}}|
-| recent_uid | unsigned 32 bit integer | No | Lowest UID of a message with the \Recent flag {{RFC3501}}|
-| uidvalidity | unsigned 32 bit integer | Yes | UIDVALIDITY value {{RFC3501}}|
-| is_subscribed | boolean | Yes | Is the folder returned by IMAP LSUB? {{RFC3501}} |
+| allowed_keywords | array of strings (IMAP keywords) | No |PERMANENTFLAGS minus "\\*" {{IMAP4}}
+| last_uid | unsigned 32 bit integer | Yes | Last UID assigned in the folder. It is UIDNEXT value minus 1 {{IMAP4}}|
+| recent_uid | unsigned 32 bit integer | No | Lowest UID of a message with the \Recent flag {{IMAP4}}|
+| uidvalidity | unsigned 32 bit integer | Yes | UIDVALIDITY value {{IMAP4}}|
+| is_subscribed | boolean | Yes | Is the folder returned by IMAP LSUB? {{IMAP4}} |
 | myrights | string | No |See Section 3.5 of {{RFC4314}}. For example "rwiptsldaex"|
 | highest_modseq | unsigned 64 bit integer | No |HIGHESTMODSEQ value {{RFC7162}}|
 | role | string | No |{{RFC6154}} SPECIAL-USE value. E.g. "inbox", "sent", "drafts", "junk", etc.|
-| sort_order |  | No |See Section 2, {{RFC8621}}]|
+| sort_order |  | No |See Section 2, {{JMAP}}]|
 | uids | map from UIDs to strings (relative filenames of messages) | Yes | Mapping from UIDs to corresponding message files included in the archive|
 | flags | map from UIDs to array of strings | Yes |IMAP flags assigned to the message, excluding \Recent|
 | modseqs | map from UIDs to unsigned 64 bit integers (modsequences) | No |Per message MODSEQ values {{RFC7162}}|
@@ -570,8 +570,8 @@ flags. Several new messages were added, some of them are with flags set.
 
 ### Contacts
 
-VCard {{RFC6350}} has long been the basis for address book and contact data representation in
-structured data files.  The specifications for JSContact {{RFC9553}} and JMAP for Contacts {{RFC9610}}
+{{vCard}} has long been the basis for address book and contact data representation in
+structured data files.  The specifications for {{JSContact}} and JMAP for Contacts {{RFC9610}}
 do a bunch of the work to explain how to do this in JSON, and in particular RFC9610 explains
 how to express references between objects (e.g. an address book and a contact in that address
 book) which is useful for a full export that can have its references reconstructed.  This section
@@ -579,15 +579,15 @@ explains how to use the fields and structures of those specifications within a P
 
 #### Individual Contact Items
 
-Individual contact items build on JSContact {{RFC9553}} which builds on VCard {{RFC6350}}.
+Individual contact items build on {{JSContact}} which builds on {{vCard}}.
 
 * The globally unique `uid` property is mandatory in JSContact and MUST be included in PDP archive.
 * The `updated` property is optional in JSContact but MUST be included in PDP archive.
-* The `rev` property defined in VCard (RFC6350), which is not included in JSContact {{RFC9553}},
+* The `rev` property defined in {{vCard}}, which is not included in {{JSContact}},
 may already be available in implementations.  It may also be included as a field on a contact,
 in which case it is a simple value field holding a timestamp.
 
-* The `@type` property should be "ContactCard".  Note that JSContact {{RFC9553}} uses a value
+* The `@type` property should be "ContactCard".  Note that {{JSContact}} uses a value
 of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml,
 but JMAP for Contacts uses "ContactCard" and registers that in https://www.iana.org/assignments/jmap/jmap.xhtml.
 
@@ -695,8 +695,8 @@ would not be found in the export.
 
 ### Using RFC9610 address book objects
 
-The VCard {{RFC6350}} specifications never defined a representation for address books.  Nor did
-JSContact {{RFC9553}}.  JMAP for Contacts {{RFC9610}} does.  Its model is clearly that of
+The {{vCard}} specifications never defined a representation for address books.  Nor did
+{{JSContact}}.  JMAP for Contacts {{RFC9610}} does.  Its model is clearly that of
 non-exclusive collection membership: a Contact item may appear with the same UID in multiple
 Address Books, and if the Contact item with that UID is updated in one it is updated in the other
 also.
@@ -775,13 +775,13 @@ object referred to by this Principal ID is not itself given representation in th
 
 ### Calendar events, tasks and groups
 
-JSCalendar {{RFC8984}} is the basis for representing events, tasks and groups in JSON.
+{{JSCalendar}} is the basis for representing events, tasks and groups in JSON.
 This section explains how to export individual events and tasks within an archive.
 JMAP for Calendars (https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/)
 does provide some additional considerations when producing calendar data from a JMAP
 system or to be consumed by a JMAP system, so it is also a normative reference.
 
-Note on CalDAV {{RFC4791}} compatibility: Although CalDAV servers are fairly common, they support the
+Note on  {{CalDAV}} compatibility: Although CalDAV servers are fairly common, they support the
 older VEVENT and VTODO syntax.  This specification requires the JSCalendar syntax instead.
 Either way, a server building a personal data archive is likely transforming an internal
 implementation-specific relational data format to an export format.
@@ -872,7 +872,7 @@ The `uid` value here corresponds to the ID used in the calendarIds property of t
 
 #### Tasks
 
-Tasks are also defined by the JSCalendar specification {{RFC8984}} using the "Task" object type.
+Tasks are also defined by {{JSCalendar}} using the "Task" object type.
 As with events, tasks MUST include the uid and updated fields to support synchronization.
 
 For example, a file called task1.json could contain:
@@ -893,8 +893,8 @@ For example, a file called task1.json could contain:
 
 ### Notes
 
-* VJournal is first defined in iCalendar (now {{RFC5545}}).
-* VJournal also used in CalDAV {{RFC4791}}.
+* VJournal is first defined in {{iCalendar}}.
+* VJournal also used in  {{CalDAV}}.
 * However, they are NOT used in https://jmap.io/spec-calendars.html
 
 Do we even have a JSON format for notes defined?
@@ -921,7 +921,7 @@ This limited solution for export/import sync may also be used for more direct sy
 
 ### Always include 'uid' and 'updated'
 
-These requirements apply to JSContact {{RFC9553}}, JSTask and JSCalendar {{RFC8984}} objects when exported or imported using the formats in this specification, because these all have 'uid' and 'updated' values.
+These requirements apply to {{JSContact}}, JSTask and {{JSCalendar}} objects when exported or imported using the formats in this specification, because these all have 'uid' and 'updated' values.
 
 Requirements:
 
@@ -938,7 +938,7 @@ Recommendations:
 
 Note on _similar enough_: This specification requires nuance in order to allow both reasonably consistent synchronization and reasonable behavior in a wide variety of use cases and implementations.  The language above is intended to give implementors both guidance and wiggle room.  For example, the importer could convert a DTSTART time from UTC to the user's local time and save it as the displayed start time. Later, re-importing the same object with the same UID, the importing code could be smart enough to realize that the time hasn't _actually_ changed, and avoid changing the 'updated' timestamp or creating a conflicting event.  This logic could be implemented by saving separate fields (imported time vs display time), by keeping a log of updates (log entry stating that the system auto-converted start time from X to Y), or by other clever algorithms. Thus, the clever implementation can avoid the appearance of an object that changes every time the calendar is synchronized.
 
-Note on _updated_: The definition of 'updated' in JSContact {{RFC9553}} is not rigorous or nuanced. "when the data in the Card was last modified" could refer to several instances of the card -- its internal implementation, its representation in an email share, its representation in an HTTP GET response (CardDAV, {{RFC6352}}).   It's not specified whether 'updated' is the same as REV in VCard {{RFC6350}}, which is defined differently.  Neither definition explicitly covers vendor-specific fields.  Thus, this specification makes additional recommendations for handling 'updated':
+Note on _updated_: The definition of 'updated' in {{JSContact}} is not rigorous or nuanced. "when the data in the Card was last modified" could refer to several instances of the card -- its internal implementation, its representation in an email share, its representation in an HTTP GET response ({{CardDAV}}).   It's not specified whether 'updated' is the same as REV in {{vCard}}, which is defined differently.  Neither definition explicitly covers vendor-specific fields.  Thus, this specification makes additional recommendations for handling 'updated':
 
 * The value of 'updated' SHOULD only change when two conditions hold: the end-user makes a decision to change a value of a user-visible field, AND the export of the JSContact shows a different value.
 * Thus, non-user-visible fields like 'version' could be changed without causing the 'updated' value to change.  A value such as 'language' could be set without changing 'updated' (if an implementation infers the language tag and begins to include 'fr-CA' as the language value in exports instead of no language, nevertheless this doesn't change the user-visible content).
@@ -948,7 +948,7 @@ We recognize that this understanding of 'updated' is highly judgement-dependent.
 
 #### Synchronizing from and to CalDAV servers
 
-CalDAV {{RFC4791}} uses URLs, ETags and UIDs for synchronizing changes between two systems reliably, but it relies upon client-server architecture, where the server is the "source of truth" and the client must manage its local history and decide which things to update from the server and which things to tell the server to update.  If a user is setting up synchronization or an implementor is building a system that involves synchronization, it may be best to use CalDAV if that is a feasible solution.
+ {{CalDAV}} uses URLs, ETags and UIDs for synchronizing changes between two systems reliably, but it relies upon client-server architecture, where the server is the "source of truth" and the client must manage its local history and decide which things to update from the server and which things to tell the server to update.  If a user is setting up synchronization or an implementor is building a system that involves synchronization, it may be best to use CalDAV if that is a feasible solution.
 
 Nevertheless, we believe some of the use cases in our [use case section](use_cases) motivate not only including calendar data in these archives for backup purposes, but also for partial updates.  This works the same way it does for JSContact and JSCard objects.
 
