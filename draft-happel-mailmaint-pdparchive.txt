@@ -867,64 +867,72 @@ folder_info = {
 
    Example of folder.json (full export):
 
-{
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": 16,
-  "highest_modseq": 6371729,
-  "recent_uid": 15,
-  "uidvalidity": 1107190787,
-  "is_subscribed": true,
-  "role": "sent",
-  "sort_order": 1,
-  "myrights": "rwiptsldaex",
+   {
+     "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
+     "last_uid": 16,
+     "highest_modseq": 6371729,
+     "recent_uid": 15,
+     "uidvalidity": 1107190787,
+     "is_subscribed": true,
+     "role": "sent",
+     "sort_order": 1,
+     "myrights": "rwiptsldaex",
 
-  "uids": {
-     1: "msg-1.eml",
-     3: "msg-3.eml",
-     15: "imported-ABC.eml"
-  },
+     "uids": {
+        "1": "msg-1.eml",
+        "3": "msg-3.eml",
+        "15": "imported-ABC.eml"
+     },
 
-  "flags": {
-     1: ["$seen"],
-     3: ["$seen", "$flagged"],
-     15: ["$answered", "$forwarded"]
-  }
-}
-```
+     "flags": {
+        "1": ["$seen"],
+        "3": ["$seen", "$flagged"],
+        "15": ["$answered", "$forwarded"]
+     }
+   }
 
-Example of folder.json that shows incremental changes from the previous export shown above.
-In this example 2 messages with UIDs 3 and 15 were removed. Message with UID 1 has updated
-flags. Several new messages were added, some of them are with flags set.
-```asciidoc=
-{
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": 21,
-  "highest_modseq": 6371845,
-  "recent_uid": 20,
-  "uidvalidity": 1107190787,
-  "is_subscribed": true,
-  "role": "sent",
-  "sort_order": 1,
-  "myrights": "rwiptsldaex",
+                   Figure 1: A basic folder.json example
 
-  "uids": {
-     1: "msg-1.eml",
-     17: "msg-17.eml",
-     19: "msg-19.eml",
-     20: "20.eml",
-     21: "21.eml"
-  },
+   Issue: Are UIDs compared as strings or integers?  JSON requires UIDs
+   to be strings if they're used as field names.  How about when we're
+   using "last_uid" or "recent_uid"?
 
-  "flags": {
-     1: ["$seen", "$answered"],
-     17: ["$seen", "$answered", "$forwarded"],
-     19: ["$seen"],
-     20: [],
-     21: []
-  },
+   Example of folder.json that shows incremental changes from the
+   previous export shown above.  In this example 2 messages with UIDs 3
+   and 15 were removed.  Message with UID 1 has updated flags.  Several
+   new messages were added, some of them are with flags set.
 
-  "removed": [3, 15]
-}
+   {
+     "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
+     "last_uid": "21",
+     "highest_modseq": 6371845,
+     "recent_uid": "20",
+     "uidvalidity": 1107190787,
+     "is_subscribed": true,
+     "role": "sent",
+     "sort_order": 1,
+     "myrights": "rwiptsldaex",
+
+     "uids": {
+        "1": "msg-1.eml",
+        "17": "msg-17.eml",
+        "19": "msg-19.eml",
+        "20": "20.eml",
+        "21": "21.eml"
+     },
+
+     "flags": {
+        "1": ["$seen", "$answered"],
+        "17": ["$seen", "$answered", "$forwarded"],
+        "19": ["$seen"],
+        "20": [],
+        "21": []
+     },
+
+     "removed": ["3", "15"]
+   }
+
+          Figure 2: A folder.json example with incremental changes
 
 6.3.2.  Contacts
 
@@ -975,12 +983,12 @@ flags. Several new messages were added, some of them are with flags set.
       "@type": "ContactCard",
       "version": "1.0",
       "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
-      "id":
+      "id": "42",
       "updated": "2021-10-31T22:27:10Z",
       "kind": "individual",
       "addressBookIds": [
          "062adcfa-105d-455c-bc60-6db68b69c3f3"
-      ]
+      ],
       "name": {
           "components": [
             { "kind": "given", "value": "John" },
@@ -1007,6 +1015,8 @@ flags. Several new messages were added, some of them are with flags set.
         }
       }
    }
+
+                      Figure 3: A contact.json example
 
    For clarity, this example includes: * How a card can reference
    address books which are exported as separate files in the overall
@@ -1052,6 +1062,8 @@ flags. Several new messages were added, some of them are with flags set.
       }
    }
 
+                   Figure 4: A group contact file example
+
    As with individual ContactCard items referencing objects that are not
    exported at the same time, a group contact can contain references
    that are not resolvable within the export.  If the user chooses to
@@ -1078,8 +1090,8 @@ flags. Several new messages were added, some of them are with flags set.
    this specification REQUIRES uid. * updated is required * The @type of
    AddressBook should be included within the data
 
-   This example copies the examples in RFC9610 so that interoperability
-   between this spec and that one is clear.
+   This example copies the examples in [RFC9610] so that
+   interoperability between this spec and that one is clear.
 
    A file with an arbitrary name like address-book1.json would contain:
 
@@ -1108,8 +1120,11 @@ flags. Several new messages were added, some of them are with flags set.
       }
    }
 
+                   Figure 5: An address book file example
+
    address-book2.json would contain:
 
+   address-book2.json
    {
       "@type": "AddressBook",
       "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
@@ -1127,6 +1142,8 @@ flags. Several new messages were added, some of them are with flags set.
         "mayDelete": false
       }
    }
+
+                Figure 6: Another address book file example
 
    Note that the first example includes a shareWith value, showing that
    the user's AddressBook has been shared with in this case one other
@@ -1215,6 +1232,8 @@ flags. Several new messages were added, some of them are with flags set.
      }
    }
 
+                          Figure 7: Event example
+
    The event object includes a calendarIds property, which links it to
    the calendar collection it belongs to.
 
@@ -1246,6 +1265,8 @@ flags. Several new messages were added, some of them are with flags set.
      }
    }
 
+                         Figure 8: Calendar example
+
    The uid value here corresponds to the ID used in the calendarIds
    property of the individual event item.
 
@@ -1266,6 +1287,8 @@ flags. Several new messages were added, some of them are with flags set.
      "priority": 1,
      "due": "2024-12-31T23:59:59Z"
    }
+
+                           Figure 9: Task example
 
 6.3.6.  Notes
 

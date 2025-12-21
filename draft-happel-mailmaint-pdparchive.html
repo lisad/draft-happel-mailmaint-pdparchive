@@ -2061,10 +2061,12 @@ folder_info = {
 </div>
 <p id="section-6.3.1-9">EML (.eml) file for each message, in order to avoid reconstructing them. Names of EML files are referenced from the "folder.json" file.<a href="#section-6.3.1-9" class="pilcrow">¶</a></p>
 <p id="section-6.3.1-10">Example of folder.json (full export):<a href="#section-6.3.1-10" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.1-11">
+<span id="name-a-basic-folderjson-example"></span><div id="example1">
+<figure id="figure-1">
+            <div class="alignLeft art-text artwork" id="section-6.3.1-11.1">
 <pre>
 {
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
+  "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
   "last_uid": 16,
   "highest_modseq": 6371729,
   "recent_uid": 15,
@@ -2075,28 +2077,37 @@ folder_info = {
   "myrights": "rwiptsldaex",
 
   "uids": {
-     1: "msg-1.eml",
-     3: "msg-3.eml",
-     15: "imported-ABC.eml"
+     "1": "msg-1.eml",
+     "3": "msg-3.eml",
+     "15": "imported-ABC.eml"
   },
 
   "flags": {
-     1: ["$seen"],
-     3: ["$seen", "$flagged"],
-     15: ["$answered", "$forwarded"]
+     "1": ["$seen"],
+     "3": ["$seen", "$flagged"],
+     "15": ["$answered", "$forwarded"]
   }
 }
-```
-
-Example of folder.json that shows incremental changes from the previous export shown above.
+</pre>
+</div>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-a-basic-folderjson-example" class="selfRef">A basic folder.json example</a>
+            </figcaption></figure>
+</div>
+<p id="section-6.3.1-12">Issue:  Are UIDs compared as strings or integers? JSON requires UIDs to be strings if
+they're used as field names. How about when we're using "last_uid" or "recent_uid"?<a href="#section-6.3.1-12" class="pilcrow">¶</a></p>
+<p id="section-6.3.1-13">Example of folder.json that shows incremental changes from the previous export shown above.
 In this example 2 messages with UIDs 3 and 15 were removed. Message with UID 1 has updated
-flags. Several new messages were added, some of them are with flags set.
-```asciidoc=
+flags. Several new messages were added, some of them are with flags set.<a href="#section-6.3.1-13" class="pilcrow">¶</a></p>
+<span id="name-a-folderjson-example-with-i"></span><div id="example2">
+<figure id="figure-2">
+            <div class="alignLeft art-text artwork" id="section-6.3.1-14.1">
+<pre>
 {
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": 21,
+  "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
+  "last_uid": "21",
   "highest_modseq": 6371845,
-  "recent_uid": 20,
+  "recent_uid": "20",
   "uidvalidity": 1107190787,
   "is_subscribed": true,
   "role": "sent",
@@ -2104,24 +2115,28 @@ flags. Several new messages were added, some of them are with flags set.
   "myrights": "rwiptsldaex",
 
   "uids": {
-     1: "msg-1.eml",
-     17: "msg-17.eml",
-     19: "msg-19.eml",
-     20: "20.eml",
-     21: "21.eml"
+     "1": "msg-1.eml",
+     "17": "msg-17.eml",
+     "19": "msg-19.eml",
+     "20": "20.eml",
+     "21": "21.eml"
   },
 
   "flags": {
-     1: ["$seen", "$answered"],
-     17: ["$seen", "$answered", "$forwarded"],
-     19: ["$seen"],
-     20: [],
-     21: []
+     "1": ["$seen", "$answered"],
+     "17": ["$seen", "$answered", "$forwarded"],
+     "19": ["$seen"],
+     "20": [],
+     "21": []
   },
 
-  "removed": [3, 15]
+  "removed": ["3", "15"]
 }
-</pre><a href="#section-6.3.1-11" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-a-folderjson-example-with-i" class="selfRef">A folder.json example with incremental changes</a>
+            </figcaption></figure>
 </div>
 </section>
 </div>
@@ -2167,18 +2182,20 @@ cross-reference other section].<a href="#section-6.3.2.1-3" class="pilcrow">¶</
 using a limited set of characters suitable for interoperability across filesystems. [TODO: we
 need to define that elsewhere].<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.3.2.1-5">For example, a file called 'contact1.json' could contain:<a href="#section-6.3.2.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.2.1-6">
+<span id="name-a-contactjson-example"></span><div id="example3">
+<figure id="figure-3">
+              <div class="alignLeft art-text artwork" id="section-6.3.2.1-6.1">
 <pre>
 {
    "@type": "ContactCard",
    "version": "1.0",
    "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
-   "id":
+   "id": "42",
    "updated": "2021-10-31T22:27:10Z",
    "kind": "individual",
    "addressBookIds": [
       "062adcfa-105d-455c-bc60-6db68b69c3f3"
-   ]
+   ],
    "name": {
        "components": [
          { "kind": "given", "value": "John" },
@@ -2205,7 +2222,11 @@ need to define that elsewhere].<a href="#section-6.3.2.1-4" class="pilcrow">¶</
      }
    }
 }
-</pre><a href="#section-6.3.2.1-6" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-a-contactjson-example" class="selfRef">A contact.json example</a>
+              </figcaption></figure>
 </div>
 <p id="section-6.3.2.1-7">For clarity, this example includes:
 * How a card can reference address books which are exported as separate files in the overall export
@@ -2233,7 +2254,9 @@ in the export even if not resolvable by some users of the export file.<a href="#
             </h5>
 <p id="section-6.3.2.2-1">Group contact items also refer to other contact items.  A file with an arbitrary name like "contact2.json"
 could include:<a href="#section-6.3.2.2-1" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.2.2-2">
+<span id="name-a-group-contact-file-exampl"></span><div id="example4">
+<figure id="figure-4">
+              <div class="alignLeft art-text artwork" id="section-6.3.2.2-2.1">
 <pre>
 {
    "@type": "ContactCard",
@@ -2248,7 +2271,11 @@ could include:<a href="#section-6.3.2.2-1" class="pilcrow">¶</a></p>
      "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519": true
    }
 }
-</pre><a href="#section-6.3.2.2-2" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-a-group-contact-file-exampl" class="selfRef">A group contact file example</a>
+              </figcaption></figure>
 </div>
 <p id="section-6.3.2.2-3">As with individual ContactCard items referencing objects that are not exported at the same time,
 a group contact can contain references that are not resolvable within the export.  If the user
@@ -2276,10 +2303,12 @@ be represented as individual files in a PDPArchive. However, some things are mis
 * <code>uid</code> is called 'id' in JMAP for Contacts but this specification REQUIRES <code>uid</code>.
 * <code>updated</code> is required
 * The <code>@type</code> of AddressBook should be included within the data<a href="#section-6.3.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.3.3-3">This example copies the examples in RFC9610 so that interoperability between this spec and that one
+<p id="section-6.3.3-3">This example copies the examples in <span>[<a href="#RFC9610" class="cite xref">RFC9610</a>]</span> so that interoperability between this spec and that one
 is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
 <p id="section-6.3.3-4">A file with an arbitrary name like address-book1.json would contain:<a href="#section-6.3.3-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.3-5">
+<span id="name-an-address-book-file-exampl"></span><div id="example5">
+<figure id="figure-5">
+            <div class="alignLeft art-text artwork" id="section-6.3.3-5.1">
 <pre>
 {
    "@type": "AddressBook",
@@ -2305,11 +2334,18 @@ is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
      "mayDelete": false
    }
 }
-</pre><a href="#section-6.3.3-5" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-an-address-book-file-exampl" class="selfRef">An address book file example</a>
+            </figcaption></figure>
 </div>
 <p id="section-6.3.3-6">address-book2.json would contain:<a href="#section-6.3.3-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.3-7">
+<span id="name-another-address-book-file-e"></span><div id="example6">
+<figure id="figure-6">
+            <div class="alignLeft art-text artwork" id="section-6.3.3-7.1">
 <pre>
+address-book2.json
 {
    "@type": "AddressBook",
    "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
@@ -2327,7 +2363,11 @@ is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
      "mayDelete": false
    }
 }
-</pre><a href="#section-6.3.3-7" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-another-address-book-file-e" class="selfRef">Another address book file example</a>
+            </figcaption></figure>
 </div>
 <p id="section-6.3.3-8">Note that the first example includes a <code>shareWith</code> value, showing that the user's AddressBook has been
 shared with in this case one other principal with the id "3f1502e0-63fe-4335-9ff3-e739c188f5dd".
@@ -2384,7 +2424,9 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 </li>
           </ul>
 <p id="section-6.3.4-6">For example, a file called event1.json could contain:<a href="#section-6.3.4-6" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.4-7">
+<span id="name-event-example"></span><div id="example-event1">
+<figure id="figure-7">
+            <div class="alignLeft art-text artwork" id="section-6.3.4-7.1">
 <pre>
 {
   "@type": "Event",
@@ -2410,7 +2452,11 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
     "062adcfa-105d-455c-bc60-6db68b69c3f3": true
   }
 }
-</pre><a href="#section-6.3.4-7" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<a href="#name-event-example" class="selfRef">Event example</a>
+            </figcaption></figure>
 </div>
 <p id="section-6.3.4-8">The event object includes a calendarIds property, which links it to the calendar collection it belongs to.<a href="#section-6.3.4-8" class="pilcrow">¶</a></p>
 </section>
@@ -2423,7 +2469,9 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 <p id="section-6.3.5-1">Calendar collection items are built using JMAP for Calendars [REF TODO - still I-D].<a href="#section-6.3.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.5-2">If a system exports events belonging to calendars, it <span class="bcp14">SHOULD</span> also export the referenced Calendar objects.<a href="#section-6.3.5-2" class="pilcrow">¶</a></p>
 <p id="section-6.3.5-3">A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \calendars\calendar2) would contain the calendar's metadata:<a href="#section-6.3.5-3" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.5-4">
+<span id="name-calendar-example"></span><div id="calendar1">
+<figure id="figure-8">
+            <div class="alignLeft art-text artwork" id="section-6.3.5-4.1">
 <pre>
 {
   "@type": "Calendar",
@@ -2441,7 +2489,11 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
     "mayDelete": false
   }
 }
-</pre><a href="#section-6.3.5-4" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<a href="#name-calendar-example" class="selfRef">Calendar example</a>
+            </figcaption></figure>
 </div>
 <p id="section-6.3.5-5">The <code>uid</code> value here corresponds to the ID used in the calendarIds property of the individual event item.<a href="#section-6.3.5-5" class="pilcrow">¶</a></p>
 <div id="tasks">
@@ -2452,7 +2504,9 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 <p id="section-6.3.5.1-1">Tasks are also defined by <span>[<a href="#JSCalendar" class="cite xref">JSCalendar</a>]</span> using the "Task" object type.
 As with events, tasks <span class="bcp14">MUST</span> include the uid and updated fields to support synchronization.<a href="#section-6.3.5.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.5.1-2">For example, a file called task1.json could contain:<a href="#section-6.3.5.1-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.5.1-3">
+<span id="name-task-example"></span><div id="task1">
+<figure id="figure-9">
+              <div class="alignLeft art-text artwork" id="section-6.3.5.1-3.1">
 <pre>
 {
   "@type": "Task",
@@ -2463,7 +2517,11 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
   "priority": 1,
   "due": "2024-12-31T23:59:59Z"
 }
-</pre><a href="#section-6.3.5.1-3" class="pilcrow">¶</a>
+</pre>
+</div>
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<a href="#name-task-example" class="selfRef">Task example</a>
+              </figcaption></figure>
 </div>
 </section>
 </div>
