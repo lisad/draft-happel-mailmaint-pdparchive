@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 23 June 2026                                            audriga
+Expires: 24 June 2026                                            audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                        20 December 2025
+                                                        21 December 2025
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 June 2026.
+   This Internet-Draft will expire on 24 June 2026.
 
 Copyright Notice
 
@@ -131,8 +131,8 @@ Table of Contents
 
    As part of communication protocols, the IETF has standardized a
    number of data formats such as the Internet Message Format [RFC5322],
-   vCard [RFC6350], iCalendar [RFC5545], or, more recently, JSContact
-   [RFC9553] and JSCalendar [RFC8984].
+   [vCard], [iCalendar], or, more recently, [JSContact] and
+   [JSCalendar].
 
    While mainly designed for interoperability, many of these data
    formats have also become popular for data portability, i.e., the
@@ -294,8 +294,7 @@ Table of Contents
    core of representing individual email data.
 
    This specification should ideally describe mappings between PDPA and
-   existing mailbox persistence schemes such as Maildir or MBOX
-   [RFC4155].
+   existing mailbox persistence schemes such as Maildir or [MBOX].
 
 3.2.2.  Interoperability
 
@@ -719,27 +718,26 @@ Table of Contents
    +==================+================+============+==================+
    | allowed_keywords |    array of    | No         | PERMANENTFLAGS   |
    |                  | strings (IMAP  |            | minus "\*"       |
-   |                  |   keywords)    |            | [RFC3501]        |
+   |                  |   keywords)    |            | [IMAP4]          |
    +------------------+----------------+------------+------------------+
    | last_uid         |  unsigned 32   | Yes        | Last UID         |
    |                  |  bit integer   |            | assigned in the  |
    |                  |                |            | folder.  It is   |
    |                  |                |            | UIDNEXT value    |
-   |                  |                |            | minus 1          |
-   |                  |                |            | [RFC3501]        |
+   |                  |                |            | minus 1 [IMAP4]  |
    +------------------+----------------+------------+------------------+
    | recent_uid       |  unsigned 32   | No         | Lowest UID of a  |
    |                  |  bit integer   |            | message with     |
    |                  |                |            | the \Recent      |
-   |                  |                |            | flag [RFC3501]   |
+   |                  |                |            | flag [IMAP4]     |
    +------------------+----------------+------------+------------------+
    | uidvalidity      |  unsigned 32   | Yes        | UIDVALIDITY      |
-   |                  |  bit integer   |            | value [RFC3501]  |
+   |                  |  bit integer   |            | value [IMAP4]    |
    +------------------+----------------+------------+------------------+
    | is_subscribed    |    boolean     | Yes        | Is the folder    |
    |                  |                |            | returned by      |
    |                  |                |            | IMAP LSUB?       |
-   |                  |                |            | [RFC3501]        |
+   |                  |                |            | [IMAP4]          |
    +------------------+----------------+------------+------------------+
    | myrights         |     string     | No         | See Section 3.5  |
    |                  |                |            | of [RFC4314].    |
@@ -758,7 +756,7 @@ Table of Contents
    |                  |                |            | "junk", etc.     |
    +------------------+----------------+------------+------------------+
    | sort_order       |                | No         | See Section 2,   |
-   |                  |                |            | [RFC8621]]       |
+   |                  |                |            | [JMAP]]          |
    +------------------+----------------+------------+------------------+
    | uids             | map from UIDs  | Yes        | Mapping from     |
    |                  |   to strings   |            | UIDs to          |
@@ -930,20 +928,20 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.3.2.  Contacts
 
-   VCard [RFC6350] has long been the basis for address book and contact
-   data representation in structured data files.  The specifications for
-   JSContact [RFC9553] and JMAP for Contacts [RFC9610] do a bunch of the
-   work to explain how to do this in JSON, and in particular RFC9610
-   explains how to express references between objects (e.g. an address
-   book and a contact in that address book) which is useful for a full
-   export that can have its references reconstructed.  This section
-   explains how to use the fields and structures of those specifications
-   within a PDP Archive export.
+   [vCard] has long been the basis for address book and contact data
+   representation in structured data files.  The specifications for
+   [JSContact] and JMAP for Contacts [RFC9610] do a bunch of the work to
+   explain how to do this in JSON, and in particular RFC9610 explains
+   how to express references between objects (e.g. an address book and a
+   contact in that address book) which is useful for a full export that
+   can have its references reconstructed.  This section explains how to
+   use the fields and structures of those specifications within a PDP
+   Archive export.
 
 6.3.2.1.  Individual Contact Items
 
-   Individual contact items build on JSContact [RFC9553] which builds on
-   VCard [RFC6350].
+   Individual contact items build on [JSContact] which builds on
+   [vCard].
 
    *  The globally unique uid property is mandatory in JSContact and
       MUST be included in PDP archive.
@@ -951,13 +949,13 @@ flags. Several new messages were added, some of them are with flags set.
    *  The updated property is optional in JSContact but MUST be included
       in PDP archive.
 
-   *  The rev property defined in VCard (RFC6350), which is not included
-      in JSContact [RFC9553], may already be available in
-      implementations.  It may also be included as a field on a contact,
-      in which case it is a simple value field holding a timestamp.
+   *  The rev property defined in [vCard], which is not included in
+      [JSContact], may already be available in implementations.  It may
+      also be included as a field on a contact, in which case it is a
+      simple value field holding a timestamp.
 
-   *  The @type property should be "ContactCard".  Note that JSContact
-      [RFC9553] uses a value of "Card" for @type and registers that in
+   *  The @type property should be "ContactCard".  Note that [JSContact]
+      uses a value of "Card" for @type and registers that in
       https://www.iana.org/assignments/jscontact/jscontact.xhtml, but
       JMAP for Contacts uses "ContactCard" and registers that in
       https://www.iana.org/assignments/jmap/jmap.xhtml.
@@ -1065,12 +1063,12 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.3.3.  Using RFC9610 address book objects
 
-   The VCard [RFC6350] specifications never defined a representation for
-   address books.  Nor did JSContact [RFC9553].  JMAP for Contacts
-   [RFC9610] does.  Its model is clearly that of non-exclusive
-   collection membership: a Contact item may appear with the same UID in
-   multiple Address Books, and if the Contact item with that UID is
-   updated in one it is updated in the other also.
+   The [vCard] specifications never defined a representation for address
+   books.  Nor did [JSContact].  JMAP for Contacts [RFC9610] does.  Its
+   model is clearly that of non-exclusive collection membership: a
+   Contact item may appear with the same UID in multiple Address Books,
+   and if the Contact item with that UID is updated in one it is updated
+   in the other also.
 
    Individual address book objects are returned in JMAP protocol
    messages with protocol wrappers.  It is the items inside the "list"
@@ -1142,16 +1140,16 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.3.4.  Calendar events, tasks and groups
 
-   JSCalendar [RFC8984] is the basis for representing events, tasks and
-   groups in JSON.  This section explains how to export individual
-   events and tasks within an archive.  JMAP for Calendars
+   [JSCalendar] is the basis for representing events, tasks and groups
+   in JSON.  This section explains how to export individual events and
+   tasks within an archive.  JMAP for Calendars
    (https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/) does
    provide some additional considerations when producing calendar data
    from a JMAP system or to be consumed by a JMAP system, so it is also
    a normative reference.
 
-   Note on CalDAV [RFC4791] compatibility: Although CalDAV servers are
-   fairly common, they support the older VEVENT and VTODO syntax.  This
+   Note on [CalDAV] compatibility: Although CalDAV servers are fairly
+   common, they support the older VEVENT and VTODO syntax.  This
    specification requires the JSCalendar syntax instead.  Either way, a
    server building a personal data archive is likely transforming an
    internal implementation-specific relational data format to an export
@@ -1253,9 +1251,9 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.3.5.1.  Tasks
 
-   Tasks are also defined by the JSCalendar specification [RFC8984]
-   using the "Task" object type.  As with events, tasks MUST include the
-   uid and updated fields to support synchronization.
+   Tasks are also defined by [JSCalendar] using the "Task" object type.
+   As with events, tasks MUST include the uid and updated fields to
+   support synchronization.
 
    For example, a file called task1.json could contain:
 
@@ -1271,9 +1269,9 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.3.6.  Notes
 
-   *  VJournal is first defined in iCalendar (now [RFC5545]).
+   *  VJournal is first defined in [iCalendar].
 
-   *  VJournal also used in CalDAV [RFC4791].
+   *  VJournal also used in [CalDAV].
 
    *  However, they are NOT used in https://jmap.io/spec-calendars.html
 
@@ -1329,10 +1327,9 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.4.1.  Always include 'uid' and 'updated'
 
-   These requirements apply to JSContact [RFC9553], JSTask and
-   JSCalendar [RFC8984] objects when exported or imported using the
-   formats in this specification, because these all have 'uid' and
-   'updated' values.
+   These requirements apply to [JSContact], JSTask and [JSCalendar]
+   objects when exported or imported using the formats in this
+   specification, because these all have 'uid' and 'updated' values.
 
    Requirements:
 
@@ -1391,15 +1388,15 @@ flags. Several new messages were added, some of them are with flags set.
    clever implementation can avoid the appearance of an object that
    changes every time the calendar is synchronized.
 
-   Note on _updated_: The definition of 'updated' in JSContact [RFC9553]
-   is not rigorous or nuanced. "when the data in the Card was last
-   modified" could refer to several instances of the card -- its
-   internal implementation, its representation in an email share, its
-   representation in an HTTP GET response (CardDAV, [RFC6352]).  It's
-   not specified whether 'updated' is the same as REV in VCard
-   [RFC6350], which is defined differently.  Neither definition
-   explicitly covers vendor-specific fields.  Thus, this specification
-   makes additional recommendations for handling 'updated':
+   Note on _updated_: The definition of 'updated' in [JSContact] is not
+   rigorous or nuanced. "when the data in the Card was last modified"
+   could refer to several instances of the card -- its internal
+   implementation, its representation in an email share, its
+   representation in an HTTP GET response ([CardDAV]).  It's not
+   specified whether 'updated' is the same as REV in [vCard], which is
+   defined differently.  Neither definition explicitly covers vendor-
+   specific fields.  Thus, this specification makes additional
+   recommendations for handling 'updated':
 
    *  The value of 'updated' SHOULD only change when two conditions
       hold: the end-user makes a decision to change a value of a user-
@@ -1433,14 +1430,14 @@ flags. Several new messages were added, some of them are with flags set.
 
 6.4.1.1.  Synchronizing from and to CalDAV servers
 
-   CalDAV [RFC4791] uses URLs, ETags and UIDs for synchronizing changes
-   between two systems reliably, but it relies upon client-server
-   architecture, where the server is the "source of truth" and the
-   client must manage its local history and decide which things to
-   update from the server and which things to tell the server to update.
-   If a user is setting up synchronization or an implementor is building
-   a system that involves synchronization, it may be best to use CalDAV
-   if that is a feasible solution.
+   [CalDAV] uses URLs, ETags and UIDs for synchronizing changes between
+   two systems reliably, but it relies upon client-server architecture,
+   where the server is the "source of truth" and the client must manage
+   its local history and decide which things to update from the server
+   and which things to tell the server to update.  If a user is setting
+   up synchronization or an implementor is building a system that
+   involves synchronization, it may be best to use CalDAV if that is a
+   feasible solution.
 
    Nevertheless, we believe some of the use cases in our use case
    section (use_cases) motivate not only including calendar data in
@@ -1595,6 +1592,27 @@ flags. Several new messages were added, some of them are with flags set.
 
 12.1.  Normative References
 
+   [CardDAV]  Daboo, C., "CardDAV: vCard Extensions to Web Distributed
+              Authoring and Versioning (WebDAV)", RFC 6352,
+              DOI 10.17487/RFC6352, August 2011,
+              <https://www.rfc-editor.org/rfc/rfc6352>.
+
+   [JMAP]     Jenkins, N. and C. Newman, "The JSON Meta Application
+              Protocol (JMAP) for Mail", RFC 8621, DOI 10.17487/RFC8621,
+              August 2019, <https://www.rfc-editor.org/rfc/rfc8621>.
+
+   [JSCalendar]
+              Jenkins, N. and R. Stepanek, "JSCalendar: A JSON
+              Representation of Calendar Data", RFC 8984,
+              DOI 10.17487/RFC8984, July 2021,
+              <https://www.rfc-editor.org/rfc/rfc8984>.
+
+   [JSContact]
+              Stepanek, R. and M. Loffredo, "JSContact: A JSON
+              Representation of Contact Data", RFC 9553,
+              DOI 10.17487/RFC9553, May 2024,
+              <https://www.rfc-editor.org/rfc/rfc9553>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -1604,28 +1622,9 @@ flags. Several new messages were added, some of them are with flags set.
               DOI 10.17487/RFC5322, October 2008,
               <https://www.rfc-editor.org/rfc/rfc5322>.
 
-   [RFC6352]  Daboo, C., "CardDAV: vCard Extensions to Web Distributed
-              Authoring and Versioning (WebDAV)", RFC 6352,
-              DOI 10.17487/RFC6352, August 2011,
-              <https://www.rfc-editor.org/rfc/rfc6352>.
-
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
-   [RFC8621]  Jenkins, N. and C. Newman, "The JSON Meta Application
-              Protocol (JMAP) for Mail", RFC 8621, DOI 10.17487/RFC8621,
-              August 2019, <https://www.rfc-editor.org/rfc/rfc8621>.
-
-   [RFC8984]  Jenkins, N. and R. Stepanek, "JSCalendar: A JSON
-              Representation of Calendar Data", RFC 8984,
-              DOI 10.17487/RFC8984, July 2021,
-              <https://www.rfc-editor.org/rfc/rfc8984>.
-
-   [RFC9553]  Stepanek, R. and M. Loffredo, "JSContact: A JSON
-              Representation of Contact Data", RFC 9553,
-              DOI 10.17487/RFC9553, May 2024,
-              <https://www.rfc-editor.org/rfc/rfc9553>.
 
    [RFC9610]  Jenkins, N., Ed., "JSON Meta Application Protocol (JMAP)
               for Contacts", RFC 9610, DOI 10.17487/RFC9610, December
@@ -1633,9 +1632,28 @@ flags. Several new messages were added, some of them are with flags set.
 
 12.2.  Informative References
 
+   [CalDAV]   Daboo, C., Desruisseaux, B., and L. Dusseault,
+              "Calendaring Extensions to WebDAV (CalDAV)", RFC 4791,
+              DOI 10.17487/RFC4791, March 2007,
+              <https://www.rfc-editor.org/rfc/rfc4791>.
+
    [GoogleTakeout]
               Google, "Google Takeout",
               <https://takeout.google.com/settings/takeout>.
+
+   [iCalendar]
+              Desruisseaux, B., Ed., "Internet Calendaring and
+              Scheduling Core Object Specification (iCalendar)",
+              RFC 5545, DOI 10.17487/RFC5545, September 2009,
+              <https://www.rfc-editor.org/rfc/rfc5545>.
+
+   [IMAP4]    Crispin, M., "INTERNET MESSAGE ACCESS PROTOCOL - VERSION
+              4rev1", RFC 3501, DOI 10.17487/RFC3501, March 2003,
+              <https://www.rfc-editor.org/rfc/rfc3501>.
+
+   [MBOX]     Hall, E., "The application/mbox Media Type", RFC 4155,
+              DOI 10.17487/RFC4155, September 2005,
+              <https://www.rfc-editor.org/rfc/rfc4155>.
 
    [PST]      Microsoft, "[MS-PST]: Outlook Personal Folders (.pst) File
               Format", <https://learn.microsoft.com/en-
@@ -1646,27 +1664,9 @@ flags. Several new messages were added, some of them are with flags set.
               DOI 10.17487/RFC2822, April 2001,
               <https://www.rfc-editor.org/rfc/rfc2822>.
 
-   [RFC3501]  Crispin, M., "INTERNET MESSAGE ACCESS PROTOCOL - VERSION
-              4rev1", RFC 3501, DOI 10.17487/RFC3501, March 2003,
-              <https://www.rfc-editor.org/rfc/rfc3501>.
-
-   [RFC4155]  Hall, E., "The application/mbox Media Type", RFC 4155,
-              DOI 10.17487/RFC4155, September 2005,
-              <https://www.rfc-editor.org/rfc/rfc4155>.
-
    [RFC4314]  Melnikov, A., "IMAP4 Access Control List (ACL) Extension",
               RFC 4314, DOI 10.17487/RFC4314, December 2005,
               <https://www.rfc-editor.org/rfc/rfc4314>.
-
-   [RFC4791]  Daboo, C., Desruisseaux, B., and L. Dusseault,
-              "Calendaring Extensions to WebDAV (CalDAV)", RFC 4791,
-              DOI 10.17487/RFC4791, March 2007,
-              <https://www.rfc-editor.org/rfc/rfc4791>.
-
-   [RFC5545]  Desruisseaux, B., Ed., "Internet Calendaring and
-              Scheduling Core Object Specification (iCalendar)",
-              RFC 5545, DOI 10.17487/RFC5545, September 2009,
-              <https://www.rfc-editor.org/rfc/rfc5545>.
 
    [RFC5598]  Crocker, D., "Internet Mail Architecture", RFC 5598,
               DOI 10.17487/RFC5598, July 2009,
@@ -1675,10 +1675,6 @@ flags. Several new messages were added, some of them are with flags set.
    [RFC6154]  Leiba, B. and J. Nicolson, "IMAP LIST Extension for
               Special-Use Mailboxes", RFC 6154, DOI 10.17487/RFC6154,
               March 2011, <https://www.rfc-editor.org/rfc/rfc6154>.
-
-   [RFC6350]  Perreault, S., "vCard Format Specification", RFC 6350,
-              DOI 10.17487/RFC6350, August 2011,
-              <https://www.rfc-editor.org/rfc/rfc6350>.
 
    [RFC7162]  Melnikov, A. and D. Cridland, "IMAP Extensions: Quick Flag
               Changes Resynchronization (CONDSTORE) and Quick Mailbox
@@ -1705,6 +1701,10 @@ flags. Several new messages were added, some of them are with flags set.
               Blob Management Extension", RFC 9404,
               DOI 10.17487/RFC9404, August 2023,
               <https://www.rfc-editor.org/rfc/rfc9404>.
+
+   [vCard]    Perreault, S., "vCard Format Specification", RFC 6350,
+              DOI 10.17487/RFC6350, August 2011,
+              <https://www.rfc-editor.org/rfc/rfc6350>.
 
 Acknowledgments
 
