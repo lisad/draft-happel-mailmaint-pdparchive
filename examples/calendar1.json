@@ -1,0 +1,16 @@
+{
+  "@type": "Calendar",
+  "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
+  "updated": "2020-01-09T14:32:01Z",
+  "name": "Work Calendar",
+  "color": "#123456",
+  "sortOrder": 0,
+  "isDefault": true,
+  "isSubscribed": true,
+  "myRights": {
+    "mayRead": true,
+    "mayWrite": true,
+    "mayShare": true,
+    "mayDelete": false
+  }
+}

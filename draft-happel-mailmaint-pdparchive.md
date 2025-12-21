@@ -507,66 +507,24 @@ EML (.eml) file for each message, in order to avoid reconstructing them. Names o
 
 Example of folder.json (full export):
 
-~~~
-{
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": 16,
-  "highest_modseq": 6371729,
-  "recent_uid": 15,
-  "uidvalidity": 1107190787,
-  "is_subscribed": true,
-  "role": "sent",
-  "sort_order": 1,
-  "myrights": "rwiptsldaex",
+~~~~~~~~~~
+{::include ./examples/folder.json}
+~~~~~~~~~~
+{: #example1 title="A basic folder.json example"}
 
-  "uids": {
-     1: "msg-1.eml",
-     3: "msg-3.eml",
-     15: "imported-ABC.eml"
-  },
 
-  "flags": {
-     1: ["$seen"],
-     3: ["$seen", "$flagged"],
-     15: ["$answered", "$forwarded"]
-  }
-}
-```
+Issue:  Are UIDs compared as strings or integers? JSON requires UIDs to be strings if
+they're used as field names. How about when we're using "last_uid" or "recent_uid"?
+
 
 Example of folder.json that shows incremental changes from the previous export shown above.
 In this example 2 messages with UIDs 3 and 15 were removed. Message with UID 1 has updated
 flags. Several new messages were added, some of them are with flags set.
-```asciidoc=
-{
-  "allowed_keywords": ["$Forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": 21,
-  "highest_modseq": 6371845,
-  "recent_uid": 20,
-  "uidvalidity": 1107190787,
-  "is_subscribed": true,
-  "role": "sent",
-  "sort_order": 1,
-  "myrights": "rwiptsldaex",
 
-  "uids": {
-     1: "msg-1.eml",
-     17: "msg-17.eml",
-     19: "msg-19.eml",
-     20: "20.eml",
-     21: "21.eml"
-  },
-
-  "flags": {
-     1: ["$seen", "$answered"],
-     17: ["$seen", "$answered", "$forwarded"],
-     19: ["$seen"],
-     20: [],
-     21: []
-  },
-
-  "removed": [3, 15]
-}
 ~~~
+{::include ./examples/folder-incremental.json}
+~~~
+{: #example2 title="A folder.json example with incremental changes"}
 
 ### Contacts
 
@@ -603,43 +561,10 @@ need to define that elsewhere].
 For example, a file called 'contact1.json' could contain:
 
 ~~~
-{
-   "@type": "ContactCard",
-   "version": "1.0",
-   "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
-   "id":
-   "updated": "2021-10-31T22:27:10Z",
-   "kind": "individual",
-   "addressBookIds": [
-      "062adcfa-105d-455c-bc60-6db68b69c3f3"
-   ]
-   "name": {
-       "components": [
-         { "kind": "given", "value": "John" },
-         { "kind": "surname", "value": "Doe" }
-       ],
-       "isOrdered": true
-   },
-
-   "relatedTo": {
-      "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6": {
-         "relation": {
-           "friend": true
-         }
-       }
-   },
-
-   "notes": {
-     "n1": {
-       "note": "Open office hours are 1600 to 1715 EST, Mon-Fri",
-       "created": "2022-11-23T15:01:32Z",
-       "author": {
-         "name": "John"
-       }
-     }
-   }
-}
+{::include ./examples/contact.json}
 ~~~
+{: #example3 title="A contact.json example"}
+
 
 For clarity, this example includes:
 * How a card can reference address books which are exported as separate files in the overall export
@@ -668,21 +593,12 @@ in the export even if not resolvable by some users of the export file.
 Group contact items also refer to other contact items.  A file with an arbitrary name like "contact2.json"
 could include:
 
+
 ~~~
-{
-   "@type": "ContactCard",
-   "kind": "group",
-   "name": {
-     "full": "The Doe family"
-   },
-   "uid": "urn:uuid:ab4310aa-fa43-11e9-8f0b-362b9e155667",
-   "updated": "2021-10-31T22:27:10Z",
-   "members": {
-     "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af": true,
-     "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519": true
-   }
-}
+{::include ./examples/group-contact.json}
 ~~~
+{: #example4 title="A group contact file example"}
+
 
 As with individual ContactCard items referencing objects that are not exported at the same time,
 a group contact can contain references that are not resolvable within the export.  If the user
@@ -709,60 +625,24 @@ be represented as individual files in a PDPArchive. However, some things are mis
 * The `@type` of AddressBook should be included within the data
 
 
-This example copies the examples in RFC9610 so that interoperability between this spec and that one
+This example copies the examples in {{RFC9610}} so that interoperability between this spec and that one
 is clear.
 
 A file with an arbitrary name like address-book1.json would contain:
 
+~~~
+{::include ./examples/address-book1.json}
+~~~
+{: #example5 title="An address book file example"}
 
-~~~
-{
-   "@type": "AddressBook",
-   "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
-   "updated": "2020-01-09T14:32:01Z",
-   "name": "Personal",
-   "description": null,
-   "sortOrder": 0,
-   "isDefault": true,
-   "isSubscribed": true,
-   "shareWith": {
-     "3f1502e0-63fe-4335-9ff3-e739c188f5dd": {
-       "mayRead": true,
-       "mayWrite": false,
-       "mayShare": false,
-       "mayDelete": false
-     }
-   },
-   "myRights": {
-     "mayRead": true,
-     "mayWrite": true,
-     "mayShare": true,
-     "mayDelete": false
-   }
-}
-~~~
 
 address-book2.json would contain:
 
 ~~~
-{
-   "@type": "AddressBook",
-   "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
-   "updated": "2020-01-09T14:32:01Z",
-   "name": "Autosaved",
-   "description": null,
-   "sortOrder": 1,
-   "isDefault": false,
-   "isSubscribed": true,
-   "shareWith": null,
-   "myRights": {
-     "mayRead": true,
-     "mayWrite": true,
-     "mayShare": true,
-     "mayDelete": false
-   }
-}
+{::include ./examples/address-book2.json}
 ~~~
+{: #example6 title="Another address book file example"}
+
 
 
 Note that the first example includes a `shareWith` value, showing that the user's AddressBook has been
@@ -811,31 +691,10 @@ events to the calendar they are supposed to appear in.
 For example, a file called event1.json could contain:
 
 ~~~
-{
-  "@type": "Event",
-  "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
-  "updated": "2020-01-09T14:32:01Z",
-  "title": "Board Meeting",
-  "start": "2024-10-25T09:00:00",
-  "timeZone": "Europe/London",
-  "duration": "PT1H30M",
-  "participants": {
-    "1": {
-      "@type": "Participant",
-      "name": "Jane Doe",
-      "sendTo": {
-        "mailto": "jane@example.com"
-      },
-      "roles": {
-        "attendee": true
-      }
-    }
-  },
-  "calendarIds": {
-    "062adcfa-105d-455c-bc60-6db68b69c3f3": true
-  }
-}
+{::include ./examples/event1.json}
 ~~~
+{: #example-event1 title="Event example"}
+
 
 The event object includes a calendarIds property, which links it to the calendar collection it belongs to.
 
@@ -850,23 +709,10 @@ A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \ca
 
 
 ~~~
-{
-  "@type": "Calendar",
-  "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
-  "updated": "2020-01-09T14:32:01Z",
-  "name": "Work Calendar",
-  "color": "#123456",
-  "sortOrder": 0,
-  "isDefault": true,
-  "isSubscribed": true,
-  "myRights": {
-    "mayRead": true,
-    "mayWrite": true,
-    "mayShare": true,
-    "mayDelete": false
-  }
-}
+{::include ./examples/calendar1.json}
 ~~~
+{: #calendar1 title="Calendar example"}
+
 
 The `uid` value here corresponds to the ID used in the calendarIds property of the individual event item.
 
@@ -878,16 +724,10 @@ As with events, tasks MUST include the uid and updated fields to support synchro
 For example, a file called task1.json could contain:
 
 ~~~
-{
-  "@type": "Task",
-  "uid": "7b0f69a6-6e3e-4f1b-85d8-c89b43d2f2a1",
-  "updated": "2022-11-23T15:01:32Z",
-  "title": "Submit Quarterly Report",
-  "status": "in-progress",
-  "priority": 1,
-  "due": "2024-12-31T23:59:59Z"
-}
+{::include ./examples/task1.json}
 ~~~
+{: #task1 title="Task example"}
+
 
 
 

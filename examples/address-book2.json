@@ -1,0 +1,18 @@
+address-book2.json
+{
+   "@type": "AddressBook",
+   "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
+   "updated": "2020-01-09T14:32:01Z",
+   "name": "Autosaved",
+   "description": null,
+   "sortOrder": 1,
+   "isDefault": false,
+   "isSubscribed": true,
+   "shareWith": null,
+   "myRights": {
+     "mayRead": true,
+     "mayWrite": true,
+     "mayShare": true,
+     "mayDelete": false
+   }
+}

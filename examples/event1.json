@@ -1,0 +1,24 @@
+{
+  "@type": "Event",
+  "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
+  "updated": "2020-01-09T14:32:01Z",
+  "title": "Board Meeting",
+  "start": "2024-10-25T09:00:00",
+  "timeZone": "Europe/London",
+  "duration": "PT1H30M",
+  "participants": {
+    "1": {
+      "@type": "Participant",
+      "name": "Jane Doe",
+      "sendTo": {
+        "mailto": "jane@example.com"
+      },
+      "roles": {
+        "attendee": true
+      }
+    }
+  },
+  "calendarIds": {
+    "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+  }
+}

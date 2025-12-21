@@ -1,0 +1,23 @@
+{
+  "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
+  "last_uid": 16,
+  "highest_modseq": 6371729,
+  "recent_uid": 15,
+  "uidvalidity": 1107190787,
+  "is_subscribed": true,
+  "role": "sent",
+  "sort_order": 1,
+  "myrights": "rwiptsldaex",
+
+  "uids": {
+     "1": "msg-1.eml",
+     "3": "msg-3.eml",
+     "15": "imported-ABC.eml"
+  },
+
+  "flags": {
+     "1": ["$seen"],
+     "3": ["$seen", "$flagged"],
+     "15": ["$answered", "$forwarded"]
+  }
+}

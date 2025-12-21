@@ -1,0 +1,36 @@
+{
+   "@type": "ContactCard",
+   "version": "1.0",
+   "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
+   "id": "42",
+   "updated": "2021-10-31T22:27:10Z",
+   "kind": "individual",
+   "addressBookIds": [
+      "062adcfa-105d-455c-bc60-6db68b69c3f3"
+   ],
+   "name": {
+       "components": [
+         { "kind": "given", "value": "John" },
+         { "kind": "surname", "value": "Doe" }
+       ],
+       "isOrdered": true
+   },
+
+   "relatedTo": {
+      "urn:uuid:f81d4fae-7dec-11d0-a765-00a0c91e6bf6": {
+         "relation": {
+           "friend": true
+         }
+       }
+   },
+
+   "notes": {
+     "n1": {
+       "note": "Open office hours are 1600 to 1715 EST, Mon-Fri",
+       "created": "2022-11-23T15:01:32Z",
+       "author": {
+         "name": "John"
+       }
+     }
+   }
+}
