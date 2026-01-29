@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 24 June 2026                                            audriga
+Expires: 2 August 2026                                           audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                        21 December 2025
+                                                         29 January 2026
 
 
                    Personal Data Portability Archive
@@ -53,11 +53,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 June 2026.
+   This Internet-Draft will expire on 2 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -682,7 +682,7 @@ Table of Contents
    /blob/
        ...?
 
-      TODO: I18n?  Special-use?
+   TODO: I18n?  Special-use?
 
    Folder names are defined in RFC9051 (IMAP v4 rev2) with great freedom
    for servers.  Servers may or may not treat mailbox names as case
@@ -701,11 +701,8 @@ Table of Contents
    Each IMAP/JMAP folder is represented as subdirectory under "mail"
    directory.  For example, the folder INBOX would be represented as
    "mail/INBOX", and the folder "Archive/2024/2024-12" would be
-   represented as "mail/Archive/2024/2024-12".
-
-   (In examples above "/" is the IMAP hierarchy delimiter)
-
-   Folder names are encoded in UTF-8.
+   represented as "mail/Archive/2024/2024-12".  Folder names are encoded
+   in UTF-8.
 
    TODO: how to signal removal of a folder in an incremental archive?
    Need to add some kind of tombstone mechanism.
@@ -747,7 +744,7 @@ Table of Contents
    | highest_modseq   |  unsigned 64   | No         | HIGHESTMODSEQ    |
    |                  |  bit integer   |            | value [RFC7162]  |
    +------------------+----------------+------------+------------------+
-   | role             |     string     | No         | [RFC6154]        |
+   | special_use      |     string     | No         | [RFC6154]        |
    |                  |                |            | SPECIAL-USE      |
    |                  |                |            | value.  E.g.     |
    |                  |                |            | "inbox",         |
@@ -868,13 +865,14 @@ folder_info = {
    Example of folder.json (full export):
 
    {
+     "name": "AVClub",
      "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
      "last_uid": 16,
      "highest_modseq": 6371729,
      "recent_uid": 15,
      "uidvalidity": 1107190787,
      "is_subscribed": true,
-     "role": "sent",
+     "special_use": "sent",
      "sort_order": 1,
      "myrights": "rwiptsldaex",
 
