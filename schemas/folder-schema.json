@@ -1,0 +1,87 @@
+
+{
+  "$id": "https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/02/",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Folder Manifest",
+  "description": "PDPArchive is a standard for interoperable exports or archives of personal data including email, tasks, calendar items and contacts.  Showing how those items exist in folders requires a common representation of folder names and content in a folder manifest.  This schema defines and constrains that folder manifest.",
+  "type": "object",
+  "required": ["name", "uids", "last_uid", "uidvalidity", "is_subscribed", "flags"],
+  "properties": {
+    "removed": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 0,
+        "exclusiveMaximum": 4294967296
+      }
+    },
+    "comment": {
+      "type": "string"
+    },
+    "original_name": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 2147483648
+    },
+    "modseqs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "exclusiveMaximum": 18446744073709551616
+      }
+    },
+    "highest_modseq": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 18446744073709551616
+    },
+    "special_use": {
+      "type": "string",
+      "description": "Can be \\All, \\Archive, \\Drafts, \\Flagged, \\Junk, \\Sent or \\Trash as per RFC6154.",
+      "pattern": "^\\\\"
+    },
+    "myrights": {
+      "type": "string"
+    },
+    "is_subscribed": {
+      "type": "boolean"
+    },
+    "last_uid": {
+      "type": "number"
+    },
+    "recent_uid": {
+      "type": "number"
+    },
+    "uidvalidity": {
+      "description": "Follows the IMAP4 requirements for non-zero unsigned 32-bit int",
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 4294967296
+    },
+    "uids": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "allowed_keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}

@@ -401,7 +401,8 @@ index.json
     ...?
 ~~~
 
-> TODO: I18n? Special-use?
+
+TODO: I18n? Special-use?
 
 Folder names are defined in RFC9051 (IMAP v4 rev2) with great freedom for servers.  Servers may or may not treat mailbox names as case sensitive.  Folder names may even include non-graphic characters, "%" and "\*". Hierarchy separators may even differ among IMAP servers although "/" is probably most common.
 
@@ -412,11 +413,10 @@ Since this specification is new, it is possible to be more constrained.  This sp
 
 ### Email
 
-Each IMAP/JMAP folder is represented as subdirectory under "mail" directory. For example, the folder INBOX would be represented as "mail/INBOX", and the folder "Archive/2024/2024-12" would be represented as "mail/Archive/2024/2024-12".
-
-(In examples above "/" is the IMAP hierarchy delimiter)
-
-Folder names are encoded in UTF-8.
+Each IMAP/JMAP folder is represented as subdirectory under "mail" directory. For
+example, the folder INBOX would be represented as "mail/INBOX", and the
+folder "Archive/2024/2024-12" would be represented
+as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.
 
 TODO: how to signal removal of a folder in an incremental archive? Need to add some kind of tombstone mechanism.
 
@@ -431,7 +431,7 @@ Each folder metatadata is described by "folder.json", which has the following fo
 | is_subscribed | boolean | Yes | Is the folder returned by IMAP LSUB? {{IMAP4}} |
 | myrights | string | No |See Section 3.5 of {{RFC4314}}. For example "rwiptsldaex"|
 | highest_modseq | unsigned 64 bit integer | No |HIGHESTMODSEQ value {{RFC7162}}|
-| role | string | No |{{RFC6154}} SPECIAL-USE value. E.g. "inbox", "sent", "drafts", "junk", etc.|
+| special_use | string | No |{{RFC6154}} SPECIAL-USE value. E.g. "inbox", "sent", "drafts", "junk", etc.|
 | sort_order |  | No |See Section 2, {{JMAP}}]|
 | uids | map from UIDs to strings (relative filenames of messages) | Yes | Mapping from UIDs to corresponding message files included in the archive|
 | flags | map from UIDs to array of strings | Yes |IMAP flags assigned to the message, excluding \Recent|

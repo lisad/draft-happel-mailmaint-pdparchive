@@ -1,11 +1,12 @@
 {
+  "name": "AVClub",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
   "last_uid": 16,
   "highest_modseq": 6371729,
   "recent_uid": 15,
   "uidvalidity": 1107190787,
   "is_subscribed": true,
-  "role": "sent",
+  "special_use": "sent",
   "sort_order": 1,
   "myrights": "rwiptsldaex",
 
