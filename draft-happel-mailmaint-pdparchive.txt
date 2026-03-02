@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 2 August 2026                                           audriga
+Expires: 3 September 2026                                        audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                         29 January 2026
+                                                            2 March 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 August 2026.
+   This Internet-Draft will expire on 3 September 2026.
 
 Copyright Notice
 
@@ -76,10 +76,11 @@ Table of Contents
    3.  Goals
      3.1.  Use cases
        3.1.1.  Data portability
-       3.1.2.  Incremental backup
-       3.1.3.  Synchronization
-       3.1.4.  Dataset exchange
-       3.1.5.  Data persistence
+       3.1.2.  Read-only data access
+       3.1.3.  Incremental data access
+       3.1.4.  Synchronization
+       3.1.5.  Dataset exchange
+       3.1.6.  Data persistence
      3.2.  Technical Goals
        3.2.1.  Email standards compatibility
        3.2.2.  Interoperability
@@ -99,6 +100,7 @@ Table of Contents
        6.1.2.  Dataset section
        6.1.3.  Datasource section
      6.2.  Folder structure
+       6.2.1.  File and folder names
      6.3.  Data formats
        6.3.1.  Email
        6.3.2.  Contacts
@@ -137,7 +139,7 @@ Table of Contents
    While mainly designed for interoperability, many of these data
    formats have also become popular for data portability, i.e., the
    import/export of data across different services.  The growing
-   importance of data portability however demands for an open standard
+   importance of data portability however demands an open standard
    archive format which can deal with different types of personal data
    in a homogeneous fashion.
 
@@ -148,10 +150,11 @@ Table of Contents
    between related software and services such as for email, contacts,
    calendaring, tasks, or files.
 
-   The approach is to define JSON formats (using CDDL), folder
-   structure, and a common compression format.  Additional
-   specifications will likely define a protocol how these files can be
-   requested from, imported into, or transferred between servers.
+   The approach is to define JSON formats, folder structure, and a
+   common compression format.  Additional specifications will likely
+   define a protocol how these files can be requested from, imported
+   into, or transferred between servers, but this specification can be
+   used as-is with user-directed imports or exports.
 
 2.  Conventions and Definitions
 
@@ -194,6 +197,14 @@ Table of Contents
 
 3.1.  Use cases
 
+   Many of these use cases benefit greatly from a simple, read-only
+   export format, compared to having IMAP and CalDAV access to personal
+   data.  While these use cases may suggest interesting niche features,
+   adding those may be left to future specs.  For example, legal and
+   forensics use cases might benefit from signing features, but
+   nevertheless this specification would advance those use cases even
+   without signing features.
+
 3.1.1.  Data portability
 
    A main use case for the novel format is to allow exporting the full
@@ -210,24 +221,31 @@ Table of Contents
    cannot use the origin system but also the destination system is not
    yet ready.
 
-3.1.2.  Incremental backup
+3.1.2.  Read-only data access
+
+   General access to data powers all kinds of analysis and applications.
+   Exporting content and metadata in a structure suitable for ease of
+   use in data pipelines or analysis tools would make these much easier.
+
+3.1.3.  Incremental data access
 
    Beyond snapshot backups/exports, the format should optionally allow
-   for incremental backups.
+   for incremental data access - knowing what new data has been added.
 
-   There are at least two scenarios for this:
+   *  Automated maintenance of a permanent, incremental mirror of user
+      data, e.g. for instant restore
 
-   *  Software which wants to keep a permanent, incremental mirror of
-      user data (e.g., for instant export or restore)
+   *  Compliance or audit logs
 
-   *  Users regularly exporting changes in data managed by services or
-      software products
+   *  Spam tracking and analysis
 
-3.1.3.  Synchronization
+   *  CRM or productivity integration scenarios that are read-only
+
+3.1.4.  Synchronization
 
    Data portability does not just allow users to switch from one service
    to another one, but to let users benefit from 3rd party services
-   getting a copy of their data (at the request of the user).  Simple
+   getting access to their data (at the request of the user).  Simple
    synchronization features could make this much better.
 
    For example, current online systems that allow importing contacts are
@@ -245,7 +263,7 @@ Table of Contents
    one-way synchronization only requires agreed-upon usage of existing
    fields and values.
 
-3.1.4.  Dataset exchange
+3.1.5.  Dataset exchange
 
    PDPA should be usable to exchange and share larger data sets than
    just one user, or to share a single user's data outside the context
@@ -263,13 +281,7 @@ Table of Contents
    *  Researchers may be able to collect archive files through data
       donations and use as input to research.
 
-   While these use cases may suggest small features that would help
-   these use cases be successful, supporting more advanced features
-   required by these use cases is not a priority.  For example, we do
-   not attempt to cryptographically solve provenance for use in legal
-   and forensics use cases.
-
-3.1.5.  Data persistence
+3.1.6.  Data persistence
 
    The format MAY be used as a development-time active persistence layer
    for user data in, e.g., email clients or applications.  It is not
@@ -373,7 +385,7 @@ Table of Contents
    metadata.  Finally these JSON and other file formats are packaged and
    compressed together in a standard but flexible way.
 
-   Our rationale for using JSON as much as it is reasonable:
+   Our rationale for using JSON to the extent reasonable:
 
    *  We envision an export format being used not just by developers of
       full IMAP servers but also by developers building task management
@@ -682,13 +694,19 @@ Table of Contents
    /blob/
        ...?
 
-   TODO: I18n?  Special-use?
+6.2.1.  File and folder names
 
-   Folder names are defined in RFC9051 (IMAP v4 rev2) with great freedom
-   for servers.  Servers may or may not treat mailbox names as case
-   sensitive.  Folder names may even include non-graphic characters, "%"
-   and "*".  Hierarchy separators may even differ among IMAP servers
-   although "/" is probably most common.
+   Because filenames can be generated by the exporting server, it is
+   always possible to generate non-colliding filenames.  Display names
+   are NOT intended to be determined by file names, but instead by
+   fields within each file.  Similarly, filenames are NOT intended to be
+   globally unique IDs.
+
+   Mail folder names are defined in [RFC9051] (IMAP v4 rev2) with great
+   freedom for servers.  Servers may or may not treat mailbox names as
+   case sensitive.  Folder names may even include non-graphic
+   characters, "%" and "*".  Hierarchy separators may even differ among
+   IMAP servers although "/" is probably most common.
 
    Since this specification is new, it is possible to be more
    constrained.  This specification only supports "/" as a folder
@@ -956,7 +974,7 @@ folder_info = {
       in PDP archive.
 
    *  The rev property defined in [vCard], which is not included in
-      [JSContact], may already be available in implementations.  It may
+      [JSContact], may already be available in implementations.  It MAY
       also be included as a field on a contact, in which case it is a
       simple value field holding a timestamp.
 
@@ -968,12 +986,11 @@ folder_info = {
 
    We make some specific requirements on the updated value so that it
    can be useful for synchronization.  See the section on updated and
-   uid specifically [TODO: cross-reference other section].
+   uid specifically Section 6.4.1.
 
    When the structured data is prepared, a contact can be exported in a
    file with an arbitrary name using a limited set of characters
-   suitable for interoperability across filesystems.  [TODO: we need to
-   define that elsewhere].
+   suitable for interoperability across filesystems.
 
    For example, a file called 'contact1.json' could contain:
 
@@ -1182,9 +1199,9 @@ folder_info = {
    Notes on specific fields:
 
    *  The globally unique uid property is mandatory in JSCalendar and
-      MUST be included.  See JMAP Calendars [ref todo] section 1.4.1 for
-      when the uid property can appear the same for multiple recurrences
-      of the same underlying event.
+      MUST be included.  See JMAP Calendars draft-ietf-jmap-calendars-26
+      section 1.4.1 for when the uid property can appear the same for
+      multiple recurrences of the same underlying event.
 
    *  The updated property is mandatory in JSCalendar and MUST be
       included.
@@ -1237,8 +1254,8 @@ folder_info = {
 
 6.3.5.  Calendar Collection Items
 
-   Calendar collection items are built using JMAP for Calendars [REF
-   TODO - still I-D].
+   Calendar collection items are built using JMAP for Calendars (draft-
+   ietf-jmap-calendars-26).
 
    If a system exports events belonging to calendars, it SHOULD also
    export the referenced Calendar objects.
@@ -1646,6 +1663,11 @@ folder_info = {
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+   [RFC9051]  Melnikov, A., Ed. and B. Leiba, Ed., "Internet Message
+              Access Protocol (IMAP) - Version 4rev2", RFC 9051,
+              DOI 10.17487/RFC9051, August 2021,
+              <https://www.rfc-editor.org/rfc/rfc9051>.
 
    [RFC9610]  Jenkins, N., Ed., "JSON Meta Application Protocol (JMAP)
               for Contacts", RFC 9610, DOI 10.17487/RFC9610, December

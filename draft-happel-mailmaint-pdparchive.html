@@ -171,7 +171,7 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
 @font-face {
   font-family: 'Oxygen Mono';
@@ -179,7 +179,8 @@
   font-weight: 400;
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
 }
 
 @font-face {
@@ -1050,11 +1051,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">PDPArchive</td>
-<td class="right">January 2026</td>
+<td class="right">March 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dusseault, et al.</td>
-<td class="center">Expires 2 August 2026</td>
+<td class="center">Expires 3 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1068,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-happel-mailmaint-pdparchive-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-01-29" class="published">29 January 2026</time>
+<time datetime="2026-03-02" class="published">2 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-08-02">2 August 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1130,7 +1131,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1175,16 +1176,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
                     <p id="section-toc.1-1.3.2.1.2.1.1" class="keepWithNext"><a href="#section-3.1.1" class="auto internal xref">3.1.1</a>.  <a href="#name-data-portability" class="internal xref">Data portability</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.2">
-                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-incremental-backup" class="internal xref">Incremental backup</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.2.1"><a href="#section-3.1.2" class="auto internal xref">3.1.2</a>.  <a href="#name-read-only-data-access" class="internal xref">Read-only data access</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.3">
-                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-synchronization" class="internal xref">Synchronization</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.3.1"><a href="#section-3.1.3" class="auto internal xref">3.1.3</a>.  <a href="#name-incremental-data-access" class="internal xref">Incremental data access</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.4">
-                    <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="auto internal xref">3.1.4</a>.  <a href="#name-dataset-exchange" class="internal xref">Dataset exchange</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.4.1"><a href="#section-3.1.4" class="auto internal xref">3.1.4</a>.  <a href="#name-synchronization" class="internal xref">Synchronization</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.5">
-                    <p id="section-toc.1-1.3.2.1.2.5.1"><a href="#section-3.1.5" class="auto internal xref">3.1.5</a>.  <a href="#name-data-persistence" class="internal xref">Data persistence</a></p>
+                    <p id="section-toc.1-1.3.2.1.2.5.1"><a href="#section-3.1.5" class="auto internal xref">3.1.5</a>.  <a href="#name-dataset-exchange" class="internal xref">Dataset exchange</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.1.2.6">
+                    <p id="section-toc.1-1.3.2.1.2.6.1"><a href="#section-3.1.6" class="auto internal xref">3.1.6</a>.  <a href="#name-data-persistence" class="internal xref">Data persistence</a></p>
 </li>
                 </ul>
 </li>
@@ -1252,6 +1256,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-folder-structure" class="internal xref">Folder structure</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.1">
+                    <p id="section-toc.1-1.6.2.2.2.1.1"><a href="#section-6.2.1" class="auto internal xref">6.2.1</a>.  <a href="#name-file-and-folder-names" class="internal xref">File and folder names</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.3">
                 <p id="section-toc.1-1.6.2.3.1"><a href="#section-6.3" class="auto internal xref">6.3</a>.  <a href="#name-data-formats" class="internal xref">Data formats</a></p>
@@ -1356,9 +1365,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">As part of communication protocols, the IETF has standardized a number of data formats such as the Internet Message Format <span>[<a href="#RFC5322" class="cite xref">RFC5322</a>]</span>,  <span>[<a href="#vCard" class="cite xref">vCard</a>]</span>,  <span>[<a href="#iCalendar" class="cite xref">iCalendar</a>]</span>, or, more recently, <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span> and <span>[<a href="#JSCalendar" class="cite xref">JSCalendar</a>]</span>.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands for an open standard archive format which can deal with different types of personal data in a homogeneous fashion.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands an open standard archive format which can deal with different types of personal data in a homogeneous fashion.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">To this end, this document proposes the Personal Data Portability Archive format (PDPA), suitable for import/export, backup/restore, and data transfer scenarios for personal data. It is compatible with both IMAP and JMAP and should be suitable as an interchange format between related software and services such as for email, contacts, calendaring, tasks, or files.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The approach is to define JSON formats (using CDDL), folder structure, and a common compression format.  Additional specifications will likely define a protocol how these files can be requested from, imported into, or transferred between servers.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">The approach is to define JSON formats, folder structure, and a common compression format.  Additional specifications will likely define a protocol how these files can be requested from, imported into, or transferred between servers, but this specification can be used as-is with user-directed imports or exports.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">
@@ -1388,6 +1397,8 @@ appear in all capitals, as shown here.<a href="#section-2-4" class="pilcrow">¶<
         <h3 id="name-use-cases">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-use-cases" class="section-name selfRef">Use cases</a>
         </h3>
+<p id="section-3.1-1">Many of these use cases benefit greatly from a simple, read-only export format,
+compared to having IMAP and CalDAV access to personal data.   While these use cases may suggest interesting niche features, adding those may be left to future specs. For example, legal and forensics use cases might benefit from signing features, but nevertheless this specification would advance those use cases even without signing features.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <div id="data-portability">
 <section id="section-3.1.1">
           <h4 id="name-data-portability">
@@ -1398,60 +1409,73 @@ appear in all capitals, as shown here.<a href="#section-2-4" class="pilcrow">¶<
 <p id="section-3.1.1-3">Depending on the type of data, exporting/importing can be a time-consuming process. Particularly for the case of switching services, PDPA should allow to minimize the time period during which a user cannot use the origin system but also the destination system is not yet ready.<a href="#section-3.1.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="incremental-backup">
+<div id="read-only-data-access">
 <section id="section-3.1.2">
-          <h4 id="name-incremental-backup">
-<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-incremental-backup" class="section-name selfRef">Incremental backup</a>
+          <h4 id="name-read-only-data-access">
+<a href="#section-3.1.2" class="section-number selfRef">3.1.2. </a><a href="#name-read-only-data-access" class="section-name selfRef">Read-only data access</a>
           </h4>
-<p id="section-3.1.2-1">Beyond snapshot backups/exports, the format should optionally allow for incremental backups.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.2-2">There are at least two scenarios for this:<a href="#section-3.1.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.2-1">General access to data powers all kinds of analysis and applications.  Exporting content and metadata in a structure suitable for ease of use in data pipelines or analysis tools would make these much easier.<a href="#section-3.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="incremental-data-access">
+<section id="section-3.1.3">
+          <h4 id="name-incremental-data-access">
+<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-incremental-data-access" class="section-name selfRef">Incremental data access</a>
+          </h4>
+<p id="section-3.1.3-1">Beyond snapshot backups/exports, the format should optionally allow for incremental data
+access - knowing what new data has been added.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.1.2-3.1">
-              <p id="section-3.1.2-3.1.1">Software which wants to keep a permanent, incremental mirror of user data (e.g., for instant export or restore)<a href="#section-3.1.2-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1.3-2.1">
+              <p id="section-3.1.3-2.1.1">Automated maintenance of a permanent, incremental mirror of user data, e.g. for instant restore<a href="#section-3.1.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.1.2-3.2">
-              <p id="section-3.1.2-3.2.1">Users regularly exporting changes in data managed by services or software products<a href="#section-3.1.2-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-3.1.3-2.2">
+              <p id="section-3.1.3-2.2.1">Compliance or audit logs<a href="#section-3.1.3-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.3-2.3">
+              <p id="section-3.1.3-2.3.1">Spam tracking and analysis<a href="#section-3.1.3-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.1.3-2.4">
+              <p id="section-3.1.3-2.4.1">CRM or productivity integration scenarios that are read-only<a href="#section-3.1.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
 </div>
 <div id="synchronization">
-<section id="section-3.1.3">
+<section id="section-3.1.4">
           <h4 id="name-synchronization">
-<a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-synchronization" class="section-name selfRef">Synchronization</a>
+<a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-synchronization" class="section-name selfRef">Synchronization</a>
           </h4>
-<p id="section-3.1.3-1">Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services getting a copy of their data  (at the request of the user).  Simple synchronization features could make this much better.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.3-2">For example, current online systems that allow importing contacts are not often suited to maintaining one's address book on two systems. Re-importing a contact into a system that already has that contact often results in duplicating the exact same contact, whether or not there have been edits, making repeated synchronization practically infeasible. It should be easy to do a significantly better job of this with some attention to object IDs and modification timestamps.<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.3-3">We however do not attempt to solve two-way synchronization via export files.  It would require significant additional work to allow two systems, neither of which is agreed-upon to be the source of truth, to reliably synchronize changes from both. In comparison, solving one-way synchronization only requires agreed-upon usage of existing fields and values.<a href="#section-3.1.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-1">Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services getting access to their data  (at the request of the user).  Simple synchronization features could make this much better.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-2">For example, current online systems that allow importing contacts are not often suited to maintaining one's address book on two systems. Re-importing a contact into a system that already has that contact often results in duplicating the exact same contact, whether or not there have been edits, making repeated synchronization practically infeasible. It should be easy to do a significantly better job of this with some attention to object IDs and modification timestamps.<a href="#section-3.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.4-3">We however do not attempt to solve two-way synchronization via export files.  It would require significant additional work to allow two systems, neither of which is agreed-upon to be the source of truth, to reliably synchronize changes from both. In comparison, solving one-way synchronization only requires agreed-upon usage of existing fields and values.<a href="#section-3.1.4-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="dataset-exchange">
-<section id="section-3.1.4">
+<section id="section-3.1.5">
           <h4 id="name-dataset-exchange">
-<a href="#section-3.1.4" class="section-number selfRef">3.1.4. </a><a href="#name-dataset-exchange" class="section-name selfRef">Dataset exchange</a>
+<a href="#section-3.1.5" class="section-number selfRef">3.1.5. </a><a href="#name-dataset-exchange" class="section-name selfRef">Dataset exchange</a>
           </h4>
-<p id="section-3.1.4-1">PDPA should be usable to exchange and share larger data sets than just one user, or to share a single user's data outside the context where the user knows what it is and where it came from.<a href="#section-3.1.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.4-2">Potential applications of this are:<a href="#section-3.1.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.5-1">PDPA should be usable to exchange and share larger data sets than just one user, or to share a single user's data outside the context where the user knows what it is and where it came from.<a href="#section-3.1.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.5-2">Potential applications of this are:<a href="#section-3.1.5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.1.4-3.1">
-              <p id="section-3.1.4-3.1.1">The ability to exchange test data and known mailstore state, e.g. for conformance testing or internal functional tests<a href="#section-3.1.4-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1.5-3.1">
+              <p id="section-3.1.5-3.1.1">The ability to exchange test data and known mailstore state, e.g. for conformance testing or internal functional tests<a href="#section-3.1.5-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.1.4-3.2">
-              <p id="section-3.1.4-3.2.1">Legal discovery and forensics use cases may benefit from a standard export format, such that investigators can expect a great deal of consistency when collecting data from different systems.<a href="#section-3.1.4-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-3.1.5-3.2">
+              <p id="section-3.1.5-3.2.1">Legal discovery and forensics use cases may benefit from a standard export format, such that investigators can expect a great deal of consistency when collecting data from different systems.<a href="#section-3.1.5-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.1.4-3.3">
-              <p id="section-3.1.4-3.3.1">Researchers may be able to collect archive files through data donations and use as input to research.<a href="#section-3.1.4-3.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-3.1.5-3.3">
+              <p id="section-3.1.5-3.3.1">Researchers may be able to collect archive files through data donations and use as input to research.<a href="#section-3.1.5-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.1.4-4">While these use cases may suggest small features that would help these use cases be successful, supporting more advanced features required by these use cases is not a priority. For example, we do not attempt to cryptographically solve provenance for use in legal and forensics use cases.<a href="#section-3.1.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="data-persistence">
-<section id="section-3.1.5">
+<section id="section-3.1.6">
           <h4 id="name-data-persistence">
-<a href="#section-3.1.5" class="section-number selfRef">3.1.5. </a><a href="#name-data-persistence" class="section-name selfRef">Data persistence</a>
+<a href="#section-3.1.6" class="section-number selfRef">3.1.6. </a><a href="#name-data-persistence" class="section-name selfRef">Data persistence</a>
           </h4>
-<p id="section-3.1.5-1">The format <span class="bcp14">MAY</span> be used as a development-time active persistence layer for user data in, e.g., email clients or applications. It is not intended as, or suitable for, a production-level persistence layer.<a href="#section-3.1.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.6-1">The format <span class="bcp14">MAY</span> be used as a development-time active persistence layer for user data in, e.g., email clients or applications. It is not intended as, or suitable for, a production-level persistence layer.<a href="#section-3.1.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1541,7 +1565,7 @@ appear in all capitals, as shown here.<a href="#section-2-4" class="pilcrow">¶<
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-using-json-mostly" class="section-name selfRef">Using JSON (mostly)</a>
         </h3>
 <p id="section-4.1-1">JSON is used in this spec for new metadata and for objects including contacts, tasks,  events and notes.  However, the Email Message Format <span>[<a href="#RFC5322" class="cite xref">RFC5322</a>]</span> is used for email message content. Individual items are stored in individual files, which are referenced in collection metadata. Finally these JSON and other file formats are packaged and compressed together in a standard but flexible way.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">Our rationale for using JSON as much as it is reasonable:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
+<p id="section-4.1-2">Our rationale for using JSON to the extent reasonable:<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.1-3.1">
             <p id="section-4.1-3.1.1">We envision an export format being used not just by developers of full IMAP servers but also by developers building task management systems, calendar systems that don't include email, etc.<a href="#section-4.1-3.1.1" class="pilcrow">¶</a></p>
@@ -1865,9 +1889,16 @@ index.json
     ...?
 </pre><a href="#section-6.2-2" class="pilcrow">¶</a>
 </div>
-<p id="section-6.2-3">TODO: I18n? Special-use?<a href="#section-6.2-3" class="pilcrow">¶</a></p>
-<p id="section-6.2-4">Folder names are defined in RFC9051 (IMAP v4 rev2) with great freedom for servers.  Servers may or may not treat mailbox names as case sensitive.  Folder names may even include non-graphic characters, "%" and "*". Hierarchy separators may even differ among IMAP servers although "/" is probably most common.<a href="#section-6.2-4" class="pilcrow">¶</a></p>
-<p id="section-6.2-5">Since this specification is new, it is possible to be more constrained.  This specification only supports "/" as a folder separator.<a href="#section-6.2-5" class="pilcrow">¶</a></p>
+<div id="file-and-folder-names">
+<section id="section-6.2.1">
+          <h4 id="name-file-and-folder-names">
+<a href="#section-6.2.1" class="section-number selfRef">6.2.1. </a><a href="#name-file-and-folder-names" class="section-name selfRef">File and folder names</a>
+          </h4>
+<p id="section-6.2.1-1">Because filenames can be generated by the exporting server, it is always possible to generate non-colliding filenames.  Display names are NOT intended to be determined by file names, but instead by fields within each file.  Similarly, filenames are NOT intended to be globally unique IDs.<a href="#section-6.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-2">Mail folder names are defined in <span>[<a href="#RFC9051" class="cite xref">RFC9051</a>]</span> (IMAP v4 rev2) with great freedom for servers.  Servers may or may not treat mailbox names as case sensitive.  Folder names may even include non-graphic characters, "%" and "*". Hierarchy separators may even differ among IMAP servers although "/" is probably most common.<a href="#section-6.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-6.2.1-3">Since this specification is new, it is possible to be more constrained.  This specification only supports "/" as a folder separator.<a href="#section-6.2.1-3" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="data-formats">
@@ -2165,7 +2196,7 @@ explains how to use the fields and structures of those specifications within a P
 </li>
               <li class="normal" id="section-6.3.2.1-2.3">
                 <p id="section-6.3.2.1-2.3.1">The <code>rev</code> property defined in <span>[<a href="#vCard" class="cite xref">vCard</a>]</span>, which is not included in <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span>,
-may already be available in implementations.  It may also be included as a field on a contact,
+may already be available in implementations.  It <span class="bcp14">MAY</span> also be included as a field on a contact,
 in which case it is a simple value field holding a timestamp.<a href="#section-6.3.2.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-6.3.2.1-2.4">
@@ -2175,11 +2206,9 @@ but JMAP for Contacts uses "ContactCard" and registers that in https://www.iana.
 </li>
             </ul>
 <p id="section-6.3.2.1-3">We make some specific requirements on the <code>updated</code> value so that it can be
-useful for synchronization.  See the section on <code>updated</code> and <code>uid</code> specifically [TODO:
-cross-reference other section].<a href="#section-6.3.2.1-3" class="pilcrow">¶</a></p>
+useful for synchronization.  See the section on <code>updated</code> and <code>uid</code> specifically <a href="#uid-updated" class="auto internal xref">Section 6.4.1</a>.<a href="#section-6.3.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-6.3.2.1-4">When the structured data is prepared, a contact can be exported in a file with an arbitrary name
-using a limited set of characters suitable for interoperability across filesystems. [TODO: we
-need to define that elsewhere].<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
+using a limited set of characters suitable for interoperability across filesystems.<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.3.2.1-5">For example, a file called 'contact1.json' could contain:<a href="#section-6.3.2.1-5" class="pilcrow">¶</a></p>
 <span id="name-a-contactjson-example"></span><div id="example3">
 <figure id="figure-3">
@@ -2400,7 +2429,7 @@ this specification does not include any requirements for ETags.<a href="#section
 <ul class="normal">
 <li class="normal" id="section-6.3.4-5.1">
               <p id="section-6.3.4-5.1.1">The globally unique <code>uid</code> property is mandatory in JSCalendar and <span class="bcp14">MUST</span> be included.
-See JMAP Calendars [ref todo] section 1.4.1 for when the <code>uid</code> property can appear the same for
+See JMAP Calendars draft-ietf-jmap-calendars-26 section 1.4.1 for when the <code>uid</code> property can appear the same for
 multiple recurrences of the same underlying event.<a href="#section-6.3.4-5.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.3.4-5.2">
@@ -2465,7 +2494,7 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           <h4 id="name-calendar-collection-items">
 <a href="#section-6.3.5" class="section-number selfRef">6.3.5. </a><a href="#name-calendar-collection-items" class="section-name selfRef">Calendar Collection Items</a>
           </h4>
-<p id="section-6.3.5-1">Calendar collection items are built using JMAP for Calendars [REF TODO - still I-D].<a href="#section-6.3.5-1" class="pilcrow">¶</a></p>
+<p id="section-6.3.5-1">Calendar collection items are built using JMAP for Calendars (draft-ietf-jmap-calendars-26).<a href="#section-6.3.5-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.5-2">If a system exports events belonging to calendars, it <span class="bcp14">SHOULD</span> also export the referenced Calendar objects.<a href="#section-6.3.5-2" class="pilcrow">¶</a></p>
 <p id="section-6.3.5-3">A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \calendars\calendar2) would contain the calendar's metadata:<a href="#section-6.3.5-3" class="pilcrow">¶</a></p>
 <span id="name-calendar-example"></span><div id="calendar1">
@@ -2573,7 +2602,7 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 <p id="section-6.4-1">This section describes the requirements to achieve repeated one-way synchronization via export/import operations between software by different vendors. While limited, this still provides better functionality than what many end-users experience with their groupware software and services today.<a href="#section-6.4-1" class="pilcrow">¶</a></p>
 <p id="section-6.4-2">Supporting <em>repeated</em> synchronization means that the export from system A and import to system B can happen over and over again without needlessly duplicating items.  Supporting <em>one-way</em> synchronization means that changes in the system with the exporter role propagate reliably to the system with the importer role, but not in the reverse direction.   Some of the constraints here arise from the fact that the two systems may not directly connect, and the import may be time-delayed from the export.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">This limited solution for export/import sync may also be used for more direct system-to-system transfers such as service-to-service data transfers, repeated data access requests or data migrations, although some of those use cases could be solved much better with direct negotiation of features.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
-<div id="always-include-uid-and-updated">
+<div id="uid-updated">
 <section id="section-6.4.1">
           <h4 id="name-always-include-uid-and-upda">
 <a href="#section-6.4.1" class="section-number selfRef">6.4.1. </a><a href="#name-always-include-uid-and-upda" class="section-name selfRef">Always include 'uid' and 'updated'</a>
@@ -2842,6 +2871,10 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9051">[RFC9051]</dt>
+        <dd>
+<span class="refAuthor">Melnikov, A., Ed.</span> and <span class="refAuthor">B. Leiba, Ed.</span>, <span class="refTitle">"Internet Message Access Protocol (IMAP) - Version 4rev2"</span>, <span class="seriesInfo">RFC 9051</span>, <span class="seriesInfo">DOI 10.17487/RFC9051</span>, <time datetime="2021-08" class="refDate">August 2021</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9051">https://www.rfc-editor.org/rfc/rfc9051</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9610">[RFC9610]</dt>
       <dd>
