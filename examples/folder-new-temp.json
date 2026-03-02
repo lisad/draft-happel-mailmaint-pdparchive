@@ -1,0 +1,30 @@
+{
+  "name": "AVClub",
+  "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
+  "last_uid": 16,
+  "highest_modseq": 6371729,
+  "recent_uid": 15,
+  "uidvalidity": 1107190787,
+  "is_subscribed": true,
+  "special_use": "sent",
+  "sort_order": 1,
+  "myrights": "rwiptsldaex",
+
+  "items": [
+    {
+      "uid": "1",
+      "filename": "msg-1.eml",
+      "flags": ["$seen"]
+    }
+    {
+      "uid": "3", 
+      "filename": "msg-3.eml",
+      "flags": ["$seen", "$flagged"]
+    }
+    {
+      "uid": "15",
+      "filename": "imported-ABC.eml",
+      "flags": ["$answered", "$forwarded"]
+    }
+  ]
+}

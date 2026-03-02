@@ -1,0 +1,20 @@
+{
+  "name": "AVClub Tasks",
+  "sort_order": 2,
+  "myrights": "rwiptsldaex",
+
+  "items": [
+    {
+      "uid": "56cb57e3-dfa9-40b5-9011-fe658909d138",
+      "filename": "elect a new chair.json"
+    }
+    {
+      "uid": "65047c09-f236-485b-a011-5f68580c0d4d", 
+      "filename": "send Jan newsletter.json"
+    }
+    {
+      "uid": "bd57adf2-3862-4256-ac2e-aafaf2ce8d71",
+      "filename": "add Mary to project folders.json"
+    }
+  ]
+}

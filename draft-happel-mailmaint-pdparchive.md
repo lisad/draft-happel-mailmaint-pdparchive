@@ -57,6 +57,8 @@ normative:
 
   RFC9610:
 
+  RFC9051:
+
 informative:
 
   RFC822:
@@ -115,11 +117,11 @@ This document proposes the Personal Data Portability Archive format (PDPA), suit
 
 As part of communication protocols, the IETF has standardized a number of data formats such as the Internet Message Format {{RFC5322}},  {{vCard}},  {{iCalendar}}, or, more recently, {{JSContact}} and {{JSCalendar}}.
 
-While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands for an open standard archive format which can deal with different types of personal data in a homogeneous fashion.
+While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands an open standard archive format which can deal with different types of personal data in a homogeneous fashion.
 
 To this end, this document proposes the Personal Data Portability Archive format (PDPA), suitable for import/export, backup/restore, and data transfer scenarios for personal data. It is compatible with both IMAP and JMAP and should be suitable as an interchange format between related software and services such as for email, contacts, calendaring, tasks, or files.
 
-The approach is to define JSON formats (using CDDL), folder structure, and a common compression format.  Additional specifications will likely define a protocol how these files can be requested from, imported into, or transferred between servers.
+The approach is to define JSON formats, folder structure, and a common compression format.  Additional specifications will likely define a protocol how these files can be requested from, imported into, or transferred between servers, but this specification can be used as-is with user-directed imports or exports.
 
 # Conventions and Definitions
 
@@ -141,6 +143,10 @@ JSON is used as a widely interoperable base format that systems can easily trans
 
 ## Use cases
 
+Many of these use cases benefit greatly from a simple, read-only export format,
+compared to having IMAP and CalDAV access to personal data.   While these use cases may suggest interesting niche features, adding those may be left to future specs. For example, legal and forensics use cases might benefit from signing features, but nevertheless this specification would advance those use cases even without signing features.
+
+
 ### Data portability
 
 A main use case for the novel format is to allow exporting the full user data managed by services or software products into a simple file (or set of files) which is under full control of the user.
@@ -149,18 +155,25 @@ The user might use such export for backup, archiving, or for importing when swit
 
 Depending on the type of data, exporting/importing can be a time-consuming process. Particularly for the case of switching services, PDPA should allow to minimize the time period during which a user cannot use the origin system but also the destination system is not yet ready.
 
-### Incremental backup
+### Read-only data access
 
-Beyond snapshot backups/exports, the format should optionally allow for incremental backups.
+General access to data powers all kinds of analysis and applications.  Exporting content and metadata in a structure suitable for ease of use in data pipelines or analysis tools would make these much easier.
 
-There are at least two scenarios for this:
 
-* Software which wants to keep a permanent, incremental mirror of user data (e.g., for instant export or restore)
-* Users regularly exporting changes in data managed by services or software products
+### Incremental data access
+
+Beyond snapshot backups/exports, the format should optionally allow for incremental data
+access - knowing what new data has been added.
+
+* Automated maintenance of a permanent, incremental mirror of user data, e.g. for instant restore
+* Compliance or audit logs
+* Spam tracking and analysis
+* CRM or productivity integration scenarios that are read-only
+
 
 ### Synchronization
 
-Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services getting a copy of their data  (at the request of the user).  Simple synchronization features could make this much better.
+Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services getting access to their data  (at the request of the user).  Simple synchronization features could make this much better.
 
 For example, current online systems that allow importing contacts are not often suited to maintaining one's address book on two systems. Re-importing a contact into a system that already has that contact often results in duplicating the exact same contact, whether or not there have been edits, making repeated synchronization practically infeasible. It should be easy to do a significantly better job of this with some attention to object IDs and modification timestamps.
 
@@ -176,7 +189,6 @@ Potential applications of this are:
 * Legal discovery and forensics use cases may benefit from a standard export format, such that investigators can expect a great deal of consistency when collecting data from different systems.
 * Researchers may be able to collect archive files through data donations and use as input to research.
 
-While these use cases may suggest small features that would help these use cases be successful, supporting more advanced features required by these use cases is not a priority. For example, we do not attempt to cryptographically solve provenance for use in legal and forensics use cases.
 
 ### Data persistence
 
@@ -236,7 +248,7 @@ This specification follows that pattern in order to build on these partial succe
 
 JSON is used in this spec for new metadata and for objects including contacts, tasks,  events and notes.  However, the Email Message Format {{RFC5322}} is used for email message content. Individual items are stored in individual files, which are referenced in collection metadata. Finally these JSON and other file formats are packaged and compressed together in a standard but flexible way.
 
-Our rationale for using JSON as much as it is reasonable:
+Our rationale for using JSON to the extent reasonable:
 
 * We envision an export format being used not just by developers of full IMAP servers but also by developers building task management systems, calendar systems that don't include email, etc.
 * We should minimize requiring multiple libraries to parse different formats. If the Metadata is going to be in JSON, it would really help to have the item data in JSON.
@@ -402,9 +414,12 @@ index.json
 ~~~
 
 
-TODO: I18n? Special-use?
 
-Folder names are defined in RFC9051 (IMAP v4 rev2) with great freedom for servers.  Servers may or may not treat mailbox names as case sensitive.  Folder names may even include non-graphic characters, "%" and "\*". Hierarchy separators may even differ among IMAP servers although "/" is probably most common.
+### File and folder names
+
+Because filenames can be generated by the exporting server, it is always possible to generate non-colliding filenames.  Display names are NOT intended to be determined by file names, but instead by fields within each file.  Similarly, filenames are NOT intended to be globally unique IDs.
+
+Mail folder names are defined in {{RFC9051}} (IMAP v4 rev2) with great freedom for servers.  Servers may or may not treat mailbox names as case sensitive.  Folder names may even include non-graphic characters, "%" and "\*". Hierarchy separators may even differ among IMAP servers although "/" is probably most common.
 
 Since this specification is new, it is possible to be more constrained.  This specification only supports "/" as a folder separator.
 
@@ -542,7 +557,7 @@ Individual contact items build on {{JSContact}} which builds on {{vCard}}.
 * The globally unique `uid` property is mandatory in JSContact and MUST be included in PDP archive.
 * The `updated` property is optional in JSContact but MUST be included in PDP archive.
 * The `rev` property defined in {{vCard}}, which is not included in {{JSContact}},
-may already be available in implementations.  It may also be included as a field on a contact,
+may already be available in implementations.  It MAY also be included as a field on a contact,
 in which case it is a simple value field holding a timestamp.
 
 * The `@type` property should be "ContactCard".  Note that {{JSContact}} uses a value
@@ -551,12 +566,10 @@ but JMAP for Contacts uses "ContactCard" and registers that in https://www.iana.
 
 
 We make some specific requirements on the `updated` value so that it can be
-useful for synchronization.  See the section on `updated` and `uid` specifically [TODO:
-cross-reference other section].
+useful for synchronization.  See the section on `updated` and `uid` specifically {{uid-updated}}.
 
 When the structured data is prepared, a contact can be exported in a file with an arbitrary name
-using a limited set of characters suitable for interoperability across filesystems. [TODO: we
-need to define that elsewhere].
+using a limited set of characters suitable for interoperability across filesystems.
 
 For example, a file called 'contact1.json' could contain:
 
@@ -676,7 +689,7 @@ this specification does not include any requirements for ETags.
 Notes on specific fields:
 
 * The globally unique `uid` property is mandatory in JSCalendar and MUST be included.
-See JMAP Calendars [ref todo] section 1.4.1 for when the `uid` property can appear the same for
+See JMAP Calendars draft-ietf-jmap-calendars-26 section 1.4.1 for when the `uid` property can appear the same for
 multiple recurrences of the same underlying event.
 * The `updated` property is mandatory in JSCalendar and MUST be included.
 * The `sequence` value is optional in JSCalendar but SHOULD be included if available.
@@ -700,7 +713,7 @@ The event object includes a calendarIds property, which links it to the calendar
 
 ### Calendar Collection Items
 
-Calendar collection items are built using JMAP for Calendars [REF TODO - still I-D].
+Calendar collection items are built using JMAP for Calendars (draft-ietf-jmap-calendars-26).
 
 If a system exports events belonging to calendars, it SHOULD also export the referenced Calendar objects.
 
@@ -759,7 +772,7 @@ Supporting _repeated_ synchronization means that the export from system A and im
 
 This limited solution for export/import sync may also be used for more direct system-to-system transfers such as service-to-service data transfers, repeated data access requests or data migrations, although some of those use cases could be solved much better with direct negotiation of features.
 
-### Always include 'uid' and 'updated'
+### Always include 'uid' and 'updated' {#uid-updated}
 
 These requirements apply to {{JSContact}}, JSTask and {{JSCalendar}} objects when exported or imported using the formats in this specification, because these all have 'uid' and 'updated' values.
 
