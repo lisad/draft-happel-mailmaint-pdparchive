@@ -1,0 +1,71 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archve",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Archive Metadata",
+  "type": "object",
+  "required": ["archive", "dataset", "datasource"],
+  "archive": {
+    "type": "object",
+    "required": ["id", "name", "timestamp", "version", "generator"],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "generator": {
+        "type": "string",
+      },
+      "legal": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "note": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "version": {
+        "type": "string",
+      },
+    },
+  },
+  "dataset": {
+    "type": "object",
+    "required": ["extent", "languagetag", "timezone"],
+    "properties": {
+      "datatypes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "extent": {
+        "type": "string"
+      },
+      "languagetag": {
+        "type": "string"
+      },
+      "selector": {
+        "type": "string"
+      },
+      "timezone": {
+        "type": "string"
+      }
+
+    }
+  },
+  "datasource": {
+    "type": "object",
+    "properties": {
+      "account": {
+        "type": "string"
+      },
+      "service": {
+        "type": "string"
+      }
+    }
+  }
+}
