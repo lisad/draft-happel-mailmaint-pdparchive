@@ -17,7 +17,6 @@
 /node_modules/
 /versioned/
 Gemfile.lock
-archive.json
 draft-happel-mailmaint-pdparchive.xml
 package-lock.json
 report.xml
