@@ -11,28 +11,28 @@
 <meta content="
        This document proposes the Personal Data Portability Archive format (PDPA), suitable for import/export, backup/restore, and data transfer scenarios for personal data. 
     " name="description">
-<meta content="xml2rfc 3.31.0" name="generator">
+<meta content="xml2rfc 3.32.0" name="generator">
 <meta content="email" name="keyword">
 <meta content="calendaring" name="keyword">
 <meta content="archive" name="keyword">
 <meta content="personal" name="keyword">
 <meta content="portability" name="keyword">
-<meta content="draft-happel-mailmaint-pdparchive-latest" name="ietf.draft">
+<meta content="draft-ietf-mailmaint-pdparchive-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.31.0
+  xml2rfc 3.32.0
     Python 3.12.12
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
     lxml 6.0.2
-    platformdirs 4.5.1
+    platformdirs 4.9.4
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.3.0
+    wcwidth 0.6.0
 -->
-<link href="draft-happel-mailmaint-pdparchive.xml" rel="alternate" type="application/rfc+xml">
+<link href="draft-ietf-mailmaint-pdparchive.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
 <style type="text/css">@font-face {
   font-family: 'Lora';
@@ -1055,7 +1055,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dusseault, et al.</td>
-<td class="center">Expires 3 September 2026</td>
+<td class="center">Expires 22 September 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,15 +1065,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dt class="label-workgroup">Workgroup:</dt>
 <dd class="workgroup">mailmaint</dd>
 <dt class="label-internet-draft">Internet-Draft:</dt>
-<dd class="internet-draft">draft-happel-mailmaint-pdparchive-latest</dd>
+<dd class="internet-draft">draft-ietf-mailmaint-pdparchive-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-03-02" class="published">2 March 2026</time>
+<time datetime="2026-03-21" class="published">21 March 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-09-03">3 September 2026</time></dd>
+<dd class="expires"><time datetime="2026-09-22">22 September 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1102,8 +1102,8 @@ svg :is([fill="white"], [fill^="#fff"]) {
       </h2>
 <p id="section-note.1-1">This note is to be removed before publishing as an RFC.<a href="#section-note.1-1" class="pilcrow">¶</a></p>
 <p id="section-note.1-2">
-        The latest revision of this draft can be found at <span><a href="https://lisad.github.io/draft-happel-mailmaint-pdparchive/draft-happel-mailmaint-pdparchive.html">https://lisad.github.io/draft-happel-mailmaint-pdparchive/draft-happel-mailmaint-pdparchive.html</a></span>.
-        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/">https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
+        The latest revision of this draft can be found at <span><a href="https://lisad.github.io/draft-happel-mailmaint-pdparchive/draft-ietf-mailmaint-pdparchive.html">https://lisad.github.io/draft-happel-mailmaint-pdparchive/draft-ietf-mailmaint-pdparchive.html</a></span>.
+        Status information for this document may be found at <span><a href="https://datatracker.ietf.org/doc/draft-ietf-mailmaint-pdparchive/">https://datatracker.ietf.org/doc/draft-ietf-mailmaint-pdparchive/</a></span>.<a href="#section-note.1-2" class="pilcrow">¶</a></p>
 <p id="section-note.1-3">
         Discussion of this document takes place on the
         mailmaint Working Group mailing list (<span><a href="mailto:mailmaint@ietf.org">mailto:mailmaint@ietf.org</a></span>),
@@ -1131,7 +1131,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 3 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 22 September 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1241,18 +1241,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.6.1"><a href="#section-6" class="auto internal xref">6</a>.  <a href="#name-file-format" class="internal xref">File format</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1">
-                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-index-files" class="internal xref">Index file(s)</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.1">
-                    <p id="section-toc.1-1.6.2.1.2.1.1"><a href="#section-6.1.1" class="auto internal xref">6.1.1</a>.  <a href="#name-archive-section" class="internal xref">Archive section</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.2">
-                    <p id="section-toc.1-1.6.2.1.2.2.1"><a href="#section-6.1.2" class="auto internal xref">6.1.2</a>.  <a href="#name-dataset-section" class="internal xref">Dataset section</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.1.2.3">
-                    <p id="section-toc.1-1.6.2.1.2.3.1"><a href="#section-6.1.3" class="auto internal xref">6.1.3</a>.  <a href="#name-datasource-section" class="internal xref">Datasource section</a></p>
-</li>
-                </ul>
+                <p id="section-toc.1-1.6.2.1.1"><a href="#section-6.1" class="auto internal xref">6.1</a>.  <a href="#name-archive-metadata-file" class="internal xref">Archive metadata file</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2">
                 <p id="section-toc.1-1.6.2.2.1"><a href="#section-6.2" class="auto internal xref">6.2</a>.  <a href="#name-folder-structure" class="internal xref">Folder structure</a></p>
@@ -1671,7 +1660,7 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
 <p id="section-6-2">PDPA in general consists of:<a href="#section-6-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6-3.1">
-          <p id="section-6-3.1.1">A main metadata file ("index.json")<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-6-3.1.1">A main metadata file ("archive.json")<a href="#section-6-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-6-3.2">
           <p id="section-6-3.2.1">Top-level folders for each data type ("/mail")<a href="#section-6-3.2.1" class="pilcrow">¶</a></p>
@@ -1680,12 +1669,12 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
           <p id="section-6-3.3.1">Subfolders representing actual collections of individual data items plus additional metadata files<a href="#section-6-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<div id="index-files">
+<div id="archive-metadata-file">
 <section id="section-6.1">
-        <h3 id="name-index-files">
-<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-index-files" class="section-name selfRef">Index file(s)</a>
+        <h3 id="name-archive-metadata-file">
+<a href="#section-6.1" class="section-number selfRef">6.1. </a><a href="#name-archive-metadata-file" class="section-name selfRef">Archive metadata file</a>
         </h3>
-<p id="section-6.1-1">The index.json file consists of three main sections:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.1-1">The archive.json file consists of three main sections with metadata about the archive as exported, the dataset used, and the source of the data.<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-2.1">
             <p id="section-6.1-2.1.1">archive: general information about the archive<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
@@ -1697,133 +1686,187 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
             <p id="section-6.1-2.3.1">datasource: meta-information about the dataset<a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-6.1-3">The following sections propose some initial properties which are still subject to discussion.<a href="#section-6.1-3" class="pilcrow">¶</a></p>
-<div id="archive-section">
-<section id="section-6.1.1">
-          <h4 id="name-archive-section">
-<a href="#section-6.1.1" class="section-number selfRef">6.1.1. </a><a href="#name-archive-section" class="section-name selfRef">Archive section</a>
-          </h4>
 <table class="center" id="table-1">
-            <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
 <thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Key</th>
-                <th class="text-left" rowspan="1" colspan="1">Description</th>
-                <th class="text-left" rowspan="1" colspan="1">Example value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">id</td>
-                <td class="text-left" rowspan="1" colspan="1">Archive identifier</td>
-                <td class="text-left" rowspan="1" colspan="1">123</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">name</td>
-                <td class="text-left" rowspan="1" colspan="1">Human readble label</td>
-                <td class="text-left" rowspan="1" colspan="1">Jane's data export (2025-10-19)</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">note</td>
-                <td class="text-left" rowspan="1" colspan="1">Note</td>
-                <td class="text-left" rowspan="1" colspan="1">Personal account export</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">legal</td>
-                <td class="text-left" rowspan="1" colspan="1">Legal desclaimer</td>
-                <td class="text-left" rowspan="1" colspan="1">Private data</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">timestamp</td>
-                <td class="text-left" rowspan="1" colspan="1">Archive timestamp</td>
-                <td class="text-left" rowspan="1" colspan="1">2025-10-19-18-00</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">version</td>
-                <td class="text-left" rowspan="1" colspan="1">PDPA spec version</td>
-                <td class="text-left" rowspan="1" colspan="1">PDPA v1.0</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">generator</td>
-                <td class="text-left" rowspan="1" colspan="1">Archive generator</td>
-                <td class="text-left" rowspan="1" colspan="1">PDPA exporter v0.9</td>
-              </tr>
-            </tbody>
-          </table>
-</section>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Key</th>
+              <th class="text-left" rowspan="1" colspan="1">Description and requirements</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/id</td>
+              <td class="text-left" rowspan="1" colspan="1">Archive identifier, generated by archive generator, <span class="bcp14">MUST</span> be unique</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/name</td>
+              <td class="text-left" rowspan="1" colspan="1">Human readable label</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/note</td>
+              <td class="text-left" rowspan="1" colspan="1">Note for human use and display (optional)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/legal</td>
+              <td class="text-left" rowspan="1" colspan="1">Legal desclaimer (optional)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/timestamp</td>
+              <td class="text-left" rowspan="1" colspan="1">Archive timestamp</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/version</td>
+              <td class="text-left" rowspan="1" colspan="1">PDPA spec version</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">archive/generator</td>
+              <td class="text-left" rowspan="1" colspan="1">Archive generator</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dataset/extent</td>
+              <td class="text-left" rowspan="1" colspan="1">Extent of the archive (full, partial)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dataset/selector</td>
+              <td class="text-left" rowspan="1" colspan="1">Select critia for partial datasets (date, folder, size, custom) (optional)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dataset/datatypes</td>
+              <td class="text-left" rowspan="1" colspan="1">List of data types</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dataset/languagetag</td>
+              <td class="text-left" rowspan="1" colspan="1">BCP 47 language tag for the dominant language in the dataset</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">dataset/timezone</td>
+              <td class="text-left" rowspan="1" colspan="1">IANA tz identifier for the dataset</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">datasource/service</td>
+              <td class="text-left" rowspan="1" colspan="1">Information about the source service (id, url, ..)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">datasource/account</td>
+              <td class="text-left" rowspan="1" colspan="1">Information about the source account (id, type, ...)</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="section-6.1-4">TODO: Is selector intended to be human readable or machine parsable?<a href="#section-6.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.1-5">More formally:<a href="#section-6.1-5" class="pilcrow">¶</a></p>
+<span id="name-general-json-schema-for-arc"></span><div id="archive-schema">
+<figure id="figure-1">
+          <div class="alignLeft art-text artwork" id="section-6.1-6.1">
+<pre>
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archve",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Archive Metadata",
+  "type": "object",
+  "required": ["archive", "dataset", "datasource"],
+  "archive": {
+    "type": "object",
+    "required": ["id", "name", "timestamp", "version", "generator"],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "generator": {
+        "type": "string",
+      },
+      "legal": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "note": {
+        "type": "string"
+      },
+      "timestamp": {
+        "type": "string",
+        "format": "date-time"
+      },
+      "version": {
+        "type": "string",
+      },
+    },
+  },
+  "dataset": {
+    "type": "object",
+    "required": ["extent", "languagetag", "timezone"],
+    "properties": {
+      "datatypes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "extent": {
+        "type": "string"
+      },
+      "languagetag": {
+        "type": "string"
+      },
+      "selector": {
+        "type": "string"
+      },
+      "timezone": {
+        "type": "string"
+      }
+
+    }
+  },
+  "datasource": {
+    "type": "object",
+    "properties": {
+      "account": {
+        "type": "string"
+      },
+      "service": {
+        "type": "string"
+      }
+    }
+  }
+}
+</pre>
 </div>
-<div id="dataset-section">
-<section id="section-6.1.2">
-          <h4 id="name-dataset-section">
-<a href="#section-6.1.2" class="section-number selfRef">6.1.2. </a><a href="#name-dataset-section" class="section-name selfRef">Dataset section</a>
-          </h4>
-<table class="center" id="table-2">
-            <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Key</th>
-                <th class="text-left" rowspan="1" colspan="1">Description</th>
-                <th class="text-left" rowspan="1" colspan="1">Example value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">extent</td>
-                <td class="text-left" rowspan="1" colspan="1">Extent of the archive (full, partial)</td>
-                <td class="text-left" rowspan="1" colspan="1">FULL</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">selector</td>
-                <td class="text-left" rowspan="1" colspan="1">Select critia for partial datasets (date, folder, size, custom)</td>
-                <td class="text-left" rowspan="1" colspan="1">NONE</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">datatypes</td>
-                <td class="text-left" rowspan="1" colspan="1">List of data types</td>
-                <td class="text-left" rowspan="1" colspan="1">MAIL</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">langaguetag</td>
-                <td class="text-left" rowspan="1" colspan="1">BCP 47 language tag for the dominant language in the dataset</td>
-                <td class="text-left" rowspan="1" colspan="1">en-ca</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">timezone</td>
-                <td class="text-left" rowspan="1" colspan="1">IANA tz identifier for the dataset</td>
-                <td class="text-left" rowspan="1" colspan="1">"America/Montreal"</td>
-              </tr>
-            </tbody>
-          </table>
-</section>
+<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<a href="#name-general-json-schema-for-arc" class="selfRef">General JSON Schema for archive.json</a>
+          </figcaption></figure>
 </div>
-<div id="datasource-section">
-<section id="section-6.1.3">
-          <h4 id="name-datasource-section">
-<a href="#section-6.1.3" class="section-number selfRef">6.1.3. </a><a href="#name-datasource-section" class="section-name selfRef">Datasource section</a>
-          </h4>
-<table class="center" id="table-3">
-            <caption><a href="#table-3" class="selfRef">Table 3</a></caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">Key</th>
-                <th class="text-left" rowspan="1" colspan="1">Description</th>
-                <th class="text-left" rowspan="1" colspan="1">Example value</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">service</td>
-                <td class="text-left" rowspan="1" colspan="1">Information about the source service (id, url, ..)</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">account</td>
-                <td class="text-left" rowspan="1" colspan="1">Information about the source account (id, type, ...)</td>
-                <td class="text-left" rowspan="1" colspan="1">TBD</td>
-              </tr>
-            </tbody>
-          </table>
-</section>
+<p id="section-6.1-7">Example of archive.json (full export):<a href="#section-6.1-7" class="pilcrow">¶</a></p>
+<span id="name-a-basic-archivejson-example"></span><div id="archive-example">
+<figure id="figure-2">
+          <div class="alignLeft art-text artwork" id="section-6.1-8.1">
+<pre>
+{
+  "archive": {
+
+    "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
+    "archive_id": "123",
+    "name": "Jane's data export (2025-10-19)",
+    "note": "Personal account export",
+    "timestamp": "2025-10-18T23:20:59Z",
+    "version": "PDPA v1.0",
+    "generator": "PDPA exporter v0.9"
+  },
+  "dataset": {
+    "extent": "FULL",
+    "datatypes": ["MAIL"],
+    "languagetag": "en_ca",
+    "timezone": "America/Montreal"
+  },
+  "datasource": {
+    "account": "marieclaire"
+  }
+}
+</pre>
+</div>
+<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<a href="#name-a-basic-archivejson-example" class="selfRef">A basic archive.json example</a>
+          </figcaption></figure>
 </div>
 </section>
 </div>
@@ -1832,20 +1875,24 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
         <h3 id="name-folder-structure">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-folder-structure" class="section-name selfRef">Folder structure</a>
         </h3>
+<p id="section-6.2-1">Rather than have deeply nested JSON with folder information inside folder
+information inside archive index JSON files, this approach uses file system
+directory structure with separate files for archive metadata and folder
+metadata as well as item data.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-6.2-1.1">
-            <p id="section-6.2-1.1.1">Folders can be nested.  Any kind of content here can be within nested folders -- this is a necessary feature for email, but extends to content like contacts that aren't always represented in nested folders.   (TODO: elsewhere, describe the requirements for an importing system to preserve folders or not.)<a href="#section-6.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-6.2-2.1">
+            <p id="section-6.2-2.1.1">Folders can be nested.  Any kind of content here can be within nested folders -- this is a necessary feature for email, but extends to content like contacts that aren't always represented in nested folders.   (TODO: elsewhere, describe the requirements for an importing system to preserve folders or not.)<a href="#section-6.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.2-1.2">
-            <p id="section-6.2-1.2.1">Names of files do not have to be globally unique.   Indexes and folder contents listings can name files relatively to their location in the archive structure, which means that references may not be resolvable if that context is lost.<a href="#section-6.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.2-2.2">
+            <p id="section-6.2-2.2.1">Names of files do not have to be globally unique.   Indexes and folder contents listings can name files relatively to their location in the archive structure, which means that references may not be resolvable if that context is lost.<a href="#section-6.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-6.2-1.3">
-            <p id="section-6.2-1.3.1">Individual content items are individual files.  This may not always be the easiest choice for exporters who must generate a large number of files for individually small items (contrast to a JSON stream including all objects) but as an archive format, the individual files allow more clarity in individual handling, transactions and errors.<a href="#section-6.2-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="section-6.2-2.3">
+            <p id="section-6.2-2.3.1">Individual content items are individual files.  This may not always be the easiest choice for exporters who must generate a large number of files for individually small items (contrast to a JSON stream including all objects) but as an archive format, the individual files allow more clarity in individual handling, transactions and errors.<a href="#section-6.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<div class="alignLeft art-text artwork" id="section-6.2-2">
+<div class="alignLeft art-text artwork" id="section-6.2-3">
 <pre>
-index.json
+archive.json
 /mail/
     /Archive/
         folder.json
@@ -1887,7 +1934,7 @@ index.json
 /sieve/
 /blob/
     ...?
-</pre><a href="#section-6.2-2" class="pilcrow">¶</a>
+</pre><a href="#section-6.2-3" class="pilcrow">¶</a>
 </div>
 <div id="file-and-folder-names">
 <section id="section-6.2.1">
@@ -1916,9 +1963,10 @@ example, the folder INBOX would be represented as "mail/INBOX", and the
 folder "Archive/2024/2024-12" would be represented
 as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.<a href="#section-6.3.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.1-2">TODO: how to signal removal of a folder in an incremental archive? Need to add some kind of tombstone mechanism.<a href="#section-6.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-6.3.1-3">Each folder metatadata is described by "folder.json", which has the following format:<a href="#section-6.3.1-3" class="pilcrow">¶</a></p>
-<table class="center" id="table-4">
-            <caption><a href="#table-4" class="selfRef">Table 4</a></caption>
+<p id="section-6.3.1-3">Each folder metatadata is described by "folder.json" (this name is <span class="bcp14">REQUIRED</span>),
+which has the following fields:<a href="#section-6.3.1-3" class="pilcrow">¶</a></p>
+<table class="center" id="table-2">
+            <caption><a href="#table-2" class="selfRef">Table 2</a></caption>
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Attribute Name</th>
@@ -1933,6 +1981,14 @@ as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.<a href="#sect
                 <td class="text-center" rowspan="1" colspan="1">array of strings (IMAP keywords)</td>
                 <td class="text-left" rowspan="1" colspan="1">No</td>
                 <td class="text-left" rowspan="1" colspan="1">PERMANENTFLAGS minus "\*" <span>[<a href="#IMAP4" class="cite xref">IMAP4</a>]</span>
+</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">uid</td>
+                <td class="text-center" rowspan="1" colspan="1">string</td>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <span class="bcp14">SHOULD</span>*</td>
+                <td class="text-left" rowspan="1" colspan="1">Use OBJECTID from <span>[<a href="#RFC8474" class="cite xref">RFC8474</a>]</span>
 </td>
               </tr>
               <tr>
@@ -1990,23 +2046,10 @@ as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.<a href="#sect
                 <td class="text-left" rowspan="1" colspan="1">See Section 2, <span>[<a href="#JMAP" class="cite xref">JMAP</a>]</span>]</td>
               </tr>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">uids</td>
-                <td class="text-center" rowspan="1" colspan="1">map from UIDs to strings (relative filenames of messages)</td>
+                <td class="text-left" rowspan="1" colspan="1">items</td>
+                <td class="text-center" rowspan="1" colspan="1">array of content item names and flags</td>
                 <td class="text-left" rowspan="1" colspan="1">Yes</td>
                 <td class="text-left" rowspan="1" colspan="1">Mapping from UIDs to corresponding message files included in the archive</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">flags</td>
-                <td class="text-center" rowspan="1" colspan="1">map from UIDs to array of strings</td>
-                <td class="text-left" rowspan="1" colspan="1">Yes</td>
-                <td class="text-left" rowspan="1" colspan="1">IMAP flags assigned to the message, excluding \Recent</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">modseqs</td>
-                <td class="text-center" rowspan="1" colspan="1">map from UIDs to unsigned 64 bit integers (modsequences)</td>
-                <td class="text-left" rowspan="1" colspan="1">No</td>
-                <td class="text-left" rowspan="1" colspan="1">Per message MODSEQ values <span>[<a href="#RFC7162" class="cite xref">RFC7162</a>]</span>
-</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">original_name</td>
@@ -2028,144 +2071,268 @@ as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.<a href="#sect
               </tr>
             </tbody>
           </table>
-<p id="section-6.3.1-5">CDDL description of "folder.json" is included below:<a href="#section-6.3.1-5" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-6.3.1-6">
+<p id="section-6.3.1-5">* The uid for a folder <span class="bcp14">SHOULD</span> be present.  For IMAP folders, this <span class="bcp14">SHOULD</span> be the OBJECTID defined by <span>[<a href="#RFC8474" class="cite xref">RFC8474</a>]</span>.<a href="#section-6.3.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.3.1-6">The folder.json format can be defined generally as follows.  Note that this
+covers folders containing tasks, notes, contacts or emails, so the fields that
+are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="pilcrow">¶</a></p>
+<span id="name-general-json-schema-for-fol"></span><div id="schema1">
+<figure id="figure-3">
+            <div class="alignLeft art-text artwork" id="section-6.3.1-7.1">
 <pre>
-;; /// Or possibly use ranges for 2 types below?
-u32 = uint .size 4
-u64 = uint .size 8
+{
+  "$id": "https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/02/",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Folder Manifest",
 
-; uid =&gt; message filename map
-uid_map = {* uid =&gt; filename}
-uid = u32
-filename = tstr
-
-flags_map = {* uid =&gt; flags}
-flags = [tstr]
-
-modseq_map = {* uid =&gt; modseqs}
-modseqs = u64
-
-
-folder_info = {
-  ? allowed_keywords: [tstr],
-  last_uid: u32,
-  ? highest_modseq: u64,
-  ? recent_uid: u32,
-  uidvalidity: u32,
-
-  is_subscribed: bool,
-
-  ; See RFC 6154 (SPECIAL-USE). E.g. "inbox", "sent", "drafts", "junk", etc.
-  ? role: tstr,
-
-  ; See Section 2, RFC 8621.
-  ? sort_order: u32,
-
-
-
-  ; See Section 3.5 of RFC 4314. For example "rwiptsldaex"
-  ? myrights: tstr,
-
-  ; Maps UIDs to the corresponding relative file names (names of .eml files)
-  uids: uid_map,
-
-  ; Maps UIDs to the corresponding array of flags/keywords (as strings)
-  flags: flags_map,
-
-  ; Maps UIDs to the corresponding modseqs (u64). See RFC 7162.
-  ? modseqs: modseq_map,
-
-  ; Original folder name if the name can't be represented in filesystem
-  ? original_name: tstr,
-
-  ; Can include information about partial export or filter used
-  ; in human readable UTF-8 text
-  ? comment: tstr,
-
-  ;; The following attributes are only used for incremental exports:
-  ? removed: [u32],
+  "type": "object",
+  "required": ["name", "items"],
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "uid": {
+      "type": "string",
+    },
+    "removed": {
+      "type": "array",
+      "items": {
+        "type": "string",
+      }
+    },
+    "comment": {
+      "type": "string"
+    },
+    "original_name": {
+      "type": "string"
+    },
+    "sort_order": {
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 2147483648
+    },
+    "modseqs": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0,
+        "exclusiveMaximum": 18446744073709551616
+      }
+    },
+    "highest_modseq": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 18446744073709551616
+    },
+    "special_use": {
+      "type": "string",
+      "description": "Can be \\All, \\Archive, \\Drafts, \\Flagged, \\Junk, \\Sent or \\Trash as per RFC6154.",
+      "pattern": "^\\\\"
+    },
+    "myrights": {
+      "type": "string"
+    },
+    "is_subscribed": {
+      "type": "boolean"
+    },
+    "last_uid": {
+      "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 4294967296
+    },
+    "recent_uid": {
+      "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 4294967296
+    },
+    "uidvalidity": {
+      "description": "Follows the IMAP4 requirements for non-zero unsigned 32-bit int",
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 4294967296
+    },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["uid", "filename"],
+        "properties": {
+          "uid": {
+            "description": "Either an IMAP UID (non-zero unsigned 32-bit integer) or a string identifier such as a UUID",
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "exclusiveMaximum": 4294967296
+              },
+              {
+                "type": "string"
+              }
+            ]
+          },
+          "filename": {
+            "type": "string"
+          },
+          "flags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "flags": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      }
+    },
+    "allowed_keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
 }
-</pre><a href="#section-6.3.1-6" class="pilcrow">¶</a>
+</pre>
 </div>
-<p id="section-6.3.1-7">EML (.eml) file for each message, in order to avoid reconstructing them. Names of EML files are referenced from the "folder.json" file.<a href="#section-6.3.1-7" class="pilcrow">¶</a></p>
+<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<a href="#name-general-json-schema-for-fol" class="selfRef">General JSON Schema for folder.json</a>
+            </figcaption></figure>
+</div>
 <p id="section-6.3.1-8">Example of folder.json (full export):<a href="#section-6.3.1-8" class="pilcrow">¶</a></p>
 <span id="name-a-basic-folderjson-example"></span><div id="example1">
-<figure id="figure-1">
+<figure id="figure-4">
             <div class="alignLeft art-text artwork" id="section-6.3.1-9.1">
 <pre>
 {
   "name": "AVClub",
+  "uid": "M6d99ac3275bb4e",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
   "last_uid": 16,
   "highest_modseq": 6371729,
   "recent_uid": 15,
   "uidvalidity": 1107190787,
   "is_subscribed": true,
-  "special_use": "sent",
+  "special_use": "\\Sent",
   "sort_order": 1,
   "myrights": "rwiptsldaex",
 
-  "uids": {
-     "1": "msg-1.eml",
-     "3": "msg-3.eml",
-     "15": "imported-ABC.eml"
-  },
-
-  "flags": {
-     "1": ["$seen"],
-     "3": ["$seen", "$flagged"],
-     "15": ["$answered", "$forwarded"]
-  }
+  "items": [
+    {
+      "uid": "1",
+      "filename": "msg-1.eml",
+      "flags": ["$seen"]
+    },
+    {
+      "uid": "3",
+      "filename": "msg-3.eml",
+      "flags": ["$seen", "$flagged"]
+    },
+    {
+      "uid": "15",
+      "filename": "imported-ABC.eml",
+      "flags": ["$answered", "$forwarded"]
+    }
+  ]
 }
 </pre>
 </div>
-<figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
 <a href="#name-a-basic-folderjson-example" class="selfRef">A basic folder.json example</a>
             </figcaption></figure>
 </div>
-<p id="section-6.3.1-10">Issue:  Are UIDs compared as strings or integers? JSON requires UIDs to be strings if
-they're used as field names. How about when we're using "last_uid" or "recent_uid"?<a href="#section-6.3.1-10" class="pilcrow">¶</a></p>
+<p id="section-6.3.1-10">UIDs <span class="bcp14">SHOULD</span> always be strings.  This allows systems with UIDs that are not
+integers to export and synchronize data reliably.  IMAP UIDs can always be
+converted back to integers.<a href="#section-6.3.1-10" class="pilcrow">¶</a></p>
 <p id="section-6.3.1-11">Example of folder.json that shows incremental changes from the previous export shown above.
 In this example 2 messages with UIDs 3 and 15 were removed. Message with UID 1 has updated
 flags. Several new messages were added, some of them are with flags set.<a href="#section-6.3.1-11" class="pilcrow">¶</a></p>
 <span id="name-a-folderjson-example-with-i"></span><div id="example2">
-<figure id="figure-2">
+<figure id="figure-5">
             <div class="alignLeft art-text artwork" id="section-6.3.1-12.1">
 <pre>
 {
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
-  "last_uid": "21",
+  "last_uid": 21,
   "highest_modseq": 6371845,
-  "recent_uid": "20",
+  "recent_uid": 20,
   "uidvalidity": 1107190787,
   "is_subscribed": true,
   "role": "sent",
   "sort_order": 1,
   "myrights": "rwiptsldaex",
+  "removed": ["3", "15"],
 
-  "uids": {
-     "1": "msg-1.eml",
-     "17": "msg-17.eml",
-     "19": "msg-19.eml",
-     "20": "20.eml",
-     "21": "21.eml"
-  },
+  "items": [
+    {
+      "uid": "1",
+      "filename": "msg-1.eml",
+      "flags": ["$seen", "$answered"]
+    },
+    {
+      "uid": "17",
+      "filename": "msg-17.eml",
+      "flags": ["$seen", "$answered", "$forwarded"]
+    },
+    {
+      "uid": "19",
+      "filename": "msg-19.eml",
+      "flags": ["$seen"]
+    },
+    {
+      "uid": "20",
+      "filename": "msg-20.eml",
+    },
+    {
+      "uid": "21",
+      "filename": "msg-21.eml",
+    },
+  ]
 
-  "flags": {
-     "1": ["$seen", "$answered"],
-     "17": ["$seen", "$answered", "$forwarded"],
-     "19": ["$seen"],
-     "20": [],
-     "21": []
-  },
-
-  "removed": ["3", "15"]
 }
 </pre>
 </div>
-<figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
 <a href="#name-a-folderjson-example-with-i" class="selfRef">A folder.json example with incremental changes</a>
+            </figcaption></figure>
+</div>
+<p id="section-6.3.1-13">Finally, to show an example containing no IMAP content but also meets schema
+requirements:<a href="#section-6.3.1-13" class="pilcrow">¶</a></p>
+<span id="name-a-folderjson-example-with-in"></span><div id="example-folder-tasks">
+<figure id="figure-6">
+            <div class="alignLeft art-text artwork" id="section-6.3.1-14.1">
+<pre>
+{
+  "name": "AVClub Tasks",
+  "sort_order": 2,
+  "myrights": "rwiptsldaex",
+
+  "items": [
+    {
+      "uid": "56cb57e3-dfa9-40b5-9011-fe658909d138",
+      "filename": "elect a new chair.json"
+    },
+    {
+      "uid": "65047c09-f236-485b-a011-5f68580c0d4d",
+      "filename": "send Jan newsletter.json"
+    },
+    {
+      "uid": "bd57adf2-3862-4256-ac2e-aafaf2ce8d71",
+      "filename": "add Mary to project folders.json"
+    }
+  ]
+}
+</pre>
+</div>
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<a href="#name-a-folderjson-example-with-in" class="selfRef">A folder.json example with incremental changes</a>
             </figcaption></figure>
 </div>
 </section>
@@ -2211,7 +2378,7 @@ useful for synchronization.  See the section on <code>updated</code> and <code>u
 using a limited set of characters suitable for interoperability across filesystems.<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-6.3.2.1-5">For example, a file called 'contact1.json' could contain:<a href="#section-6.3.2.1-5" class="pilcrow">¶</a></p>
 <span id="name-a-contactjson-example"></span><div id="example3">
-<figure id="figure-3">
+<figure id="figure-7">
               <div class="alignLeft art-text artwork" id="section-6.3.2.1-6.1">
 <pre>
 {
@@ -2252,7 +2419,7 @@ using a limited set of characters suitable for interoperability across filesyste
 }
 </pre>
 </div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-a-contactjson-example" class="selfRef">A contact.json example</a>
               </figcaption></figure>
 </div>
@@ -2283,7 +2450,7 @@ in the export even if not resolvable by some users of the export file.<a href="#
 <p id="section-6.3.2.2-1">Group contact items also refer to other contact items.  A file with an arbitrary name like "contact2.json"
 could include:<a href="#section-6.3.2.2-1" class="pilcrow">¶</a></p>
 <span id="name-a-group-contact-file-exampl"></span><div id="example4">
-<figure id="figure-4">
+<figure id="figure-8">
               <div class="alignLeft art-text artwork" id="section-6.3.2.2-2.1">
 <pre>
 {
@@ -2301,7 +2468,7 @@ could include:<a href="#section-6.3.2.2-1" class="pilcrow">¶</a></p>
 }
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-a-group-contact-file-exampl" class="selfRef">A group contact file example</a>
               </figcaption></figure>
 </div>
@@ -2335,7 +2502,7 @@ be represented as individual files in a PDPArchive. However, some things are mis
 is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
 <p id="section-6.3.3-4">A file with an arbitrary name like address-book1.json would contain:<a href="#section-6.3.3-4" class="pilcrow">¶</a></p>
 <span id="name-an-address-book-file-exampl"></span><div id="example5">
-<figure id="figure-5">
+<figure id="figure-9">
             <div class="alignLeft art-text artwork" id="section-6.3.3-5.1">
 <pre>
 {
@@ -2364,13 +2531,13 @@ is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
 }
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-an-address-book-file-exampl" class="selfRef">An address book file example</a>
             </figcaption></figure>
 </div>
 <p id="section-6.3.3-6">address-book2.json would contain:<a href="#section-6.3.3-6" class="pilcrow">¶</a></p>
 <span id="name-another-address-book-file-e"></span><div id="example6">
-<figure id="figure-6">
+<figure id="figure-10">
             <div class="alignLeft art-text artwork" id="section-6.3.3-7.1">
 <pre>
 address-book2.json
@@ -2393,7 +2560,7 @@ address-book2.json
 }
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-another-address-book-file-e" class="selfRef">Another address book file example</a>
             </figcaption></figure>
 </div>
@@ -2453,7 +2620,7 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           </ul>
 <p id="section-6.3.4-6">For example, a file called event1.json could contain:<a href="#section-6.3.4-6" class="pilcrow">¶</a></p>
 <span id="name-event-example"></span><div id="example-event1">
-<figure id="figure-7">
+<figure id="figure-11">
             <div class="alignLeft art-text artwork" id="section-6.3.4-7.1">
 <pre>
 {
@@ -2482,7 +2649,7 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 }
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-event-example" class="selfRef">Event example</a>
             </figcaption></figure>
 </div>
@@ -2498,7 +2665,7 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 <p id="section-6.3.5-2">If a system exports events belonging to calendars, it <span class="bcp14">SHOULD</span> also export the referenced Calendar objects.<a href="#section-6.3.5-2" class="pilcrow">¶</a></p>
 <p id="section-6.3.5-3">A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \calendars\calendar2) would contain the calendar's metadata:<a href="#section-6.3.5-3" class="pilcrow">¶</a></p>
 <span id="name-calendar-example"></span><div id="calendar1">
-<figure id="figure-8">
+<figure id="figure-12">
             <div class="alignLeft art-text artwork" id="section-6.3.5-4.1">
 <pre>
 {
@@ -2519,11 +2686,12 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 }
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-calendar-example" class="selfRef">Calendar example</a>
             </figcaption></figure>
 </div>
 <p id="section-6.3.5-5">The <code>uid</code> value here corresponds to the ID used in the calendarIds property of the individual event item.<a href="#section-6.3.5-5" class="pilcrow">¶</a></p>
+<p id="section-6.3.5-6">TODO: fix the relationship between folder.json and calendar metadata<a href="#section-6.3.5-6" class="pilcrow">¶</a></p>
 <div id="tasks">
 <section id="section-6.3.5.1">
             <h5 id="name-tasks">
@@ -2533,7 +2701,7 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
 As with events, tasks <span class="bcp14">MUST</span> include the uid and updated fields to support synchronization.<a href="#section-6.3.5.1-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.5.1-2">For example, a file called task1.json could contain:<a href="#section-6.3.5.1-2" class="pilcrow">¶</a></p>
 <span id="name-task-example"></span><div id="task1">
-<figure id="figure-9">
+<figure id="figure-13">
               <div class="alignLeft art-text artwork" id="section-6.3.5.1-3.1">
 <pre>
 {
@@ -2547,7 +2715,7 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 }
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-task-example" class="selfRef">Task example</a>
               </figcaption></figure>
 </div>
@@ -2578,7 +2746,8 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 <section id="section-6.3.7">
           <h4 id="name-files">
 <a href="#section-6.3.7" class="section-number selfRef">6.3.7. </a><a href="#name-files" class="section-name selfRef">Files</a>
-        </h4>
+          </h4>
+<p id="section-6.3.7-1">TODO<a href="#section-6.3.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="other">
@@ -2589,7 +2758,10 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 <p id="section-6.3.8-1">(LMD Note: I think this might better fit in an out of scope section - I think out of scope sections are useful for statements that explain why scope is limited.  that's assuming we all agree that groups, freebusy and timezones are left out.)<a href="#section-6.3.8-1" class="pilcrow">¶</a></p>
 <p id="section-6.3.8-2">Groups as defined in JSCalendar are NOT part of this archive format.  Groups in JSCalendar can combine events and tasks in a container.  This specification, for consistency and simplicity, uses folders and requires individual objects to be in separate files.<a href="#section-6.3.8-2" class="pilcrow">¶</a></p>
 <p id="section-6.3.8-3">VFREEBUSY objects are not part of this archive format.  Calendar software can calculate freebusy time from event data.  Use cases that are not satisfied by this limitation could extend this archive format but understanding what it means to backup, restore, export or import freebusy data would need to be fleshed out.<a href="#section-6.3.8-3" class="pilcrow">¶</a></p>
-<p id="section-6.3.8-4">VTIMEZONE objects are not part of this archive format.  Timezones are more likely to be system objects referred to by calendar objects in modern calendar systems, than objects which are exchanged across systems.<a href="#section-6.3.8-4" class="pilcrow">¶</a></p>
+<p id="section-6.3.8-4">VTIMEZONE objects are not part of this archive format.  Timezones are more
+likely to be system objects referred to by calendar objects in modern calendar
+systems, than personal data.  If there are use cases for timezones as personal
+data, this specification can be extended to explain how that would work.<a href="#section-6.3.8-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2871,6 +3043,10 @@ As with events, tasks <span class="bcp14">MUST</span> include the uid and update
 <dt id="RFC8174">[RFC8174]</dt>
         <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8474">[RFC8474]</dt>
+        <dd>
+<span class="refAuthor">Gondwana, B., Ed.</span>, <span class="refTitle">"IMAP Extension for Object Identifiers"</span>, <span class="seriesInfo">RFC 8474</span>, <span class="seriesInfo">DOI 10.17487/RFC8474</span>, <time datetime="2018-09" class="refDate">September 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8474">https://www.rfc-editor.org/rfc/rfc8474</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC9051">[RFC9051]</dt>
         <dd>
