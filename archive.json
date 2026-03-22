@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-19T00:34:46.331695+00:00",
+  "timestamp": "2026-03-22T00:35:22.801932+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -50,5 +50,34 @@
     }
   ],
   "issues": [],
-  "pulls": []
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOQr7OuM7MPACR",
+      "title": "Iterated on folder JSON Schema and examples and added archive schema",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/1",
+      "state": "MERGED",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "* Shifted to more JSON-native expression of objects listed in a folder.json listing\r\n* Folder examples needed UIDs to be strings as well as conforming to new schema\r\n* archive json schema is new\r\n* archive file example is new\r\n* moved example values into example JSON where it can be validated\r\n* decided list of data types should be array of strings\r\n* decided which archive properties should be required",
+      "createdAt": "2026-03-20T19:20:31Z",
+      "updatedAt": "2026-03-21T02:12:02Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "13952d75e02569c6674d6f7f3b8cab8a13c85b5c",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "archive-json-schema",
+      "headRefOid": "cd911369d7e6f215b557735fa3581b6c213d898f",
+      "closedAt": "2026-03-21T02:12:02Z",
+      "mergedAt": "2026-03-21T02:12:02Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "cd911369d7e6f215b557735fa3581b6c213d898f"
+      },
+      "comments": [],
+      "reviews": []
+    }
+  ]
 }
