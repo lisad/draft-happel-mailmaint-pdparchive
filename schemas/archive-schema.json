@@ -48,7 +48,7 @@
       "languagetag": {
         "type": "string"
       },
-      "selector": {
+      "description": {
         "type": "string"
       },
       "timezone": {

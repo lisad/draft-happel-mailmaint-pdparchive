@@ -121,7 +121,7 @@ As part of communication protocols, the IETF has standardized a number of data f
 
 While mainly designed for interoperability, many of these data formats have also become popular for data portability, i.e., the import/export of data across different services. The growing importance of data portability however demands an open standard archive format which can deal with different types of personal data in a homogeneous fashion.
 
-To this end, this document proposes the Personal Data Portability Archive format (PDPA), suitable for import/export, backup/restore, and data transfer scenarios for personal data. It is compatible with both IMAP and JMAP and should be suitable as an interchange format between related software and services such as for email, contacts, calendaring, tasks, or files.
+To this end, this document proposes the Personal Data Portability Archive format (PDPArchive), suitable for import/export, backup/restore, and data transfer scenarios for personal data. It is compatible with both IMAP and JMAP and should be suitable as an interchange format between related software and services such as for email, contacts, calendaring, tasks, or files.
 
 The approach is to define JSON formats, folder structure, and a common compression format.  Additional specifications will likely define a protocol how these files can be requested from, imported into, or transferred between servers, but this specification can be used as-is with user-directed imports or exports.
 
@@ -153,7 +153,7 @@ compared to having IMAP and CalDAV access to personal data.   While these use ca
 
 A main use case for the novel format is to allow exporting the full user data managed by services or software products into a simple file (or set of files) which is under full control of the user.
 
-The user might use such export for backup, archiving, or for importing when switching to another service or software (i.e., migration).
+The user might use such an export for backup, archiving, or for importing when switching to another service or software (i.e., migration).
 
 Depending on the type of data, exporting/importing can be a time-consuming process. Particularly for the case of switching services, PDPA should allow to minimize the time period during which a user cannot use the origin system but also the destination system is not yet ready.
 
@@ -175,7 +175,7 @@ access - knowing what new data has been added.
 
 ### Synchronization
 
-Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services getting access to their data  (at the request of the user).  Simple synchronization features could make this much better.
+Data portability does not just allow users to switch from one service to another one, but to let users benefit from 3rd party services with ongoing access to their data (authorized by the user).  Simple synchronization features could make this much better.
 
 For example, current online systems that allow importing contacts are not often suited to maintaining one's address book on two systems. Re-importing a contact into a system that already has that contact often results in duplicating the exact same contact, whether or not there have been edits, making repeated synchronization practically infeasible. It should be easy to do a significantly better job of this with some attention to object IDs and modification timestamps.
 
@@ -183,7 +183,7 @@ We however do not attempt to solve two-way synchronization via export files.  It
 
 ### Dataset exchange
 
-PDPA should be usable to exchange and share larger data sets than just one user, or to share a single user's data outside the context where the user knows what it is and where it came from.
+PDPArchive should be usable to exchange and share larger data sets than just one user, or to share a single user's data outside the context where the user knows what it is and where it came from.
 
 Potential applications of this are:
 
@@ -202,9 +202,9 @@ Besides actual use cases, there are a number of side requirements and goals for 
 
 ### Email standards compatibility
 
-Data formats should aim for compatibility with JMAP data formats for the sake of interoperability and synergies in software libraries.
+Data definitions have to be compatible with widespread calendar and email standards, although need not be limited to only what is in those standards.  Data serialization formats should aim for compatibility with JMAP data formats for the sake of interoperability and synergies in software libraries.
 
-Dedicated JMAP API methods for exporting and importing the format described here, or for related server-to-server transfer protocols are out of the scope of this document.
+Dedicated JMAP API methods or client/server protocol messages for exporting and importing the format described here are out of scope of this document.  Server-to-server transfer protocols for sending or requesting this format are out of the scope of this document.
 
 Due to its specifics and ubiquitous usage, the Internet Message Format {{RFC5322}}; latest revision of {{RFC2822}}/{{RFC822}} should be the core of representing individual email data.
 
@@ -318,7 +318,7 @@ Synchronization requirements
 
 This section describes the internal "raw" file format of a personal data portability archive. For discussion about a surrounding container format, see section "open issues".
 
-PDPA in general consists of:
+PDPArchive in general consists of:
 
 - A main metadata file ("archive.json")
 - Top-level folders for each data type ("/mail")
@@ -343,15 +343,13 @@ The archive.json file consists of three main sections with metadata about the ar
 | archive/version      | PDPA spec version   |
 | archive/generator    | Archive generator   |
 | dataset/extent       | Extent of the archive (full, partial) |
-| dataset/selector     | Select critia for partial datasets (date, folder, size, custom) (optional) |
+| dataset/description  | Human readable description, containing e.g. date, folder, size (optional) |
 | dataset/datatypes    | List of data types   |
 | dataset/languagetag  | BCP 47 language tag for the dominant language in the dataset  |
 | dataset/timezone     | IANA tz identifier for the dataset |
 | datasource/service   | Information about the source service (id, url, ..) |
 | datasource/account   | Information about the source account (id, type, ...) |
 
-
-TODO: Is selector intended to be human readable or machine parsable?
 
 More formally:
 
