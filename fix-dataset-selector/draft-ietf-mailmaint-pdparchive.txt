@@ -671,7 +671,7 @@ Table of Contents
       "languagetag": {
         "type": "string"
       },
-      "selector": {
+      "description": {
         "type": "string"
       },
       "timezone": {
