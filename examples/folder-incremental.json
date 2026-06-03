@@ -1,11 +1,13 @@
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
+  "name": "AVClub",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
   "last_uid": 21,
   "highest_modseq": 6371845,
   "recent_uid": 20,
   "uidvalidity": 1107190787,
   "is_subscribed": true,
-  "role": "sent",
+  "special_use": "\\Sent",
   "sort_order": 1,
   "myrights": "rwiptsldaex",
   "removed": ["3", "15"],
@@ -28,12 +30,12 @@
     },
     {
       "uid": "20",
-      "filename": "msg-20.eml",
+      "filename": "msg-20.eml"
     },
     {
       "uid": "21",
-      "filename": "msg-21.eml",
-    },
+      "filename": "msg-21.eml"
+    }
   ]
 
 }

@@ -1,4 +1,3 @@
-
 {
   "$id": "https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/02/",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
@@ -11,12 +10,12 @@
       "type": "string"
     },
     "uid": {
-      "type": "string",
+      "type": "string"
     },
     "removed": {
       "type": "array",
       "items": {
-        "type": "string",
+        "type": "string"
       }
     },
     "comment": {

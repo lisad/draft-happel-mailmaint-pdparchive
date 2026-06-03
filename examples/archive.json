@@ -1,4 +1,5 @@
 { 
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
   "archive": {
   
     "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",

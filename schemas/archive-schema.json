@@ -12,7 +12,7 @@
         "type": "string"
       },
       "generator": {
-        "type": "string",
+        "type": "string"
       },
       "legal": {
         "type": "string"
@@ -28,9 +28,9 @@
         "format": "date-time"
       },
       "version": {
-        "type": "string",
-      },
-    },
+        "type": "string"
+      }
+    }
   },
   "dataset": {
     "type": "object",
