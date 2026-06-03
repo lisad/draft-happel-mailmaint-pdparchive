@@ -1,5 +1,5 @@
 {
-  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archve",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Archive Metadata",
   "type": "object",

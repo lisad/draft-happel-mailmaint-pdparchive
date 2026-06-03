@@ -447,8 +447,6 @@ example, the folder INBOX would be represented as "mail/INBOX", and the
 folder "Archive/2024/2024-12" would be represented
 as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.
 
-TODO: how to signal removal of a folder in an incremental archive? Need to add some kind of tombstone mechanism.
-
 Each folder metatadata is described by "folder.json" (this name is REQUIRED),
 which has the following fields:
 
@@ -460,6 +458,7 @@ which has the following fields:
 | recent_uid | unsigned 32 bit integer | No | Lowest UID of a message with the \Recent flag {{IMAP4}}|
 | uidvalidity | unsigned 32 bit integer | Yes | UIDVALIDITY value {{IMAP4}}|
 | is_subscribed | boolean | Yes | Is the folder returned by IMAP LSUB? {{IMAP4}} |
+| deleted_at | string (timestamp) or null | No | Folder has been DELETED - this is a tombstone |
 | myrights | string | No |See Section 3.5 of {{RFC4314}}. For example "rwiptsldaex"|
 | highest_modseq | unsigned 64 bit integer | No |HIGHESTMODSEQ value {{RFC7162}}|
 | special_use | string | No |{{RFC6154}} SPECIAL-USE value. E.g. "inbox", "sent", "drafts", "junk", etc.|
@@ -469,7 +468,11 @@ which has the following fields:
 | comment | string | No |Can include information about partial export or filter used in human readable UTF-8 text|
 | removed | array of unsigned 32 bit integers | No |List of messages (UIDs) removed since the last export |
 
-\* The uid for a folder SHOULD be present.  For IMAP folders, this SHOULD be the OBJECTID defined by {{RFC8474}}.
+The uid for a folder SHOULD be present.  For IMAP folders, this SHOULD be the OBJECTID defined by {{RFC8474}}.
+
+In an incremental update, a folder can both have items added/removed and be deleted in the time
+period elapsed, so it could have removed messages and flags as well as a.  A full archive or
+snapshot SHOULD NOT include deleted folders with the deleted_at value.
 
 The folder.json format can be defined generally as follows.  Note that this
 covers folders containing tasks, notes, contacts or emails, so the fields that
