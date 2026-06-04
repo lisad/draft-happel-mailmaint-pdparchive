@@ -64,9 +64,11 @@ def main():
             passed += 1
         except jsonschema.ValidationError as e:
             path_str = " -> ".join(str(p) for p in e.absolute_path) or "(root)"
+            print(f"::error file=examples/{name}::{e.message} [at {path_str}]")
             print(f"FAIL:         {name}: {e.message} [at {path_str}]")
             failed += 1
         except jsonschema.SchemaError as e:
+            print(f"::error file=schemas/{schema_name}::{e.message}")
             print(f"SCHEMA ERROR: {schema_name}: {e.message}")
             failed += 1
 

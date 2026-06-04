@@ -1,0 +1,17 @@
+name: "Validate Examples"
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate:
+    name: "Validate JSON Examples"
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v5
+    - uses: actions/setup-python@v5
+      with:
+        python-version: "3.x"
+    - run: pip install -r requirements.txt
+    - run: python validate_examples.py
