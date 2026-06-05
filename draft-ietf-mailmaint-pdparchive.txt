@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 22 September 2026                                       audriga
+Expires: 7 December 2026                                         audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                           21 March 2026
+                                                             5 June 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 September 2026.
+   This Internet-Draft will expire on 7 December 2026.
 
 Copyright Notice
 
@@ -141,11 +141,11 @@ Table of Contents
    in a homogeneous fashion.
 
    To this end, this document proposes the Personal Data Portability
-   Archive format (PDPA), suitable for import/export, backup/restore,
-   and data transfer scenarios for personal data.  It is compatible with
-   both IMAP and JMAP and should be suitable as an interchange format
-   between related software and services such as for email, contacts,
-   calendaring, tasks, or files.
+   Archive format (PDPArchive), suitable for import/export, backup/
+   restore, and data transfer scenarios for personal data.  It is
+   compatible with both IMAP and JMAP and should be suitable as an
+   interchange format between related software and services such as for
+   email, contacts, calendaring, tasks, or files.
 
    The approach is to define JSON formats, folder structure, and a
    common compression format.  Additional specifications will likely
@@ -208,7 +208,7 @@ Table of Contents
    user data managed by services or software products into a simple file
    (or set of files) which is under full control of the user.
 
-   The user might use such export for backup, archiving, or for
+   The user might use such an export for backup, archiving, or for
    importing when switching to another service or software (i.e.,
    migration).
 
@@ -241,8 +241,8 @@ Table of Contents
 3.1.4.  Synchronization
 
    Data portability does not just allow users to switch from one service
-   to another one, but to let users benefit from 3rd party services
-   getting access to their data (at the request of the user).  Simple
+   to another one, but to let users benefit from 3rd party services with
+   ongoing access to their data (authorized by the user).  Simple
    synchronization features could make this much better.
 
    For example, current online systems that allow importing contacts are
@@ -262,9 +262,9 @@ Table of Contents
 
 3.1.5.  Dataset exchange
 
-   PDPA should be usable to exchange and share larger data sets than
-   just one user, or to share a single user's data outside the context
-   where the user knows what it is and where it came from.
+   PDPArchive should be usable to exchange and share larger data sets
+   than just one user, or to share a single user's data outside the
+   context where the user knows what it is and where it came from.
 
    Potential applications of this are:
 
@@ -291,12 +291,16 @@ Table of Contents
 
 3.2.1.  Email standards compatibility
 
-   Data formats should aim for compatibility with JMAP data formats for
-   the sake of interoperability and synergies in software libraries.
+   Data definitions have to be compatible with widespread calendar and
+   email standards, although need not be limited to only what is in
+   those standards.  Data serialization formats should aim for
+   compatibility with JMAP data formats for the sake of interoperability
+   and synergies in software libraries.
 
-   Dedicated JMAP API methods for exporting and importing the format
-   described here, or for related server-to-server transfer protocols
-   are out of the scope of this document.
+   Dedicated JMAP API methods or client/server protocol messages for
+   exporting and importing the format described here are out of scope of
+   this document.  Server-to-server transfer protocols for sending or
+   requesting this format are out of the scope of this document.
 
    Due to its specifics and ubiquitous usage, the Internet Message
    Format [RFC5322]; latest revision of [RFC2822]/[RFC822] should be the
@@ -546,7 +550,7 @@ Table of Contents
    data portability archive.  For discussion about a surrounding
    container format, see section "open issues".
 
-   PDPA in general consists of:
+   PDPArchive in general consists of:
 
    *  A main metadata file ("archive.json")
 
@@ -567,60 +571,58 @@ Table of Contents
 
    *  datasource: meta-information about the dataset
 
-         +=============+=========================================+
-         | Key         | Description and requirements            |
-         +=============+=========================================+
-         | archive/id  | Archive identifier, generated by        |
-         |             | archive generator, MUST be unique       |
-         +-------------+-----------------------------------------+
-         | archive/    | Human readable label                    |
-         | name        |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Note for human use and display          |
-         | note        | (optional)                              |
-         +-------------+-----------------------------------------+
-         | archive/    | Legal desclaimer (optional)             |
-         | legal       |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Archive timestamp                       |
-         | timestamp   |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | PDPA spec version                       |
-         | version     |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Archive generator                       |
-         | generator   |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | Extent of the archive (full, partial)   |
-         | extent      |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | Select critia for partial datasets      |
-         | selector    | (date, folder, size, custom) (optional) |
-         +-------------+-----------------------------------------+
-         | dataset/    | List of data types                      |
-         | datatypes   |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | BCP 47 language tag for the dominant    |
-         | languagetag | language in the dataset                 |
-         +-------------+-----------------------------------------+
-         | dataset/    | IANA tz identifier for the dataset      |
-         | timezone    |                                         |
-         +-------------+-----------------------------------------+
-         | datasource/ | Information about the source service    |
-         | service     | (id, url, ..)                           |
-         +-------------+-----------------------------------------+
-         | datasource/ | Information about the source account    |
-         | account     | (id, type, ...)                         |
-         +-------------+-----------------------------------------+
+         +=============+========================================+
+         | Key         | Description and requirements           |
+         +=============+========================================+
+         | archive/id  | Archive identifier, generated by       |
+         |             | archive generator, MUST be unique      |
+         +-------------+----------------------------------------+
+         | archive/    | Human readable label                   |
+         | name        |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Note for human use and display         |
+         | note        | (optional)                             |
+         +-------------+----------------------------------------+
+         | archive/    | Legal desclaimer (optional)            |
+         | legal       |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Archive timestamp                      |
+         | timestamp   |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | PDPA spec version                      |
+         | version     |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Archive generator                      |
+         | generator   |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | Extent of the archive (full, partial)  |
+         | extent      |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | Human readable description, containing |
+         | description | e.g. date, folder, size (optional)     |
+         +-------------+----------------------------------------+
+         | dataset/    | List of data types                     |
+         | datatypes   |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | BCP 47 language tag for the dominant   |
+         | languagetag | language in the dataset                |
+         +-------------+----------------------------------------+
+         | dataset/    | IANA tz identifier for the dataset     |
+         | timezone    |                                        |
+         +-------------+----------------------------------------+
+         | datasource/ | Information about the source service   |
+         | service     | (id, url, ..)                          |
+         +-------------+----------------------------------------+
+         | datasource/ | Information about the source account   |
+         | account     | (id, type, ...)                        |
+         +-------------+----------------------------------------+
 
-                                  Table 1
-
-   TODO: Is selector intended to be human readable or machine parsable?
+                                 Table 1
 
    More formally:
 
 {
-  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archve",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Archive Metadata",
   "type": "object",
@@ -669,7 +671,7 @@ Table of Contents
       "languagetag": {
         "type": "string"
       },
-      "selector": {
+      "description": {
         "type": "string"
       },
       "timezone": {
@@ -695,29 +697,30 @@ Table of Contents
 
    Example of archive.json (full export):
 
-   {
-     "archive": {
+{
+  "archive": {
 
-       "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
-       "archive_id": "123",
-       "name": "Jane's data export (2025-10-19)",
-       "note": "Personal account export",
-       "timestamp": "2025-10-18T23:20:59Z",
-       "version": "PDPA v1.0",
-       "generator": "PDPA exporter v0.9"
-     },
-     "dataset": {
-       "extent": "FULL",
-       "datatypes": ["MAIL"],
-       "languagetag": "en_ca",
-       "timezone": "America/Montreal"
-     },
-     "datasource": {
-       "account": "marieclaire"
-     }
-   }
+    "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
+    "archive_id": "123",
+    "name": "Jane's data export (2025-10-19)",
+    "note": "Personal account export",
+    "timestamp": "2025-10-18T23:20:59Z",
+    "version": "PDPA v1.0",
+    "generator": "PDPA exporter v0.9"
+  },
+  "dataset": {
+    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025)",
+    "extent": "FULL",
+    "datatypes": ["MAIL"],
+    "languagetag": "en_ca",
+    "timezone": "America/Montreal"
+  },
+  "datasource": {
+    "account": "marieclaire"
+  }
+}
 
-                   Figure 2: A basic archive.json example
+                Figure 2: A basic archive.json example
 
 6.2.  Folder structure
 
@@ -815,98 +818,104 @@ Table of Contents
    represented as "mail/Archive/2024/2024-12".  Folder names are encoded
    in UTF-8.
 
-   TODO: how to signal removal of a folder in an incremental archive?
-   Need to add some kind of tombstone mechanism.
-
    Each folder metatadata is described by "folder.json" (this name is
    REQUIRED), which has the following fields:
 
-    +==================+===========+============+=====================+
-    | Attribute Name   |    Type   | Mandatory? | Comment             |
-    +==================+===========+============+=====================+
-    | allowed_keywords |  array of | No         | PERMANENTFLAGS      |
-    |                  |  strings  |            | minus "\*" [IMAP4]  |
-    |                  |   (IMAP   |            |                     |
-    |                  | keywords) |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | uid              |   string  | SHOULD*    | Use OBJECTID from   |
-    |                  |           |            | [RFC8474]           |
-    +------------------+-----------+------------+---------------------+
-    | last_uid         |  unsigned | Yes        | Last UID assigned   |
-    |                  |   32 bit  |            | in the folder.  It  |
-    |                  |  integer  |            | is UIDNEXT value    |
-    |                  |           |            | minus 1 [IMAP4]     |
-    +------------------+-----------+------------+---------------------+
-    | recent_uid       |  unsigned | No         | Lowest UID of a     |
-    |                  |   32 bit  |            | message with the    |
-    |                  |  integer  |            | \Recent flag        |
-    |                  |           |            | [IMAP4]             |
-    +------------------+-----------+------------+---------------------+
-    | uidvalidity      |  unsigned | Yes        | UIDVALIDITY value   |
-    |                  |   32 bit  |            | [IMAP4]             |
-    |                  |  integer  |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | is_subscribed    |  boolean  | Yes        | Is the folder       |
-    |                  |           |            | returned by IMAP    |
-    |                  |           |            | LSUB?  [IMAP4]      |
-    +------------------+-----------+------------+---------------------+
-    | myrights         |   string  | No         | See Section 3.5 of  |
-    |                  |           |            | [RFC4314].  For     |
-    |                  |           |            | example             |
-    |                  |           |            | "rwiptsldaex"       |
-    +------------------+-----------+------------+---------------------+
-    | highest_modseq   |  unsigned | No         | HIGHESTMODSEQ value |
-    |                  |   64 bit  |            | [RFC7162]           |
-    |                  |  integer  |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | special_use      |   string  | No         | [RFC6154] SPECIAL-  |
-    |                  |           |            | USE value.  E.g.    |
-    |                  |           |            | "inbox", "sent",    |
-    |                  |           |            | "drafts", "junk",   |
-    |                  |           |            | etc.                |
-    +------------------+-----------+------------+---------------------+
-    | sort_order       |           | No         | See Section 2,      |
-    |                  |           |            | [JMAP]]             |
-    +------------------+-----------+------------+---------------------+
-    | items            |  array of | Yes        | Mapping from UIDs   |
-    |                  |  content  |            | to corresponding    |
-    |                  |    item   |            | message files       |
-    |                  | names and |            | included in the     |
-    |                  |   flags   |            | archive             |
-    +------------------+-----------+------------+---------------------+
-    | original_name    |   string  | No         | Original folder     |
-    |                  |           |            | name (relative to   |
-    |                  |           |            | its parent, if any) |
-    |                  |           |            | if the name can't   |
-    |                  |           |            | be represented in   |
-    |                  |           |            | filesystem, e.g. if |
-    |                  |           |            | it includes special |
-    |                  |           |            | characters          |
-    +------------------+-----------+------------+---------------------+
-    | comment          |   string  | No         | Can include         |
-    |                  |           |            | information about   |
-    |                  |           |            | partial export or   |
-    |                  |           |            | filter used in      |
-    |                  |           |            | human readable      |
-    |                  |           |            | UTF-8 text          |
-    +------------------+-----------+------------+---------------------+
-    | removed          |  array of | No         | List of messages    |
-    |                  |  unsigned |            | (UIDs) removed      |
-    |                  |   32 bit  |            | since the last      |
-    |                  |  integers |            | export              |
-    +------------------+-----------+------------+---------------------+
+   +==================+=============+============+=====================+
+   | Attribute Name   |     Type    | Mandatory? | Comment             |
+   +==================+=============+============+=====================+
+   | allowed_keywords |   array of  | No         | PERMANENTFLAGS      |
+   |                  |   strings   |            | minus "\*" [IMAP4]  |
+   |                  |    (IMAP    |            |                     |
+   |                  |  keywords)  |            |                     |
+   +------------------+-------------+------------+---------------------+
+   | uid              |    string   | SHOULD*    | Use OBJECTID from   |
+   |                  |             |            | [RFC8474]           |
+   +------------------+-------------+------------+---------------------+
+   | last_uid         | unsigned 32 | Yes        | Last UID assigned   |
+   |                  | bit integer |            | in the folder.  It  |
+   |                  |             |            | is UIDNEXT value    |
+   |                  |             |            | minus 1 [IMAP4]     |
+   +------------------+-------------+------------+---------------------+
+   | recent_uid       | unsigned 32 | No         | Lowest UID of a     |
+   |                  | bit integer |            | message with the    |
+   |                  |             |            | \Recent flag        |
+   |                  |             |            | [IMAP4]             |
+   +------------------+-------------+------------+---------------------+
+   | uidvalidity      | unsigned 32 | Yes        | UIDVALIDITY value   |
+   |                  | bit integer |            | [IMAP4]             |
+   +------------------+-------------+------------+---------------------+
+   | is_subscribed    |   boolean   | Yes        | Is the folder       |
+   |                  |             |            | returned by IMAP    |
+   |                  |             |            | LSUB?  [IMAP4]      |
+   +------------------+-------------+------------+---------------------+
+   | deleted_at       |    string   | No         | Folder has been     |
+   |                  | (timestamp) |            | DELETED - this is   |
+   |                  |   or null   |            | a tombstone         |
+   +------------------+-------------+------------+---------------------+
+   | myrights         |    string   | No         | See Section 3.5 of  |
+   |                  |             |            | [RFC4314].  For     |
+   |                  |             |            | example             |
+   |                  |             |            | "rwiptsldaex"       |
+   +------------------+-------------+------------+---------------------+
+   | highest_modseq   | unsigned 64 | No         | HIGHESTMODSEQ       |
+   |                  | bit integer |            | value [RFC7162]     |
+   +------------------+-------------+------------+---------------------+
+   | special_use      |    string   | No         | [RFC6154] SPECIAL-  |
+   |                  |             |            | USE value.  E.g.    |
+   |                  |             |            | "inbox", "sent",    |
+   |                  |             |            | "drafts", "junk",   |
+   |                  |             |            | etc.                |
+   +------------------+-------------+------------+---------------------+
+   | sort_order       |             | No         | See Section 2,      |
+   |                  |             |            | [JMAP]]             |
+   +------------------+-------------+------------+---------------------+
+   | items            |   array of  | Yes        | Mapping from UIDs   |
+   |                  |   content   |            | to corresponding    |
+   |                  |  item names |            | message files       |
+   |                  |  and flags  |            | included in the     |
+   |                  |             |            | archive             |
+   +------------------+-------------+------------+---------------------+
+   | original_name    |    string   | No         | Original folder     |
+   |                  |             |            | name (relative to   |
+   |                  |             |            | its parent, if      |
+   |                  |             |            | any) if the name    |
+   |                  |             |            | can't be            |
+   |                  |             |            | represented in      |
+   |                  |             |            | filesystem, e.g.    |
+   |                  |             |            | if it includes      |
+   |                  |             |            | special characters  |
+   +------------------+-------------+------------+---------------------+
+   | comment          |    string   | No         | Can include         |
+   |                  |             |            | information about   |
+   |                  |             |            | partial export or   |
+   |                  |             |            | filter used in      |
+   |                  |             |            | human readable      |
+   |                  |             |            | UTF-8 text          |
+   +------------------+-------------+------------+---------------------+
+   | removed          |   array of  | No         | List of messages    |
+   |                  | unsigned 32 |            | (UIDs) removed      |
+   |                  |     bit     |            | since the last      |
+   |                  |   integers  |            | export              |
+   +------------------+-------------+------------+---------------------+
 
                                   Table 2
 
-   * The uid for a folder SHOULD be present.  For IMAP folders, this
+   The uid for a folder SHOULD be present.  For IMAP folders, this
    SHOULD be the OBJECTID defined by [RFC8474].
+
+   In an incremental update, a folder can both have items added/removed
+   and be deleted in the time period elapsed, so it could have removed
+   messages and flags as well as be a tombstone.  A full archive or
+   snapshot SHOULD NOT include deleted folders with the deleted_at
+   value.
 
    The folder.json format can be defined generally as follows.  Note
    that this covers folders containing tasks, notes, contacts or emails,
    so the fields that are specific to IMAP folders are not required.
 
 {
-  "$id": "https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/02/",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Folder Manifest",
 
@@ -959,6 +968,10 @@ Table of Contents
     },
     "is_subscribed": {
       "type": "boolean"
+    },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
     },
     "last_uid": {
       "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
