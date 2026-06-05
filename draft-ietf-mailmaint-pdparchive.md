@@ -471,8 +471,8 @@ which has the following fields:
 The uid for a folder SHOULD be present.  For IMAP folders, this SHOULD be the OBJECTID defined by {{RFC8474}}.
 
 In an incremental update, a folder can both have items added/removed and be deleted in the time
-period elapsed, so it could have removed messages and flags as well as a.  A full archive or
-snapshot SHOULD NOT include deleted folders with the deleted_at value.
+period elapsed, so it could have removed messages and flags as well as be a tombstone.
+A full archive or snapshot SHOULD NOT include deleted folders with the deleted_at value.
 
 The folder.json format can be defined generally as follows.  Note that this
 covers folders containing tasks, notes, contacts or emails, so the fields that

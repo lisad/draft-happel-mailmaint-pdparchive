@@ -10,7 +10,7 @@
     "generator": "PDPA exporter v0.9"
   },
   "dataset": {
-    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025",
+    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025)",
     "extent": "FULL",
     "datatypes": ["MAIL"],
     "languagetag": "en_ca",
