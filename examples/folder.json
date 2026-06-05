@@ -1,4 +1,5 @@
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "name": "AVClub",
   "uid": "M6d99ac3275bb4e",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],

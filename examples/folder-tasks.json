@@ -1,4 +1,5 @@
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "name": "AVClub Tasks",
   "sort_order": 2,
   "myrights": "rwiptsldaex",
