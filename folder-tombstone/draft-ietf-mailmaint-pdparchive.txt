@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 5 December 2026                                         audriga
+Expires: 7 December 2026                                         audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                             3 June 2026
+                                                             5 June 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2026.
+   This Internet-Draft will expire on 7 December 2026.
 
 Copyright Notice
 
@@ -709,7 +709,7 @@ Table of Contents
     "generator": "PDPA exporter v0.9"
   },
   "dataset": {
-    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025",
+    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025)",
     "extent": "FULL",
     "datatypes": ["MAIL"],
     "languagetag": "en_ca",
@@ -906,8 +906,9 @@ Table of Contents
 
    In an incremental update, a folder can both have items added/removed
    and be deleted in the time period elapsed, so it could have removed
-   messages and flags as well as a.  A full archive or snapshot SHOULD
-   NOT include deleted folders with the deleted_at value.
+   messages and flags as well as be a tombstone.  A full archive or
+   snapshot SHOULD NOT include deleted folders with the deleted_at
+   value.
 
    The folder.json format can be defined generally as follows.  Note
    that this covers folders containing tasks, notes, contacts or emails,
