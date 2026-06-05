@@ -1770,7 +1770,7 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
         "type": "string"
       },
       "generator": {
-        "type": "string",
+        "type": "string"
       },
       "legal": {
         "type": "string"
@@ -1786,9 +1786,9 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
         "format": "date-time"
       },
       "version": {
-        "type": "string",
-      },
-    },
+        "type": "string"
+      }
+    }
   },
   "dataset": {
     "type": "object",
@@ -1839,6 +1839,7 @@ access - knowing what new data has been added.<a href="#section-3.1.3-1" class="
           <div class="alignLeft art-text artwork" id="section-6.1-7.1">
 <pre>
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
   "archive": {
 
     "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
@@ -2097,12 +2098,12 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
       "type": "string"
     },
     "uid": {
-      "type": "string",
+      "type": "string"
     },
     "removed": {
       "type": "array",
       "items": {
-        "type": "string",
+        "type": "string"
       }
     },
     "comment": {
@@ -2222,6 +2223,7 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
             <div class="alignLeft art-text artwork" id="section-6.3.1-9.1">
 <pre>
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "name": "AVClub",
   "uid": "M6d99ac3275bb4e",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
@@ -2269,13 +2271,15 @@ flags. Several new messages were added, some of them are with flags set.<a href=
             <div class="alignLeft art-text artwork" id="section-6.3.1-12.1">
 <pre>
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
+  "name": "AVClub",
   "allowed_keywords": ["$forwarded", "$MDNSent", "$ismailinglist"],
   "last_uid": 21,
   "highest_modseq": 6371845,
   "recent_uid": 20,
   "uidvalidity": 1107190787,
   "is_subscribed": true,
-  "role": "sent",
+  "special_use": "\\Sent",
   "sort_order": 1,
   "myrights": "rwiptsldaex",
   "removed": ["3", "15"],
@@ -2298,12 +2302,12 @@ flags. Several new messages were added, some of them are with flags set.<a href=
     },
     {
       "uid": "20",
-      "filename": "msg-20.eml",
+      "filename": "msg-20.eml"
     },
     {
       "uid": "21",
-      "filename": "msg-21.eml",
-    },
+      "filename": "msg-21.eml"
+    }
   ]
 
 }
@@ -2320,6 +2324,7 @@ requirements:<a href="#section-6.3.1-13" class="pilcrow">¶</a></p>
             <div class="alignLeft art-text artwork" id="section-6.3.1-14.1">
 <pre>
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "name": "AVClub Tasks",
   "sort_order": 2,
   "myrights": "rwiptsldaex",
@@ -2550,7 +2555,6 @@ is clear.<a href="#section-6.3.3-3" class="pilcrow">¶</a></p>
 <figure id="figure-10">
             <div class="alignLeft art-text artwork" id="section-6.3.3-7.1">
 <pre>
-address-book2.json
 {
    "@type": "AddressBook",
    "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
