@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-04T01:06:49.464552+00:00",
+  "timestamp": "2026-06-07T01:01:30.592588+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -84,46 +84,133 @@
       "id": "PR_kwDOQr7OuM7idM5P",
       "title": "Adds deleted folder tombstone mechanism",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/2",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "I'm not committed to this approach but wanted to put something down for critiques/improvements.\r\nAlso this PR renames \"selector\" to \"description\" and clarifies that it is human-readable.",
       "createdAt": "2026-06-03T23:31:50Z",
-      "updatedAt": "2026-06-03T23:31:50Z",
+      "updatedAt": "2026-06-05T17:44:34Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "cd911369d7e6f215b557735fa3581b6c213d898f",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "folder-tombstone",
-      "headRefOid": "bef5878869f9d3a0d921678975376531ada89b81",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "a4f1b92cd4b3ac1b88075fbd74d535bc8240310d",
+      "closedAt": "2026-06-05T17:44:24Z",
+      "mergedAt": "2026-06-05T17:44:24Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "1c11ad62f4b35604bc660ea8475d8fb75e4cc970"
+      },
+      "comments": [
+        {
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "body": "Looks reasonable to me.",
+          "createdAt": "2026-06-05T14:43:57Z",
+          "updatedAt": "2026-06-05T14:43:57Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOQr7OuM8AAAABCHjh0w",
+          "commit": {
+            "abbreviatedOid": "bef5878"
+          },
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-05T14:33:24Z",
+          "updatedAt": "2026-06-05T14:33:24Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "OCD nit: missing closing \")\" ;-)",
+              "createdAt": "2026-06-05T14:33:24Z",
+              "updatedAt": "2026-06-05T14:33:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQr7OuM8AAAABCHkw1w",
+          "commit": {
+            "abbreviatedOid": "bef5878"
+          },
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-05T14:35:58Z",
+          "updatedAt": "2026-06-05T14:35:59Z",
+          "comments": [
+            {
+              "originalPosition": 100,
+              "body": "\"as well as a\" looks like an unfinished sentence.",
+              "createdAt": "2026-06-05T14:35:59Z",
+              "updatedAt": "2026-06-05T14:35:59Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 3,
       "id": "PR_kwDOQr7OuM7id3ou",
       "title": "Add validation test",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/3",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-04T00:14:05Z",
-      "updatedAt": "2026-06-04T00:14:05Z",
+      "updatedAt": "2026-06-05T17:45:21Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "cd911369d7e6f215b557735fa3581b6c213d898f",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "add-validation-test",
       "headRefOid": "cb63b3c6f034892cec4e57e20caa1a42e828ec2d",
+      "closedAt": "2026-06-05T17:45:21Z",
+      "mergedAt": "2026-06-05T17:45:21Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "e43f07f366e78afcd7301575a68641f04eceaa06"
+      },
+      "comments": [
+        {
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "body": "I only inspected visually, but this looks good to me.",
+          "createdAt": "2026-06-05T14:42:50Z",
+          "updatedAt": "2026-06-05T14:42:50Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOQr7OuM7jOom1",
+      "title": "Adds a schema for contacts and clarifies @type and id for contacts",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/4",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-06-05T19:10:25Z",
+      "updatedAt": "2026-06-05T19:10:25Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "e43f07f366e78afcd7301575a68641f04eceaa06",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "contact-schema",
+      "headRefOid": "5b253da05c7a1d7b6333f0b9abad63fd79a6790f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
