@@ -526,7 +526,7 @@ explains how to use the fields and structures of those specifications within a P
 
 #### Individual Contact Items
 
-Individual contact items build on {{JSContact}} which builds on {{vCard}}.
+Individual contact items build on {{RFC9610}} and {{JSContact}} which build on {{vCard}}.
 
 * The globally unique `uid` property is mandatory in JSContact and MUST be included in PDP archive.
 * The `updated` property is optional in JSContact but MUST be included in PDP archive.
@@ -534,13 +534,21 @@ Individual contact items build on {{JSContact}} which builds on {{vCard}}.
 may already be available in implementations.  It MAY also be included as a field on a contact,
 in which case it is a simple value field holding a timestamp.
 
-* The `@type` property should be "ContactCard".  Note that {{JSContact}} uses a value
-of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml,
-but JMAP for Contacts uses "ContactCard" and registers that in https://www.iana.org/assignments/jmap/jmap.xhtml.
+* The `@type` property should be "Card" because {{JSContact}} uses a value
+of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml.
+JMAP for Contacts uses "ContactCard" and registers that in
+https://www.iana.org/assignments/jmap/jmap.xhtml but does not use that as a `@type` value directly.
 
+
+~~~
+{::include ./schemas/contact-schema.json}
+~~~
 
 We make some specific requirements on the `updated` value so that it can be
 useful for synchronization.  See the section on `updated` and `uid` specifically {{uid-updated}}.
+Cards can also have an `id` value; nevertheless `uid` is required by this specification
+for consistency of identifying different kinds of objects.  See also how {{RFC9610}} contrasts
+`id` with `uid`.
 
 When the structured data is prepared, a contact can be exported in a file with an arbitrary name
 using a limited set of characters suitable for interoperability across filesystems.
@@ -550,7 +558,7 @@ For example, a file called 'contact1.json' could contain:
 ~~~
 {::include ./examples/contact.json}
 ~~~
-{: #example3 title="A contact.json example"}
+{: #example3 title="A contact example called contact1.json in the export"}
 
 
 For clarity, this example includes:
@@ -560,7 +568,6 @@ For clarity, this example includes:
 though notes are also an object that can be included as individual files in a PDPArchive export.
 
 
-TODO:  figure out if these can have RFC9610 "id" field
 
 Because a ContactCard item can reference an AddressBook item, if a system exports contacts
 belonging to address books it SHOULD also export the referenced AddressBook objects.  Likewise,
@@ -584,7 +591,7 @@ could include:
 ~~~
 {::include ./examples/group-contact.json}
 ~~~
-{: #example4 title="A group contact file example"}
+{: #example4 title="A group contact file example in the export as contact2.json"}
 
 
 As with individual ContactCard items referencing objects that are not exported at the same time,

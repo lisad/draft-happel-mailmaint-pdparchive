@@ -1,13 +1,15 @@
 {
-   "@type": "ContactCard",
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+   "@type": "Card",
    "version": "1.0",
    "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
    "id": "42",
+   "created": "2021-10-31T22:27:10Z",
    "updated": "2021-10-31T22:27:10Z",
    "kind": "individual",
-   "addressBookIds": [
-      "062adcfa-105d-455c-bc60-6db68b69c3f3"
-   ],
+   "addressBookIds": {
+      "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+   },
    "name": {
        "components": [
          { "kind": "given", "value": "John" },
