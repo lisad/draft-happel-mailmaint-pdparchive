@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dusseault, et al.</td>
-<td class="center">Expires 7 December 2026</td>
+<td class="center">Expires 10 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-mailmaint-pdparchive-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-05" class="published">5 June 2026</time>
+<time datetime="2026-06-08" class="published">8 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-07">7 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-10">10 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1129,7 +1129,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 10 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2368,7 +2368,7 @@ explains how to use the fields and structures of those specifications within a P
             <h5 id="name-individual-contact-items">
 <a href="#section-6.3.2.1" class="section-number selfRef">6.3.2.1. </a><a href="#name-individual-contact-items" class="section-name selfRef">Individual Contact Items</a>
             </h5>
-<p id="section-6.3.2.1-1">Individual contact items build on <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span> which builds on <span>[<a href="#vCard" class="cite xref">vCard</a>]</span>.<a href="#section-6.3.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-6.3.2.1-1">Individual contact items build on <span>[<a href="#RFC9610" class="cite xref">RFC9610</a>]</span> and <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span> which build on <span>[<a href="#vCard" class="cite xref">vCard</a>]</span>.<a href="#section-6.3.2.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.3.2.1-2.1">
                 <p id="section-6.3.2.1-2.1.1">The globally unique <code>uid</code> property is mandatory in JSContact and <span class="bcp14">MUST</span> be included in PDP archive.<a href="#section-6.3.2.1-2.1.1" class="pilcrow">¶</a></p>
@@ -2382,30 +2382,168 @@ may already be available in implementations.  It <span class="bcp14">MAY</span> 
 in which case it is a simple value field holding a timestamp.<a href="#section-6.3.2.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-6.3.2.1-2.4">
-                <p id="section-6.3.2.1-2.4.1">The <code>@type</code> property should be "ContactCard".  Note that <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span> uses a value
-of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml,
-but JMAP for Contacts uses "ContactCard" and registers that in https://www.iana.org/assignments/jmap/jmap.xhtml.<a href="#section-6.3.2.1-2.4.1" class="pilcrow">¶</a></p>
+                <p id="section-6.3.2.1-2.4.1">The <code>@type</code> property should be "Card" because <span>[<a href="#JSContact" class="cite xref">JSContact</a>]</span> uses a value
+of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml.
+JMAP for Contacts uses "ContactCard" and registers that in
+https://www.iana.org/assignments/jmap/jmap.xhtml but does not use that as a <code>@type</code> value directly.<a href="#section-6.3.2.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-6.3.2.1-3">We make some specific requirements on the <code>updated</code> value so that it can be
-useful for synchronization.  See the section on <code>updated</code> and <code>uid</code> specifically <a href="#uid-updated" class="auto internal xref">Section 6.4.1</a>.<a href="#section-6.3.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-6.3.2.1-4">When the structured data is prepared, a contact can be exported in a file with an arbitrary name
-using a limited set of characters suitable for interoperability across filesystems.<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-6.3.2.1-5">For example, a file called 'contact1.json' could contain:<a href="#section-6.3.2.1-5" class="pilcrow">¶</a></p>
-<span id="name-a-contactjson-example"></span><div id="example3">
-<figure id="figure-7">
-              <div class="alignLeft art-text artwork" id="section-6.3.2.1-6.1">
+<div class="alignLeft art-text artwork" id="section-6.3.2.1-3">
 <pre>
 {
-   "@type": "ContactCard",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Contact",
+  "type": "object",
+  "required": ["@type", "version", "uid", "updated"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Card"
+    },
+    "version": {
+      "type": "string"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the contact",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP ID for the contact",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rev": {
+      "description": "Revision timestamp from vCard RFC6350; may be included alongside updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["individual", "group", "org", "location", "device", "application"]
+    },
+    "addressBookIds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "full": {
+          "type": "string"
+        },
+        "defaultSeparator": {
+          "type": "string"
+        },
+        "isOrdered": {
+          "type": "boolean"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["title", "given", "given2", "surname", "surname2",
+                         "generation", "credential", "separator"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "phonetic": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "members": {
+      "description": "For group contacts; maps member UIDs to true",
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "relatedTo": {
+      "description": "Maps UIDs of related contacts to relation objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "description": "Maps note IDs to note objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "note": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+</pre><a href="#section-6.3.2.1-3" class="pilcrow">¶</a>
+</div>
+<p id="section-6.3.2.1-4">We make some specific requirements on the <code>updated</code> value so that it can be
+useful for synchronization.  See the section on <code>updated</code> and <code>uid</code> specifically <a href="#uid-updated" class="auto internal xref">Section 6.4.1</a>.
+Cards can also have an <code>id</code> value; nevertheless <code>uid</code> is required by this specification
+for consistency of identifying different kinds of objects.  See also how <span>[<a href="#RFC9610" class="cite xref">RFC9610</a>]</span> contrasts
+<code>id</code> with <code>uid</code>.<a href="#section-6.3.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-6.3.2.1-5">When the structured data is prepared, a contact can be exported in a file with an arbitrary name
+using a limited set of characters suitable for interoperability across filesystems.<a href="#section-6.3.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-6.3.2.1-6">For example, a file called 'contact1.json' could contain:<a href="#section-6.3.2.1-6" class="pilcrow">¶</a></p>
+<span id="name-a-contact-example-called-co"></span><div id="example3">
+<figure id="figure-7">
+              <div class="alignLeft art-text artwork" id="section-6.3.2.1-7.1">
+<pre>
+{
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+   "@type": "Card",
    "version": "1.0",
    "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
    "id": "42",
+   "created": "2021-10-31T22:27:10Z",
    "updated": "2021-10-31T22:27:10Z",
    "kind": "individual",
-   "addressBookIds": [
-      "062adcfa-105d-455c-bc60-6db68b69c3f3"
-   ],
+   "addressBookIds": {
+      "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+   },
    "name": {
        "components": [
          { "kind": "given", "value": "John" },
@@ -2435,15 +2573,14 @@ using a limited set of characters suitable for interoperability across filesyste
 </pre>
 </div>
 <figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
-<a href="#name-a-contactjson-example" class="selfRef">A contact.json example</a>
+<a href="#name-a-contact-example-called-co" class="selfRef">A contact example called contact1.json in the export</a>
               </figcaption></figure>
 </div>
-<p id="section-6.3.2.1-7">For clarity, this example includes:
+<p id="section-6.3.2.1-8">For clarity, this example includes:
 * How a card can reference address books which are exported as separate files in the overall export
 * How a card can reference other cards using <code>relatedTo</code>
 * A card can contain arbitrary notes - those are not necessarily exported as separate files even
-though notes are also an object that can be included as individual files in a PDPArchive export.<a href="#section-6.3.2.1-7" class="pilcrow">¶</a></p>
-<p id="section-6.3.2.1-8">TODO:  figure out if these can have RFC9610 "id" field<a href="#section-6.3.2.1-8" class="pilcrow">¶</a></p>
+though notes are also an object that can be included as individual files in a PDPArchive export.<a href="#section-6.3.2.1-8" class="pilcrow">¶</a></p>
 <p id="section-6.3.2.1-9">Because a ContactCard item can reference an AddressBook item, if a system exports contacts
 belonging to address books it <span class="bcp14">SHOULD</span> also export the referenced AddressBook objects.  Likewise,
 it <span class="bcp14">SHOULD</span> export the other ContactCard objects that are referenced in the 'relatedTo' field.
@@ -2484,7 +2621,7 @@ could include:<a href="#section-6.3.2.2-1" class="pilcrow">¶</a></p>
 </pre>
 </div>
 <figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
-<a href="#name-a-group-contact-file-exampl" class="selfRef">A group contact file example</a>
+<a href="#name-a-group-contact-file-exampl" class="selfRef">A group contact file example in the export as contact2.json</a>
               </figcaption></figure>
 </div>
 <p id="section-6.3.2.2-3">As with individual ContactCard items referencing objects that are not exported at the same time,

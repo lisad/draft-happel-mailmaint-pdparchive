@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 7 December 2026                                         audriga
+Expires: 10 December 2026                                        audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                             5 June 2026
+                                                             8 June 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2026.
+   This Internet-Draft will expire on 10 December 2026.
 
 Copyright Notice
 
@@ -1174,8 +1174,8 @@ Table of Contents
 
 6.3.2.1.  Individual Contact Items
 
-   Individual contact items build on [JSContact] which builds on
-   [vCard].
+   Individual contact items build on [RFC9610] and [JSContact] which
+   build on [vCard].
 
    *  The globally unique uid property is mandatory in JSContact and
       MUST be included in PDP archive.
@@ -1188,15 +1188,148 @@ Table of Contents
       also be included as a field on a contact, in which case it is a
       simple value field holding a timestamp.
 
-   *  The @type property should be "ContactCard".  Note that [JSContact]
-      uses a value of "Card" for @type and registers that in
-      https://www.iana.org/assignments/jscontact/jscontact.xhtml, but
-      JMAP for Contacts uses "ContactCard" and registers that in
-      https://www.iana.org/assignments/jmap/jmap.xhtml.
+   *  The @type property should be "Card" because [JSContact] uses a
+      value of "Card" for @type and registers that in
+      https://www.iana.org/assignments/jscontact/jscontact.xhtml.  JMAP
+      for Contacts uses "ContactCard" and registers that in
+      https://www.iana.org/assignments/jmap/jmap.xhtml but does not use
+      that as a @type value directly.
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Contact",
+  "type": "object",
+  "required": ["@type", "version", "uid", "updated"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Card"
+    },
+    "version": {
+      "type": "string"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the contact",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP ID for the contact",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rev": {
+      "description": "Revision timestamp from vCard RFC6350; may be included alongside updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["individual", "group", "org", "location", "device", "application"]
+    },
+    "addressBookIds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "full": {
+          "type": "string"
+        },
+        "defaultSeparator": {
+          "type": "string"
+        },
+        "isOrdered": {
+          "type": "boolean"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["title", "given", "given2", "surname", "surname2",
+                         "generation", "credential", "separator"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "phonetic": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "members": {
+      "description": "For group contacts; maps member UIDs to true",
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "relatedTo": {
+      "description": "Maps UIDs of related contacts to relation objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "description": "Maps note IDs to note objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "note": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
 
    We make some specific requirements on the updated value so that it
    can be useful for synchronization.  See the section on updated and
-   uid specifically Section 6.4.1.
+   uid specifically Section 6.4.1.  Cards can also have an id value;
+   nevertheless uid is required by this specification for consistency of
+   identifying different kinds of objects.  See also how [RFC9610]
+   contrasts id with uid.
 
    When the structured data is prepared, a contact can be exported in a
    file with an arbitrary name using a limited set of characters
@@ -1205,15 +1338,17 @@ Table of Contents
    For example, a file called 'contact1.json' could contain:
 
    {
-      "@type": "ContactCard",
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+      "@type": "Card",
       "version": "1.0",
       "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
       "id": "42",
+      "created": "2021-10-31T22:27:10Z",
       "updated": "2021-10-31T22:27:10Z",
       "kind": "individual",
-      "addressBookIds": [
-         "062adcfa-105d-455c-bc60-6db68b69c3f3"
-      ],
+      "addressBookIds": {
+         "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+      },
       "name": {
           "components": [
             { "kind": "given", "value": "John" },
@@ -1241,7 +1376,7 @@ Table of Contents
       }
    }
 
-                      Figure 7: A contact.json example
+       Figure 7: A contact example called contact1.json in the export
 
    For clarity, this example includes: * How a card can reference
    address books which are exported as separate files in the overall
@@ -1249,8 +1384,6 @@ Table of Contents
    card can contain arbitrary notes - those are not necessarily exported
    as separate files even though notes are also an object that can be
    included as individual files in a PDPArchive export.
-
-   TODO: figure out if these can have RFC9610 "id" field
 
    Because a ContactCard item can reference an AddressBook item, if a
    system exports contacts belonging to address books it SHOULD also
@@ -1287,7 +1420,7 @@ Table of Contents
       }
    }
 
-                   Figure 8: A group contact file example
+   Figure 8: A group contact file example in the export as contact2.json
 
    As with individual ContactCard items referencing objects that are not
    exported at the same time, a group contact can contain references
