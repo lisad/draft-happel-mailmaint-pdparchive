@@ -1,4 +1,5 @@
 {
+   "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
    "@type": "AddressBook",
    "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
    "updated": "2020-01-09T14:32:01Z",

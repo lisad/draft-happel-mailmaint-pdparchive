@@ -1,0 +1,65 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Address Book",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "name"],
+  "$defs": {
+    "rights": {
+      "type": "object",
+      "properties": {
+        "mayRead": { "type": "boolean" },
+        "mayWrite": { "type": "boolean" },
+        "mayShare": { "type": "boolean" },
+        "mayDelete": { "type": "boolean" }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "AddressBook"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the address book",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the address book",
+      "type": "string"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "sortOrder": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "isDefault": {
+      "type": "boolean"
+    },
+    "isSubscribed": {
+      "type": "boolean"
+    },
+    "shareWith": {
+      "description": "Maps principal IDs to their rights; null if not shared",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/rights"
+      }
+    },
+    "myRights": {
+      "$ref": "#/$defs/rights"
+    }
+  }
+}
