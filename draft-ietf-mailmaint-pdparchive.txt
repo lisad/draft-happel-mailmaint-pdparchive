@@ -5,10 +5,10 @@
 mailmaint                                                   L. Dusseault
 Internet-Draft                                  Data Transfer Initiative
 Intended status: Standards Track                            H. J. Happel
-Expires: 10 December 2026                                        audriga
+Expires: 11 December 2026                                        audriga
                                                              A. Melnikov
                                                                Isode Ltd
-                                                             8 June 2026
+                                                             9 June 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 December 2026.
+   This Internet-Draft will expire on 11 December 2026.
 
 Copyright Notice
 
@@ -1407,7 +1407,9 @@ Table of Contents
    an arbitrary name like "contact2.json" could include:
 
    {
-      "@type": "ContactCard",
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+      "@type": "Card",
+      "version": "1.0",
       "kind": "group",
       "name": {
         "full": "The Doe family"
