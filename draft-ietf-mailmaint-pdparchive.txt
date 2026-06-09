@@ -1456,6 +1456,7 @@ Table of Contents
    A file with an arbitrary name like address-book1.json would contain:
 
    {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
       "@type": "AddressBook",
       "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
       "updated": "2020-01-09T14:32:01Z",
@@ -1485,6 +1486,7 @@ Table of Contents
    address-book2.json would contain:
 
    {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
       "@type": "AddressBook",
       "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
       "updated": "2020-01-09T14:32:01Z",
