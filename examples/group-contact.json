@@ -1,5 +1,7 @@
 {
-   "@type": "ContactCard",
+   "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+   "@type": "Card",
+   "version": "1.0",
    "kind": "group",
    "name": {
      "full": "The Doe family"
