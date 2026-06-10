@@ -1,0 +1,131 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/calendar",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Calendar Collection",
+  "description": "A Calendar collection object as defined in JMAP for Calendars (draft-ietf-jmap-calendars).",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "name"],
+  "$defs": {
+    "calendarRights": {
+      "description": "CalendarRights object as defined in JMAP for Calendars",
+      "type": "object",
+      "properties": {
+        "mayReadFreeBusy":   { "type": "boolean" },
+        "mayReadItems":      { "type": "boolean" },
+        "mayWriteAll":       { "type": "boolean" },
+        "mayWriteOwn":       { "type": "boolean" },
+        "mayUpdatePrivate":  { "type": "boolean" },
+        "mayRSVP":           { "type": "boolean" },
+        "mayShare":          { "type": "boolean" },
+        "mayDelete":         { "type": "boolean" }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": ["@type", "trigger"],
+      "properties": {
+        "@type": { "type": "string", "const": "Alert" },
+        "trigger": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["@type", "offset"],
+              "properties": {
+                "@type":      { "type": "string", "const": "OffsetTrigger" },
+                "offset":     { "type": "string" },
+                "relativeTo": { "type": "string", "enum": ["start", "end"] }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["@type", "when"],
+              "properties": {
+                "@type": { "type": "string", "const": "AbsoluteTrigger" },
+                "when":  { "type": "string", "format": "date-time" }
+              }
+            }
+          ]
+        },
+        "acknowledged": { "type": "string", "format": "date-time" },
+        "action": { "type": "string", "enum": ["display", "email", "uri"] }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Calendar"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the calendar; referenced by Event calendarIds",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the calendar",
+      "type": "string"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "color": {
+      "description": "CSS color value used to distinguish the calendar visually",
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "isDefault": {
+      "type": "boolean"
+    },
+    "isSubscribed": {
+      "type": "boolean"
+    },
+    "isVisible": {
+      "type": "boolean"
+    },
+    "includeInAvailability": {
+      "description": "Which events contribute to free/busy availability",
+      "type": "string",
+      "enum": ["all", "attending", "none"]
+    },
+    "timeZone": {
+      "description": "IANA time zone identifier used as default for events without their own time zone",
+      "type": ["string", "null"]
+    },
+    "defaultAlertsWithTime": {
+      "description": "Default alerts applied to timed events when the event has useDefaultAlerts: true; null clears inherited defaults",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/alert"
+      }
+    },
+    "defaultAlertsWithoutTime": {
+      "description": "Default alerts applied to all-day events when the event has useDefaultAlerts: true; null clears inherited defaults",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/alert"
+      }
+    },
+    "shareWith": {
+      "description": "Maps principal IDs to their CalendarRights; null if not shared",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/calendarRights"
+      }
+    },
+    "myRights": {
+      "$ref": "#/$defs/calendarRights"
+    }
+  }
+}

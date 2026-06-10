@@ -1,4 +1,5 @@
 {
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/calendar",
   "@type": "Calendar",
   "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
   "updated": "2020-01-09T14:32:01Z",
@@ -8,8 +9,12 @@
   "isDefault": true,
   "isSubscribed": true,
   "myRights": {
-    "mayRead": true,
-    "mayWrite": true,
+    "mayReadFreeBusy": true,
+    "mayReadItems": true,
+    "mayWriteAll": true,
+    "mayWriteOwn": true,
+    "mayUpdatePrivate": true,
+    "mayRSVP": true,
     "mayShare": true,
     "mayDelete": false
   }
