@@ -2184,9 +2184,7 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
             "description": "Either an IMAP UID (non-zero unsigned 32-bit integer) or a string identifier such as a UUID",
             "oneOf": [
               {
-                "type": "integer",
-                "minimum": 1,
-                "exclusiveMaximum": 4294967296
+                "$ref": "#/$defs/imap-nz-number"
               },
               {
                 "type": "string"
