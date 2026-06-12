@@ -2091,6 +2091,27 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Folder Manifest",
 
+  "$defs": {
+    "mod-sequence-value": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 18446744073709551616,
+      "$comment": "Per RFC4551, a 'mod-sequence-value' is a positive unsigned 64-bit integer"
+    },
+    "imap-number": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 4294967296,
+      "$comment": "IMAP unsigned 32-bit integer"
+    },
+    "imap-nz-number": {
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 4294967296,
+      "$comment": "IMAP non-zero unsigned 32-bit integer"
+    }
+  },
+
   "type": "object",
   "required": ["name", "items"],
   "properties": {
@@ -2120,15 +2141,11 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
     "modseqs": {
       "type": "object",
       "additionalProperties": {
-        "type": "integer",
-        "minimum": 0,
-        "exclusiveMaximum": 18446744073709551616
+        "$ref": "#/$defs/mod-sequence-value"
       }
     },
     "highest_modseq": {
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 18446744073709551616
+      "$ref": "#/$defs/mod-sequence-value"
     },
     "special_use": {
       "type": "string",
@@ -2147,21 +2164,15 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
     },
     "last_uid": {
       "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-number"
     },
     "recent_uid": {
       "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-number"
     },
     "uidvalidity": {
       "description": "Follows the IMAP4 requirements for non-zero unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 1,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-nz-number"
     },
     "items": {
       "type": "array",
@@ -2173,9 +2184,7 @@ are specific to IMAP folders are not required.<a href="#section-6.3.1-6" class="
             "description": "Either an IMAP UID (non-zero unsigned 32-bit integer) or a string identifier such as a UUID",
             "oneOf": [
               {
-                "type": "integer",
-                "minimum": 1,
-                "exclusiveMaximum": 4294967296
+                "$ref": "#/$defs/imap-nz-number"
               },
               {
                 "type": "string"
