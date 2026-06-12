@@ -736,6 +736,11 @@ TODO: fix the relationship between folder.json and calendar metadata
 Tasks are also defined by {{JSCalendar}} using the "Task" object type.
 As with events, tasks MUST include the uid and updated fields to support synchronization.
 
+~~~
+{::include ./schemas/task-schema.json}
+~~~
+{: #task-schema title="Schema for tasks"}
+
 For example, a file called task1.json could contain:
 
 ~~~
