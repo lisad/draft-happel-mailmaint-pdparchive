@@ -481,7 +481,7 @@ are specific to IMAP folders are not required.
 ~~~~~~~~~~
 {::include ./schemas/folder-schema.json}
 ~~~~~~~~~~
-{: #schema1 title="General JSON Schema for folder.json"}
+{: #folder-schema title="General JSON Schema for folder.json"}
 
 
 
@@ -543,6 +543,7 @@ https://www.iana.org/assignments/jmap/jmap.xhtml but does not use that as a `@ty
 ~~~
 {::include ./schemas/contact-schema.json}
 ~~~
+{: #contact-schema title="Schema for contacts"}
 
 We make some specific requirements on the `updated` value so that it can be
 useful for synchronization.  See the section on `updated` and `uid` specifically {{uid-updated}}.
@@ -618,6 +619,13 @@ be represented as individual files in a PDPArchive. However, some things are mis
 * `updated` is required
 * The `@type` of AddressBook should be included within the data
 
+In the schema below, `myRights` (camelCase) is a JSON object with named boolean fields, unlike the IMAP `myrights` property which is a compact string of right-characters (e.g. `"rwiptsld"`).
+
+~~~
+{::include ./schemas/address-book-schema.json}
+~~~
+{: #address-book-schema title="Schema for address book objects"}
+
 
 This example copies the examples in {{RFC9610}} so that interoperability between this spec and that one
 is clear.
@@ -681,6 +689,11 @@ destination for the data wants expanded recurrences within a specific time perio
 * The `calendarIds` field defined in JMAP Calendars is REQUIRED in order to match up
 events to the calendar they are supposed to appear in.
 
+~~~
+{::include ./schemas/event-schema.json}
+~~~
+{: #event-schema title="Schema for events"}
+
 
 For example, a file called event1.json could contain:
 
@@ -698,6 +711,12 @@ Calendar collection items are built using JMAP for Calendars (draft-ietf-jmap-ca
 
 If a system exports events belonging to calendars, it SHOULD also export the referenced Calendar objects.
 
+`myRights` uses the same JSON object structure as in the Address Book schema, but the set of rights is defined by JMAP Calendars rather than JMAP Contacts, so the property names differ.
+
+~~~
+{::include ./schemas/calendar-schema.json}
+~~~
+{: #calendar-schema title="Schema for calendar collections"}
 
 A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \calendars\calendar2\) would contain the calendar's metadata:
 
