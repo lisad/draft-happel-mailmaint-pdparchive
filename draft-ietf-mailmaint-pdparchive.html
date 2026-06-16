@@ -1053,7 +1053,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Dusseault, et al.</td>
-<td class="center">Expires 14 December 2026</td>
+<td class="center">Expires 18 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg {
 <dd class="internet-draft">draft-ietf-mailmaint-pdparchive-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-12" class="published">12 June 2026</time>
+<time datetime="2026-06-16" class="published">16 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-14">14 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-18">18 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1129,7 +1129,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 18 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2876,6 +2876,11 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
   "type": "object",
   "required": ["@type", "uid", "updated", "calendarIds"],
   "$defs": {
+    "LocalDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+      "$comment": "ISO 8601 date-time with no UTC offset; interpreted in the timeZone property"
+    },
     "participant": {
       "type": "object",
       "properties": {
@@ -2891,7 +2896,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           "format": "email"
         },
         "sendTo": {
-          "description": "Maps delivery method (e.g. 'mailto', 'imip') to the address for that method",
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -2902,7 +2906,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           "enum": ["individual", "group", "resource", "location"]
         },
         "roles": {
-          "description": "Maps role names to true; roles include owner, attendee, optional, informational, chair, contact",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
@@ -2919,21 +2922,18 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           "type": "boolean"
         },
         "delegatedTo": {
-          "description": "Maps participant IDs to true for participants this one has delegated to",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
           }
         },
         "delegatedFrom": {
-          "description": "Maps participant IDs to true for participants this one was delegated from",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
           }
         },
         "memberOf": {
-          "description": "Maps group participant IDs to true for groups this participant belongs to",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
@@ -2956,7 +2956,8 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
         },
         "coordinates": {
           "description": "Geo URI as defined in RFC 5870",
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "timeZone": {
           "type": "string"
@@ -3081,7 +3082,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           "minimum": 1
         },
         "rscale": {
-          "description": "Calendar system for recurrence, e.g. 'gregorian'",
           "type": "string"
         },
         "skip": {
@@ -3146,8 +3146,8 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
           "minimum": 1
         },
         "until": {
-          "description": "LocalDateTime string (no UTC offset) giving the last allowed occurrence",
-          "type": "string"
+          "description": "LocalDateTime giving the last allowed occurrence",
+          "$ref": "#/$defs/LocalDateTime"
         }
       }
     }
@@ -3174,6 +3174,9 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       "type": "string",
       "format": "date-time"
     },
+    "prodId": {
+      "type": "string"
+    },
     "sequence": {
       "description": "Monotonically increasing revision counter; SHOULD be included if available",
       "type": "integer",
@@ -3186,13 +3189,10 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       "type": "string"
     },
     "descriptionContentType": {
-      "description": "Media type of the description field, e.g. 'text/html'",
       "type": "string"
     },
     "start": {
-      "description": "Event start as a LocalDateTime (ISO 8601 date-time with no UTC offset), interpreted in the timeZone property",
-      "type": "string",
-      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$"
+      "$ref": "#/$defs/LocalDateTime"
     },
     "timeZone": {
       "description": "IANA time zone identifier for the start time",
@@ -3207,7 +3207,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       "enum": ["confirmed", "cancelled", "tentative"]
     },
     "priority": {
-      "description": "Priority from 0 (undefined) to 9 (lowest); 1 is highest",
       "type": "integer",
       "minimum": 0,
       "maximum": 9
@@ -3225,7 +3224,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       "type": "string"
     },
     "calendarIds": {
-      "description": "Maps calendar UIDs to true; REQUIRED to associate event with its calendar",
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {
@@ -3233,14 +3231,12 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       }
     },
     "participants": {
-      "description": "Maps participant IDs to Participant objects",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/participant"
       }
     },
     "locations": {
-      "description": "Maps location IDs to Location objects",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/location"
@@ -3267,14 +3263,12 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       }
     },
     "keywords": {
-      "description": "Maps keyword strings to true",
       "type": "object",
       "additionalProperties": {
         "type": "boolean"
       }
     },
     "categories": {
-      "description": "Maps category strings to true",
       "type": "object",
       "additionalProperties": {
         "type": "boolean"
@@ -3288,7 +3282,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       }
     },
     "useDefaultAlerts": {
-      "description": "If true, the calendar's default alerts apply when the alerts property is absent",
       "type": "boolean"
     },
     "recurrenceRules": {
@@ -3304,7 +3297,6 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
       }
     },
     "recurrenceOverrides": {
-      "description": "Maps recurrence LocalDateTime keys to partial Event objects overriding that occurrence",
       "type": "object",
       "additionalProperties": {
         "type": "object"
@@ -3547,23 +3539,325 @@ events to the calendar they are supposed to appear in.<a href="#section-6.3.4-5.
             </h5>
 <p id="section-6.3.5.1-1">Tasks are also defined by <span>[<a href="#JSCalendar" class="cite xref">JSCalendar</a>]</span> using the "Task" object type.
 As with events, tasks <span class="bcp14">MUST</span> include the uid and updated fields to support synchronization.<a href="#section-6.3.5.1-1" class="pilcrow">¶</a></p>
-<p id="section-6.3.5.1-2">For example, a file called task1.json could contain:<a href="#section-6.3.5.1-2" class="pilcrow">¶</a></p>
-<span id="name-task-example"></span><div id="task1">
+<span id="name-schema-for-tasks"></span><div id="task-schema">
 <figure id="figure-17">
-              <div class="alignLeft art-text artwork" id="section-6.3.5.1-3.1">
+              <div class="alignLeft art-text artwork" id="section-6.3.5.1-2.1">
 <pre>
 {
-  "@type": "Task",
-  "uid": "7b0f69a6-6e3e-4f1b-85d8-c89b43d2f2a1",
-  "updated": "2022-11-23T15:01:32Z",
-  "title": "Submit Quarterly Report",
-  "status": "in-progress",
-  "priority": 1,
-  "due": "2024-12-31T23:59:59Z"
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/task",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Task",
+  "description": "A JSCalendar Task object as defined in RFC 8984.",
+  "type": "object",
+  "required": ["@type", "uid", "updated"],
+  "$defs": {
+    "LocalDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+      "$comment": "ISO 8601 date-time with no UTC offset; interpreted in the timeZone property"
+    },
+    "participant": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "const": "Participant" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "sendTo": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["individual", "group", "resource", "location"]
+        },
+        "roles": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "participationStatus": {
+          "type": "string",
+          "enum": ["needs-action", "accepted", "declined", "tentative", "delegated"]
+        },
+        "participationComment": { "type": "string" },
+        "expectReply": { "type": "boolean" }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": ["href"],
+      "properties": {
+        "@type": { "type": "string", "const": "Link" },
+        "href": { "type": "string", "format": "uri" },
+        "cid": { "type": "string" },
+        "contentType": { "type": "string" },
+        "size": { "type": "integer", "minimum": 0 },
+        "rel": { "type": "string" },
+        "display": {
+          "type": "string",
+          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
+        },
+        "title": { "type": "string" }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": ["@type", "trigger"],
+      "properties": {
+        "@type": { "type": "string", "const": "Alert" },
+        "trigger": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["@type", "offset"],
+              "properties": {
+                "@type": { "type": "string", "const": "OffsetTrigger" },
+                "offset": { "type": "string" },
+                "relativeTo": { "type": "string", "enum": ["start", "end"] }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["@type", "when"],
+              "properties": {
+                "@type": { "type": "string", "const": "AbsoluteTrigger" },
+                "when": { "type": "string", "format": "date-time" }
+              }
+            }
+          ]
+        },
+        "acknowledged": { "type": "string", "format": "date-time" },
+        "action": { "type": "string", "enum": ["display", "email", "uri"] }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "const": "Location" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "coordinates": {
+          "description": "Geo URI as defined in RFC 5870",
+          "type": "string",
+          "format": "uri"
+        },
+        "timeZone": { "type": "string" },
+        "relativeTo": { "type": "string", "enum": ["start", "end"] },
+        "links": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/link" }
+        }
+      }
+    },
+    "recurrenceRule": {
+      "type": "object",
+      "required": ["frequency"],
+      "properties": {
+        "@type": { "type": "string", "const": "RecurrenceRule" },
+        "frequency": {
+          "type": "string",
+          "enum": ["secondly", "minutely", "hourly", "daily", "weekly", "monthly", "yearly"]
+        },
+        "interval": { "type": "integer", "minimum": 1 },
+        "firstDayOfWeek": {
+          "type": "string",
+          "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+        },
+        "byDay": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["day"],
+            "properties": {
+              "@type": { "type": "string", "const": "NDay" },
+              "day": {
+                "type": "string",
+                "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+              },
+              "nthOfPeriod": { "type": "integer" }
+            }
+          }
+        },
+        "byMonthDay": { "type": "array", "items": { "type": "integer" } },
+        "byMonth": { "type": "array", "items": { "type": "string" } },
+        "count": { "type": "integer", "minimum": 1 },
+        "until": {
+          "description": "LocalDateTime giving the last allowed occurrence",
+          "$ref": "#/$defs/LocalDateTime"
+        }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Task"
+    },
+    "uid": {
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the task",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "description": "Last-modified timestamp; MUST be included for synchronization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "prodId": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "descriptionContentType": {
+      "type": "string"
+    },
+    "start": {
+      "$ref": "#/$defs/LocalDateTime"
+    },
+    "due": {
+      "$ref": "#/$defs/LocalDateTime"
+    },
+    "timeZone": {
+      "description": "IANA time zone identifier for the start and due times",
+      "type": "string"
+    },
+    "estimatedDuration": {
+      "description": "ISO 8601 duration string estimating time to complete",
+      "type": "string"
+    },
+    "percentComplete": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "progress": {
+      "description": "Task progress status per RFC 8984",
+      "type": "string",
+      "enum": ["needs-action", "in-progress", "completed", "failed", "cancelled"]
+    },
+    "progressUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "privacy": {
+      "type": "string",
+      "enum": ["public", "private", "secret"]
+    },
+    "color": {
+      "type": "string"
+    },
+    "participants": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/participant" }
+    },
+    "locations": {
+      "description": "Maps location IDs to Location objects",
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/location" }
+    },
+    "virtualLocations": {
+      "description": "Maps virtual location IDs to VirtualLocation objects (e.g. video conference links)",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "VirtualLocation" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "uri": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "relatedTo": {
+      "description": "Maps related object UIDs to Relation objects describing the relationship",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "Relation" },
+          "relation": {
+            "description": "Maps relation type (e.g. parent, child, first, next) to true",
+            "type": "object",
+            "additionalProperties": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/link" }
+    },
+    "keywords": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "alerts": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/alert" }
+    },
+    "useDefaultAlerts": {
+      "type": "boolean"
+    },
+    "recurrenceRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/recurrenceRule" }
+    },
+    "excludedRecurrenceRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/recurrenceRule" }
+    },
+    "recurrenceOverrides": {
+      "type": "object",
+      "additionalProperties": { "type": "object" }
+    }
+  }
 }
 </pre>
 </div>
 <figcaption><a href="#figure-17" class="selfRef">Figure 17</a>:
+<a href="#name-schema-for-tasks" class="selfRef">Schema for tasks</a>
+              </figcaption></figure>
+</div>
+<p id="section-6.3.5.1-3">For example, a file called task1.json could contain:<a href="#section-6.3.5.1-3" class="pilcrow">¶</a></p>
+<span id="name-task-example"></span><div id="task1">
+<figure id="figure-18">
+              <div class="alignLeft art-text artwork" id="section-6.3.5.1-4.1">
+<pre>
+{
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/task",
+  "@type": "Task",
+  "uid": "7b0f69a6-6e3e-4f1b-85d8-c89b43d2f2a1",
+  "updated": "2022-11-23T15:01:32Z",
+  "title": "Submit Quarterly Report",
+  "progress": "in-progress",
+  "priority": 1,
+  "due": "2024-12-31T23:59:59"
+}
+</pre>
+</div>
+<figcaption><a href="#figure-18" class="selfRef">Figure 18</a>:
 <a href="#name-task-example" class="selfRef">Task example</a>
               </figcaption></figure>
 </div>
