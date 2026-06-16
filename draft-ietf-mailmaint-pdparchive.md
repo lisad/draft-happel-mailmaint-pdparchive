@@ -27,15 +27,15 @@ venue:
 
 author:
  -
-    ins: L. Dusseault
-    fullname: Lisa Dusseault
-    organization: Data Transfer Initiative
-    email: lisa@dtinit.org
- -
     ins: H.J. Happel
     fullname: Hans-Joerg Happel
     organization: audriga
     email: hans-joerg@audriga.com
+ -
+    ins: L. Dusseault
+    fullname: Lisa Dusseault
+    organization: Data Transfer Initiative
+    email: lisa@dtinit.org
 
  -
     ins: A. Melnikov
@@ -914,3 +914,12 @@ Register .pdpa?
 {:numbered="false"}
 
 TODO acknowledge.
+
+# Changes
+{:numbered="false"}
+
+## Changes in draft-ietf-mailmaint-pdparchive-01
+{:numbered="false"}
+
+* Added JSON Schema (draft 2020-12) files for all defined data types: folder, archive, contact, address book, calendar, event, and task.
+* Added a folder tombstone mechanism to support incremental exports that delete previously exported folders.
