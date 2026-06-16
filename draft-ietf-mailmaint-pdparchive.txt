@@ -2,10 +2,10 @@
 
 
 
-mailmaint                                                   L. Dusseault
-Internet-Draft                                  Data Transfer Initiative
-Intended status: Standards Track                            H. J. Happel
-Expires: 18 December 2026                                        audriga
+mailmaint                                                   H. J. Happel
+Internet-Draft                                                   audriga
+Intended status: Standards Track                            L. Dusseault
+Expires: 18 December 2026                       Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
                                                             16 June 2026
@@ -124,6 +124,8 @@ Table of Contents
      12.1.  Normative References
      12.2.  Informative References
    Acknowledgments
+   Changes
+     Changes in draft-ietf-mailmaint-pdparchive-01
    Authors' Addresses
 
 1.  Introduction
@@ -3069,16 +3071,27 @@ Acknowledgments
 
    TODO acknowledge.
 
+Changes
+
+Changes in draft-ietf-mailmaint-pdparchive-01
+
+   *  Added JSON Schema (draft 2020-12) files for all defined data
+      types: folder, archive, contact, address book, calendar, event,
+      and task.
+
+   *  Added a folder tombstone mechanism to support incremental exports
+      that delete previously exported folders.
+
 Authors' Addresses
-
-   Lisa Dusseault
-   Data Transfer Initiative
-   Email: lisa@dtinit.org
-
 
    Hans-Joerg Happel
    audriga
    Email: hans-joerg@audriga.com
+
+
+   Lisa Dusseault
+   Data Transfer Initiative
+   Email: lisa@dtinit.org
 
 
    Alexey Melnikov
