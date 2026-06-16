@@ -6,6 +6,11 @@
   "type": "object",
   "required": ["@type", "uid", "updated", "calendarIds"],
   "$defs": {
+    "LocalDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+      "$comment": "ISO 8601 date-time with no UTC offset; interpreted in the timeZone property"
+    },
     "participant": {
       "type": "object",
       "properties": {
@@ -21,7 +26,6 @@
           "format": "email"
         },
         "sendTo": {
-          "description": "Maps delivery method (e.g. 'mailto', 'imip') to the address for that method",
           "type": "object",
           "additionalProperties": {
             "type": "string"
@@ -32,7 +36,6 @@
           "enum": ["individual", "group", "resource", "location"]
         },
         "roles": {
-          "description": "Maps role names to true; roles include owner, attendee, optional, informational, chair, contact",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
@@ -49,21 +52,18 @@
           "type": "boolean"
         },
         "delegatedTo": {
-          "description": "Maps participant IDs to true for participants this one has delegated to",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
           }
         },
         "delegatedFrom": {
-          "description": "Maps participant IDs to true for participants this one was delegated from",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
           }
         },
         "memberOf": {
-          "description": "Maps group participant IDs to true for groups this participant belongs to",
           "type": "object",
           "additionalProperties": {
             "type": "boolean"
@@ -86,7 +86,8 @@
         },
         "coordinates": {
           "description": "Geo URI as defined in RFC 5870",
-          "type": "string"
+          "type": "string",
+          "format": "uri"
         },
         "timeZone": {
           "type": "string"
@@ -211,7 +212,6 @@
           "minimum": 1
         },
         "rscale": {
-          "description": "Calendar system for recurrence, e.g. 'gregorian'",
           "type": "string"
         },
         "skip": {
@@ -276,8 +276,8 @@
           "minimum": 1
         },
         "until": {
-          "description": "LocalDateTime string (no UTC offset) giving the last allowed occurrence",
-          "type": "string"
+          "description": "LocalDateTime giving the last allowed occurrence",
+          "$ref": "#/$defs/LocalDateTime"
         }
       }
     }
@@ -304,6 +304,9 @@
       "type": "string",
       "format": "date-time"
     },
+    "prodId": {
+      "type": "string"
+    },
     "sequence": {
       "description": "Monotonically increasing revision counter; SHOULD be included if available",
       "type": "integer",
@@ -316,13 +319,10 @@
       "type": "string"
     },
     "descriptionContentType": {
-      "description": "Media type of the description field, e.g. 'text/html'",
       "type": "string"
     },
     "start": {
-      "description": "Event start as a LocalDateTime (ISO 8601 date-time with no UTC offset), interpreted in the timeZone property",
-      "type": "string",
-      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$"
+      "$ref": "#/$defs/LocalDateTime"
     },
     "timeZone": {
       "description": "IANA time zone identifier for the start time",
@@ -337,7 +337,6 @@
       "enum": ["confirmed", "cancelled", "tentative"]
     },
     "priority": {
-      "description": "Priority from 0 (undefined) to 9 (lowest); 1 is highest",
       "type": "integer",
       "minimum": 0,
       "maximum": 9
@@ -355,7 +354,6 @@
       "type": "string"
     },
     "calendarIds": {
-      "description": "Maps calendar UIDs to true; REQUIRED to associate event with its calendar",
       "type": "object",
       "minProperties": 1,
       "additionalProperties": {
@@ -363,14 +361,12 @@
       }
     },
     "participants": {
-      "description": "Maps participant IDs to Participant objects",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/participant"
       }
     },
     "locations": {
-      "description": "Maps location IDs to Location objects",
       "type": "object",
       "additionalProperties": {
         "$ref": "#/$defs/location"
@@ -397,14 +393,12 @@
       }
     },
     "keywords": {
-      "description": "Maps keyword strings to true",
       "type": "object",
       "additionalProperties": {
         "type": "boolean"
       }
     },
     "categories": {
-      "description": "Maps category strings to true",
       "type": "object",
       "additionalProperties": {
         "type": "boolean"
@@ -418,7 +412,6 @@
       }
     },
     "useDefaultAlerts": {
-      "description": "If true, the calendar's default alerts apply when the alerts property is absent",
       "type": "boolean"
     },
     "recurrenceRules": {
@@ -434,7 +427,6 @@
       }
     },
     "recurrenceOverrides": {
-      "description": "Maps recurrence LocalDateTime keys to partial Event objects overriding that occurrence",
       "type": "object",
       "additionalProperties": {
         "type": "object"
