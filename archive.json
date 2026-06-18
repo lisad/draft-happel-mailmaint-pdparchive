@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-16T01:09:13.748121+00:00",
+  "timestamp": "2026-06-18T01:02:32.356575+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -345,24 +345,26 @@
       "id": "PR_kwDOQr7OuM7l3TYe",
       "title": "adds task schema and fixes some bugs in event schema too",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-12T17:40:16Z",
-      "updatedAt": "2026-06-12T17:40:16Z",
+      "updatedAt": "2026-06-16T19:09:37Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "248d5dba1237e5758cb9659d4e0e4db66a1057d3",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "task-schema",
       "headRefOid": "0a9f4618568e9fb23bce1889874bd67b40e65c2f",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-16T19:09:37Z",
+      "mergedAt": "2026-06-16T19:09:36Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "24457f30ee56155c5444b325b6e75e2d06f04187"
+      },
       "comments": [],
       "reviews": []
     },
@@ -371,26 +373,42 @@
       "id": "PR_kwDOQr7OuM7l3T6B",
       "title": "Adds a Change Log and other cleanup",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/10",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-06-12T17:40:42Z",
-      "updatedAt": "2026-06-12T17:40:42Z",
+      "updatedAt": "2026-06-16T19:10:31Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "248d5dba1237e5758cb9659d4e0e4db66a1057d3",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "prepare-for-01",
       "headRefOid": "b131028180a2446da6c61c26f17f517379a2d6b7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-16T19:10:31Z",
+      "mergedAt": "2026-06-16T19:10:31Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "424e4aca7b3e9f6a9dfd19086f5a6d3a9c9df6b4"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQr7OuM8AAAABDI73yg",
+          "commit": {
+            "abbreviatedOid": "b131028"
+          },
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-16T10:55:23Z",
+          "updatedAt": "2026-06-16T10:55:23Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
