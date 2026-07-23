@@ -2,13 +2,13 @@
 
 
 
-mailmaint                                                   L. Dusseault
-Internet-Draft                                  Data Transfer Initiative
-Intended status: Standards Track                            H. J. Happel
-Expires: 6 December 2026                                         audriga
+mailmaint                                                   H. J. Happel
+Internet-Draft                                                   audriga
+Intended status: Standards Track                            L. Dusseault
+Expires: 24 January 2027                        Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                             4 June 2026
+                                                            23 July 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 December 2026.
+   This Internet-Draft will expire on 24 January 2027.
 
 Copyright Notice
 
@@ -123,7 +123,10 @@ Table of Contents
    12. References
      12.1.  Normative References
      12.2.  Informative References
+   Appendix A.  Base Contact Schema
    Acknowledgments
+   Changes
+     Changes in draft-ietf-mailmaint-pdparchive-01
    Authors' Addresses
 
 1.  Introduction
@@ -141,11 +144,11 @@ Table of Contents
    in a homogeneous fashion.
 
    To this end, this document proposes the Personal Data Portability
-   Archive format (PDPA), suitable for import/export, backup/restore,
-   and data transfer scenarios for personal data.  It is compatible with
-   both IMAP and JMAP and should be suitable as an interchange format
-   between related software and services such as for email, contacts,
-   calendaring, tasks, or files.
+   Archive format (PDPArchive), suitable for import/export, backup/
+   restore, and data transfer scenarios for personal data.  It is
+   compatible with both IMAP and JMAP and should be suitable as an
+   interchange format between related software and services such as for
+   email, contacts, calendaring, tasks, or files.
 
    The approach is to define JSON formats, folder structure, and a
    common compression format.  Additional specifications will likely
@@ -208,7 +211,7 @@ Table of Contents
    user data managed by services or software products into a simple file
    (or set of files) which is under full control of the user.
 
-   The user might use such export for backup, archiving, or for
+   The user might use such an export for backup, archiving, or for
    importing when switching to another service or software (i.e.,
    migration).
 
@@ -241,8 +244,8 @@ Table of Contents
 3.1.4.  Synchronization
 
    Data portability does not just allow users to switch from one service
-   to another one, but to let users benefit from 3rd party services
-   getting access to their data (at the request of the user).  Simple
+   to another one, but to let users benefit from 3rd party services with
+   ongoing access to their data (authorized by the user).  Simple
    synchronization features could make this much better.
 
    For example, current online systems that allow importing contacts are
@@ -262,9 +265,9 @@ Table of Contents
 
 3.1.5.  Dataset exchange
 
-   PDPA should be usable to exchange and share larger data sets than
-   just one user, or to share a single user's data outside the context
-   where the user knows what it is and where it came from.
+   PDPArchive should be usable to exchange and share larger data sets
+   than just one user, or to share a single user's data outside the
+   context where the user knows what it is and where it came from.
 
    Potential applications of this are:
 
@@ -291,12 +294,16 @@ Table of Contents
 
 3.2.1.  Email standards compatibility
 
-   Data formats should aim for compatibility with JMAP data formats for
-   the sake of interoperability and synergies in software libraries.
+   Data definitions have to be compatible with widespread calendar and
+   email standards, although need not be limited to only what is in
+   those standards.  Data serialization formats should aim for
+   compatibility with JMAP data formats for the sake of interoperability
+   and synergies in software libraries.
 
-   Dedicated JMAP API methods for exporting and importing the format
-   described here, or for related server-to-server transfer protocols
-   are out of the scope of this document.
+   Dedicated JMAP API methods or client/server protocol messages for
+   exporting and importing the format described here are out of scope of
+   this document.  Server-to-server transfer protocols for sending or
+   requesting this format are out of the scope of this document.
 
    Due to its specifics and ubiquitous usage, the Internet Message
    Format [RFC5322]; latest revision of [RFC2822]/[RFC822] should be the
@@ -546,7 +553,7 @@ Table of Contents
    data portability archive.  For discussion about a surrounding
    container format, see section "open issues".
 
-   PDPA in general consists of:
+   PDPArchive in general consists of:
 
    *  A main metadata file ("archive.json")
 
@@ -567,60 +574,58 @@ Table of Contents
 
    *  datasource: meta-information about the dataset
 
-         +=============+=========================================+
-         | Key         | Description and requirements            |
-         +=============+=========================================+
-         | archive/id  | Archive identifier, generated by        |
-         |             | archive generator, MUST be unique       |
-         +-------------+-----------------------------------------+
-         | archive/    | Human readable label                    |
-         | name        |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Note for human use and display          |
-         | note        | (optional)                              |
-         +-------------+-----------------------------------------+
-         | archive/    | Legal desclaimer (optional)             |
-         | legal       |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Archive timestamp                       |
-         | timestamp   |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | PDPA spec version                       |
-         | version     |                                         |
-         +-------------+-----------------------------------------+
-         | archive/    | Archive generator                       |
-         | generator   |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | Extent of the archive (full, partial)   |
-         | extent      |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | Select critia for partial datasets      |
-         | selector    | (date, folder, size, custom) (optional) |
-         +-------------+-----------------------------------------+
-         | dataset/    | List of data types                      |
-         | datatypes   |                                         |
-         +-------------+-----------------------------------------+
-         | dataset/    | BCP 47 language tag for the dominant    |
-         | languagetag | language in the dataset                 |
-         +-------------+-----------------------------------------+
-         | dataset/    | IANA tz identifier for the dataset      |
-         | timezone    |                                         |
-         +-------------+-----------------------------------------+
-         | datasource/ | Information about the source service    |
-         | service     | (id, url, ..)                           |
-         +-------------+-----------------------------------------+
-         | datasource/ | Information about the source account    |
-         | account     | (id, type, ...)                         |
-         +-------------+-----------------------------------------+
+         +=============+========================================+
+         | Key         | Description and requirements           |
+         +=============+========================================+
+         | archive/id  | Archive identifier, generated by       |
+         |             | archive generator, MUST be unique      |
+         +-------------+----------------------------------------+
+         | archive/    | Human readable label                   |
+         | name        |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Note for human use and display         |
+         | note        | (optional)                             |
+         +-------------+----------------------------------------+
+         | archive/    | Legal desclaimer (optional)            |
+         | legal       |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Archive timestamp                      |
+         | timestamp   |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | PDPA spec version                      |
+         | version     |                                        |
+         +-------------+----------------------------------------+
+         | archive/    | Archive generator                      |
+         | generator   |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | Extent of the archive (full, partial)  |
+         | extent      |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | Human readable description, containing |
+         | description | e.g. date, folder, size (optional)     |
+         +-------------+----------------------------------------+
+         | dataset/    | List of data types                     |
+         | datatypes   |                                        |
+         +-------------+----------------------------------------+
+         | dataset/    | BCP 47 language tag for the dominant   |
+         | languagetag | language in the dataset                |
+         +-------------+----------------------------------------+
+         | dataset/    | IANA tz identifier for the dataset     |
+         | timezone    |                                        |
+         +-------------+----------------------------------------+
+         | datasource/ | Information about the source service   |
+         | service     | (id, url, ..)                          |
+         +-------------+----------------------------------------+
+         | datasource/ | Information about the source account   |
+         | account     | (id, type, ...)                        |
+         +-------------+----------------------------------------+
 
-                                  Table 1
-
-   TODO: Is selector intended to be human readable or machine parsable?
+                                 Table 1
 
    More formally:
 
 {
-  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archve",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Archive Metadata",
   "type": "object",
@@ -669,7 +674,7 @@ Table of Contents
       "languagetag": {
         "type": "string"
       },
-      "selector": {
+      "description": {
         "type": "string"
       },
       "timezone": {
@@ -695,30 +700,31 @@ Table of Contents
 
    Example of archive.json (full export):
 
-   {
-     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
-     "archive": {
+{
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/archive",
+  "archive": {
 
-       "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
-       "archive_id": "123",
-       "name": "Jane's data export (2025-10-19)",
-       "note": "Personal account export",
-       "timestamp": "2025-10-18T23:20:59Z",
-       "version": "PDPA v1.0",
-       "generator": "PDPA exporter v0.9"
-     },
-     "dataset": {
-       "extent": "FULL",
-       "datatypes": ["MAIL"],
-       "languagetag": "en_ca",
-       "timezone": "America/Montreal"
-     },
-     "datasource": {
-       "account": "marieclaire"
-     }
-   }
+    "id": "b47c1b85-c085-48b9-ae15-cb1b455422cd",
+    "archive_id": "123",
+    "name": "Jane's data export (2025-10-19)",
+    "note": "Personal account export",
+    "timestamp": "2025-10-18T23:20:59Z",
+    "version": "PDPA v1.0",
+    "generator": "PDPA exporter v0.9"
+  },
+  "dataset": {
+    "description": "Export generated for account holder Oct 19, 2025 (scope: Oct 19, 2024 - Oct 19, 2025)",
+    "extent": "FULL",
+    "datatypes": ["MAIL"],
+    "languagetag": "en_ca",
+    "timezone": "America/Montreal"
+  },
+  "datasource": {
+    "account": "marieclaire"
+  }
+}
 
-                   Figure 2: A basic archive.json example
+                Figure 2: A basic archive.json example
 
 6.2.  Folder structure
 
@@ -816,100 +822,127 @@ Table of Contents
    represented as "mail/Archive/2024/2024-12".  Folder names are encoded
    in UTF-8.
 
-   TODO: how to signal removal of a folder in an incremental archive?
-   Need to add some kind of tombstone mechanism.
-
    Each folder metatadata is described by "folder.json" (this name is
    REQUIRED), which has the following fields:
 
-    +==================+===========+============+=====================+
-    | Attribute Name   |    Type   | Mandatory? | Comment             |
-    +==================+===========+============+=====================+
-    | allowed_keywords |  array of | No         | PERMANENTFLAGS      |
-    |                  |  strings  |            | minus "\*" [IMAP4]  |
-    |                  |   (IMAP   |            |                     |
-    |                  | keywords) |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | uid              |   string  | SHOULD*    | Use OBJECTID from   |
-    |                  |           |            | [RFC8474]           |
-    +------------------+-----------+------------+---------------------+
-    | last_uid         |  unsigned | Yes        | Last UID assigned   |
-    |                  |   32 bit  |            | in the folder.  It  |
-    |                  |  integer  |            | is UIDNEXT value    |
-    |                  |           |            | minus 1 [IMAP4]     |
-    +------------------+-----------+------------+---------------------+
-    | recent_uid       |  unsigned | No         | Lowest UID of a     |
-    |                  |   32 bit  |            | message with the    |
-    |                  |  integer  |            | \Recent flag        |
-    |                  |           |            | [IMAP4]             |
-    +------------------+-----------+------------+---------------------+
-    | uidvalidity      |  unsigned | Yes        | UIDVALIDITY value   |
-    |                  |   32 bit  |            | [IMAP4]             |
-    |                  |  integer  |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | is_subscribed    |  boolean  | Yes        | Is the folder       |
-    |                  |           |            | returned by IMAP    |
-    |                  |           |            | LSUB?  [IMAP4]      |
-    +------------------+-----------+------------+---------------------+
-    | myrights         |   string  | No         | See Section 3.5 of  |
-    |                  |           |            | [RFC4314].  For     |
-    |                  |           |            | example             |
-    |                  |           |            | "rwiptsldaex"       |
-    +------------------+-----------+------------+---------------------+
-    | highest_modseq   |  unsigned | No         | HIGHESTMODSEQ value |
-    |                  |   64 bit  |            | [RFC7162]           |
-    |                  |  integer  |            |                     |
-    +------------------+-----------+------------+---------------------+
-    | special_use      |   string  | No         | [RFC6154] SPECIAL-  |
-    |                  |           |            | USE value.  E.g.    |
-    |                  |           |            | "inbox", "sent",    |
-    |                  |           |            | "drafts", "junk",   |
-    |                  |           |            | etc.                |
-    +------------------+-----------+------------+---------------------+
-    | sort_order       |           | No         | See Section 2,      |
-    |                  |           |            | [JMAP]]             |
-    +------------------+-----------+------------+---------------------+
-    | items            |  array of | Yes        | Mapping from UIDs   |
-    |                  |  content  |            | to corresponding    |
-    |                  |    item   |            | message files       |
-    |                  | names and |            | included in the     |
-    |                  |   flags   |            | archive             |
-    +------------------+-----------+------------+---------------------+
-    | original_name    |   string  | No         | Original folder     |
-    |                  |           |            | name (relative to   |
-    |                  |           |            | its parent, if any) |
-    |                  |           |            | if the name can't   |
-    |                  |           |            | be represented in   |
-    |                  |           |            | filesystem, e.g. if |
-    |                  |           |            | it includes special |
-    |                  |           |            | characters          |
-    +------------------+-----------+------------+---------------------+
-    | comment          |   string  | No         | Can include         |
-    |                  |           |            | information about   |
-    |                  |           |            | partial export or   |
-    |                  |           |            | filter used in      |
-    |                  |           |            | human readable      |
-    |                  |           |            | UTF-8 text          |
-    +------------------+-----------+------------+---------------------+
-    | removed          |  array of | No         | List of messages    |
-    |                  |  unsigned |            | (UIDs) removed      |
-    |                  |   32 bit  |            | since the last      |
-    |                  |  integers |            | export              |
-    +------------------+-----------+------------+---------------------+
+   +==================+=============+============+=====================+
+   | Attribute Name   |     Type    | Mandatory? | Comment             |
+   +==================+=============+============+=====================+
+   | allowed_keywords |   array of  | No         | PERMANENTFLAGS      |
+   |                  |   strings   |            | minus "\*" [IMAP4]  |
+   |                  |    (IMAP    |            |                     |
+   |                  |  keywords)  |            |                     |
+   +------------------+-------------+------------+---------------------+
+   | uid              |    string   | SHOULD*    | Use OBJECTID from   |
+   |                  |             |            | [RFC8474]           |
+   +------------------+-------------+------------+---------------------+
+   | last_uid         | unsigned 32 | Yes        | Last UID assigned   |
+   |                  | bit integer |            | in the folder.  It  |
+   |                  |             |            | is UIDNEXT value    |
+   |                  |             |            | minus 1 [IMAP4]     |
+   +------------------+-------------+------------+---------------------+
+   | recent_uid       | unsigned 32 | No         | Lowest UID of a     |
+   |                  | bit integer |            | message with the    |
+   |                  |             |            | \Recent flag        |
+   |                  |             |            | [IMAP4]             |
+   +------------------+-------------+------------+---------------------+
+   | uidvalidity      | unsigned 32 | Yes        | UIDVALIDITY value   |
+   |                  | bit integer |            | [IMAP4]             |
+   +------------------+-------------+------------+---------------------+
+   | is_subscribed    |   boolean   | Yes        | Is the folder       |
+   |                  |             |            | returned by IMAP    |
+   |                  |             |            | LSUB?  [IMAP4]      |
+   +------------------+-------------+------------+---------------------+
+   | deleted_at       |    string   | No         | Folder has been     |
+   |                  | (timestamp) |            | DELETED - this is   |
+   |                  |   or null   |            | a tombstone         |
+   +------------------+-------------+------------+---------------------+
+   | myrights         |    string   | No         | See Section 3.5 of  |
+   |                  |             |            | [RFC4314].  For     |
+   |                  |             |            | example             |
+   |                  |             |            | "rwiptsldaex"       |
+   +------------------+-------------+------------+---------------------+
+   | highest_modseq   | unsigned 64 | No         | HIGHESTMODSEQ       |
+   |                  | bit integer |            | value [RFC7162]     |
+   +------------------+-------------+------------+---------------------+
+   | special_use      |    string   | No         | [RFC6154] SPECIAL-  |
+   |                  |             |            | USE value.  E.g.    |
+   |                  |             |            | "inbox", "sent",    |
+   |                  |             |            | "drafts", "junk",   |
+   |                  |             |            | etc.                |
+   +------------------+-------------+------------+---------------------+
+   | sort_order       |             | No         | See Section 2,      |
+   |                  |             |            | [JMAP]]             |
+   +------------------+-------------+------------+---------------------+
+   | items            |   array of  | Yes        | Mapping from UIDs   |
+   |                  |   content   |            | to corresponding    |
+   |                  |  item names |            | message files       |
+   |                  |  and flags  |            | included in the     |
+   |                  |             |            | archive             |
+   +------------------+-------------+------------+---------------------+
+   | original_name    |    string   | No         | Original folder     |
+   |                  |             |            | name (relative to   |
+   |                  |             |            | its parent, if      |
+   |                  |             |            | any) if the name    |
+   |                  |             |            | can't be            |
+   |                  |             |            | represented in      |
+   |                  |             |            | filesystem, e.g.    |
+   |                  |             |            | if it includes      |
+   |                  |             |            | special characters  |
+   +------------------+-------------+------------+---------------------+
+   | comment          |    string   | No         | Can include         |
+   |                  |             |            | information about   |
+   |                  |             |            | partial export or   |
+   |                  |             |            | filter used in      |
+   |                  |             |            | human readable      |
+   |                  |             |            | UTF-8 text          |
+   +------------------+-------------+------------+---------------------+
+   | removed          |   array of  | No         | List of messages    |
+   |                  | unsigned 32 |            | (UIDs) removed      |
+   |                  |     bit     |            | since the last      |
+   |                  |   integers  |            | export              |
+   +------------------+-------------+------------+---------------------+
 
                                   Table 2
 
-   * The uid for a folder SHOULD be present.  For IMAP folders, this
+   The uid for a folder SHOULD be present.  For IMAP folders, this
    SHOULD be the OBJECTID defined by [RFC8474].
+
+   In an incremental update, a folder can both have items added/removed
+   and be deleted in the time period elapsed, so it could have removed
+   messages and flags as well as be a tombstone.  A full archive or
+   snapshot SHOULD NOT include deleted folders with the deleted_at
+   value.
 
    The folder.json format can be defined generally as follows.  Note
    that this covers folders containing tasks, notes, contacts or emails,
    so the fields that are specific to IMAP folders are not required.
 
 {
-  "$id": "https://datatracker.ietf.org/doc/draft-happel-mailmaint-pdparchive/02/",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Folder Manifest",
+
+  "$defs": {
+    "mod-sequence-value": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 18446744073709551616,
+      "$comment": "Per RFC4551, a 'mod-sequence-value' is a positive unsigned 64-bit integer"
+    },
+    "imap-number": {
+      "type": "integer",
+      "minimum": 0,
+      "exclusiveMaximum": 4294967296,
+      "$comment": "IMAP unsigned 32-bit integer"
+    },
+    "imap-nz-number": {
+      "type": "integer",
+      "minimum": 1,
+      "exclusiveMaximum": 4294967296,
+      "$comment": "IMAP non-zero unsigned 32-bit integer"
+    }
+  },
 
   "type": "object",
   "required": ["name", "items"],
@@ -940,15 +973,11 @@ Table of Contents
     "modseqs": {
       "type": "object",
       "additionalProperties": {
-        "type": "integer",
-        "minimum": 0,
-        "exclusiveMaximum": 18446744073709551616
+        "$ref": "#/$defs/mod-sequence-value"
       }
     },
     "highest_modseq": {
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 18446744073709551616
+      "$ref": "#/$defs/mod-sequence-value"
     },
     "special_use": {
       "type": "string",
@@ -961,23 +990,21 @@ Table of Contents
     "is_subscribed": {
       "type": "boolean"
     },
+    "deleted_at": {
+      "type": "string",
+      "format": "date-time"
+    },
     "last_uid": {
       "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-number"
     },
     "recent_uid": {
       "description": "Follows the IMAP4 requirements for unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 0,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-number"
     },
     "uidvalidity": {
       "description": "Follows the IMAP4 requirements for non-zero unsigned 32-bit int",
-      "type": "integer",
-      "minimum": 1,
-      "exclusiveMaximum": 4294967296
+      "$ref": "#/$defs/imap-nz-number"
     },
     "items": {
       "type": "array",
@@ -989,9 +1016,7 @@ Table of Contents
             "description": "Either an IMAP UID (non-zero unsigned 32-bit integer) or a string identifier such as a UUID",
             "oneOf": [
               {
-                "type": "integer",
-                "minimum": 1,
-                "exclusiveMaximum": 4294967296
+                "$ref": "#/$defs/imap-nz-number"
               },
               {
                 "type": "string"
@@ -1161,46 +1186,73 @@ Table of Contents
 
 6.3.2.1.  Individual Contact Items
 
-   Individual contact items build on [JSContact] which builds on
-   [vCard].
+   Individual contact items build on [RFC9610] and [JSContact] which
+   build on [vCard].
 
-   *  The globally unique uid property is mandatory in JSContact and
-      MUST be included in PDP archive.
-
-   *  The updated property is optional in JSContact but MUST be included
-      in PDP archive.
+   *  The @type property should be "Card" because [JSContact] uses a
+      value of "Card" for @type and registers that in
+      https://www.iana.org/assignments/jscontact/jscontact.xhtml.  JMAP
+      for Contacts uses "ContactCard" and registers that in
+      https://www.iana.org/assignments/jmap/jmap.xhtml but does not use
+      that as a @type value directly.
 
    *  The rev property defined in [vCard], which is not included in
       [JSContact], may already be available in implementations.  It MAY
       also be included as a field on a contact, in which case it is a
       simple value field holding a timestamp.
 
-   *  The @type property should be "ContactCard".  Note that [JSContact]
-      uses a value of "Card" for @type and registers that in
-      https://www.iana.org/assignments/jscontact/jscontact.xhtml, but
-      JMAP for Contacts uses "ContactCard" and registers that in
-      https://www.iana.org/assignments/jmap/jmap.xhtml.
+   When a Card is exported as a standalone Contact item in PDP Archive,
+   it MUST meet an extended schema, compared to other contexts where
+   JSON Card data may be found.  Unique uid and updated MUST be
+   included.  This specification extends the base schema (see
+   Appendix A) to require uid, updated, and a non-empty addressBookIds.
 
-   We make some specific requirements on the updated value so that it
-   can be useful for synchronization.  See the section on updated and
-   uid specifically Section 6.4.1.
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Contact",
+  "description": "Extends the base JSContact Card schema (contact-schema.json) with the `uid`, `updated`, and `addressBookIds` values required when a Card is exported as a standalone PDPArchive Contact item, as opposed to a Card embedded in some other object.",
+  "allOf": [
+    { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/contact" },
+    {
+      "type": "object",
+      "required": ["uid", "updated", "addressBookIds"],
+      "properties": {
+        "addressBookIds": {
+          "minProperties": 1
+        }
+      }
+    }
+  ]
+}
 
-   When the structured data is prepared, a contact can be exported in a
-   file with an arbitrary name using a limited set of characters
-   suitable for interoperability across filesystems.
+      Figure 7: Schema for a standalone PDPArchive Contact item,
+                    extending the base Card schema
+
+   Synchronization requirements for the updated and uid values apply to
+   Contact items too (see Section 6.4.1).  Cards can also have an id
+   value; nevertheless uid is required by this specification for
+   consistency of identifying different kinds of objects.  See also how
+   [RFC9610] contrasts id with uid.
+
+   A contact can be exported in a file with an arbitrary name using a
+   limited set of characters suitable for interoperability across
+   filesystems.
 
    For example, a file called 'contact1.json' could contain:
 
    {
-      "@type": "ContactCard",
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+      "@type": "Card",
       "version": "1.0",
       "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
       "id": "42",
+      "created": "2021-10-31T22:27:10Z",
       "updated": "2021-10-31T22:27:10Z",
       "kind": "individual",
-      "addressBookIds": [
-         "062adcfa-105d-455c-bc60-6db68b69c3f3"
-      ],
+      "addressBookIds": {
+         "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+      },
       "name": {
           "components": [
             { "kind": "given", "value": "John" },
@@ -1228,7 +1280,7 @@ Table of Contents
       }
    }
 
-                      Figure 7: A contact.json example
+       Figure 8: A contact example called contact1.json in the export
 
    For clarity, this example includes: * How a card can reference
    address books which are exported as separate files in the overall
@@ -1236,8 +1288,6 @@ Table of Contents
    card can contain arbitrary notes - those are not necessarily exported
    as separate files even though notes are also an object that can be
    included as individual files in a PDPArchive export.
-
-   TODO: figure out if these can have RFC9610 "id" field
 
    Because a ContactCard item can reference an AddressBook item, if a
    system exports contacts belonging to address books it SHOULD also
@@ -1261,20 +1311,25 @@ Table of Contents
    an arbitrary name like "contact2.json" could include:
 
    {
-      "@type": "ContactCard",
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+      "@type": "Card",
+      "version": "1.0",
       "kind": "group",
       "name": {
         "full": "The Doe family"
       },
       "uid": "urn:uuid:ab4310aa-fa43-11e9-8f0b-362b9e155667",
       "updated": "2021-10-31T22:27:10Z",
+      "addressBookIds": {
+         "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+      },
       "members": {
         "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af": true,
         "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519": true
       }
    }
 
-                   Figure 8: A group contact file example
+   Figure 9: A group contact file example in the export as contact2.json
 
    As with individual ContactCard items referencing objects that are not
    exported at the same time, a group contact can contain references
@@ -1302,12 +1357,85 @@ Table of Contents
    this specification REQUIRES uid. * updated is required * The @type of
    AddressBook should be included within the data
 
+   In the schema below, myRights (camelCase) is a JSON object with named
+   boolean fields, unlike the IMAP myrights property which is a compact
+   string of right-characters (e.g. "rwiptsld").
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Address Book",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "name"],
+  "$defs": {
+    "rights": {
+      "type": "object",
+      "properties": {
+        "mayRead": { "type": "boolean" },
+        "mayWrite": { "type": "boolean" },
+        "mayShare": { "type": "boolean" },
+        "mayDelete": { "type": "boolean" }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "AddressBook"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the address book",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the address book",
+      "type": "string"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "sortOrder": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "isDefault": {
+      "type": "boolean"
+    },
+    "isSubscribed": {
+      "type": "boolean"
+    },
+    "shareWith": {
+      "description": "Maps principal IDs to their rights; null if not shared",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/rights"
+      }
+    },
+    "myRights": {
+      "$ref": "#/$defs/rights"
+    }
+  }
+}
+
+              Figure 10: Schema for address book objects
+
    This example copies the examples in [RFC9610] so that
    interoperability between this spec and that one is clear.
 
    A file with an arbitrary name like address-book1.json would contain:
 
    {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
       "@type": "AddressBook",
       "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
       "updated": "2020-01-09T14:32:01Z",
@@ -1332,11 +1460,12 @@ Table of Contents
       }
    }
 
-                   Figure 9: An address book file example
+                  Figure 11: An address book file example
 
    address-book2.json would contain:
 
    {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
       "@type": "AddressBook",
       "uid": "cd40089d-35f9-4fd7-980b-ba3a9f1d74fe",
       "updated": "2020-01-09T14:32:01Z",
@@ -1354,7 +1483,7 @@ Table of Contents
       }
    }
 
-                Figure 10: Another address book file example
+                Figure 12: Another address book file example
 
    Note that the first example includes a shareWith value, showing that
    the user's AddressBook has been shared with in this case one other
@@ -1416,9 +1545,449 @@ Table of Contents
       order to match up events to the calendar they are supposed to
       appear in.
 
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/event",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Calendar Event",
+  "description": "A JSCalendar Event object as defined in RFC 8984, extended with the calendarIds property from JMAP for Calendars.",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "calendarIds"],
+  "$defs": {
+    "LocalDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+      "$comment": "ISO 8601 date-time with no UTC offset; interpreted in the timeZone property"
+    },
+    "participant": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Participant"
+        },
+        "name": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string",
+          "format": "email"
+        },
+        "sendTo": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["individual", "group", "resource", "location"]
+        },
+        "roles": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "participationStatus": {
+          "type": "string",
+          "enum": ["needs-action", "accepted", "declined", "tentative", "delegated"]
+        },
+        "participationComment": {
+          "type": "string"
+        },
+        "expectReply": {
+          "type": "boolean"
+        },
+        "delegatedTo": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "delegatedFrom": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        },
+        "memberOf": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Location"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "coordinates": {
+          "description": "Geo URI as defined in RFC 5870",
+          "type": "string",
+          "format": "uri"
+        },
+        "timeZone": {
+          "type": "string"
+        },
+        "relativeTo": {
+          "type": "string",
+          "enum": ["start", "end"]
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/link"
+          }
+        }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": ["href"],
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Link"
+        },
+        "href": {
+          "type": "string",
+          "format": "uri"
+        },
+        "cid": {
+          "type": "string"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "rel": {
+          "type": "string"
+        },
+        "display": {
+          "type": "string",
+          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": ["@type", "trigger"],
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "Alert"
+        },
+        "trigger": {
+          "oneOf": [
+            {
+              "description": "Offset-based trigger relative to event start or end",
+              "type": "object",
+              "required": ["@type", "offset"],
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "OffsetTrigger"
+                },
+                "offset": {
+                  "description": "ISO 8601 duration (may be negative for before-start alerts)",
+                  "type": "string"
+                },
+                "relativeTo": {
+                  "type": "string",
+                  "enum": ["start", "end"]
+                }
+              }
+            },
+            {
+              "description": "Absolute date-time trigger",
+              "type": "object",
+              "required": ["@type", "when"],
+              "properties": {
+                "@type": {
+                  "type": "string",
+                  "const": "AbsoluteTrigger"
+                },
+                "when": {
+                  "type": "string",
+                  "format": "date-time"
+                }
+              }
+            }
+          ]
+        },
+        "acknowledged": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "action": {
+          "type": "string",
+          "enum": ["display", "email", "uri"]
+        }
+      }
+    },
+    "recurrenceRule": {
+      "description": "Recurrence rule as defined in RFC 8984 section 4.3.2",
+      "type": "object",
+      "required": ["frequency"],
+      "properties": {
+        "@type": {
+          "type": "string",
+          "const": "RecurrenceRule"
+        },
+        "frequency": {
+          "type": "string",
+          "enum": ["secondly", "minutely", "hourly", "daily", "weekly", "monthly", "yearly"]
+        },
+        "interval": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rscale": {
+          "type": "string"
+        },
+        "skip": {
+          "type": "string",
+          "enum": ["omit", "backward", "forward"]
+        },
+        "firstDayOfWeek": {
+          "type": "string",
+          "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+        },
+        "byDay": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["day"],
+            "properties": {
+              "@type": { "type": "string", "const": "NDay" },
+              "day": {
+                "type": "string",
+                "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+              },
+              "nthOfPeriod": {
+                "type": "integer"
+              }
+            }
+          }
+        },
+        "byMonthDay": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "byMonth": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "byYearDay": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "byWeekNo": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "byHour": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0, "maximum": 23 }
+        },
+        "byMinute": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0, "maximum": 59 }
+        },
+        "bySecond": {
+          "type": "array",
+          "items": { "type": "integer", "minimum": 0, "maximum": 60 }
+        },
+        "bySetPosition": {
+          "type": "array",
+          "items": { "type": "integer" }
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "until": {
+          "description": "LocalDateTime giving the last allowed occurrence",
+          "$ref": "#/$defs/LocalDateTime"
+        }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Event"
+    },
+    "uid": {
+      "description": "Globally unique identifier for this event; stable across recurrences",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the event",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "description": "Last-modified timestamp; MUST be included for synchronization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "prodId": {
+      "type": "string"
+    },
+    "sequence": {
+      "description": "Monotonically increasing revision counter; SHOULD be included if available",
+      "type": "integer",
+      "minimum": 0
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "descriptionContentType": {
+      "type": "string"
+    },
+    "start": {
+      "$ref": "#/$defs/LocalDateTime"
+    },
+    "timeZone": {
+      "description": "IANA time zone identifier for the start time",
+      "type": "string"
+    },
+    "duration": {
+      "description": "ISO 8601 duration string",
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["confirmed", "cancelled", "tentative"]
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "privacy": {
+      "type": "string",
+      "enum": ["public", "private", "secret"]
+    },
+    "freeBusyStatus": {
+      "type": "string",
+      "enum": ["free", "busy"]
+    },
+    "color": {
+      "description": "CSS color value for display purposes",
+      "type": "string"
+    },
+    "calendarIds": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "participants": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/participant"
+      }
+    },
+    "locations": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/location"
+      }
+    },
+    "virtualLocations": {
+      "description": "Maps virtual location IDs to VirtualLocation objects (e.g. video conference links)",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "VirtualLocation" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "uri": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "links": {
+      "description": "Maps link IDs to Link objects (attachments, references)",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/link"
+      }
+    },
+    "keywords": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "alerts": {
+      "description": "Maps alert IDs to Alert objects",
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/alert"
+      }
+    },
+    "useDefaultAlerts": {
+      "type": "boolean"
+    },
+    "recurrenceRules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recurrenceRule"
+      }
+    },
+    "excludedRecurrenceRules": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/recurrenceRule"
+      }
+    },
+    "recurrenceOverrides": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object"
+      }
+    }
+  }
+}
+
+                     Figure 13: Schema for events
+
    For example, a file called event1.json could contain:
 
    {
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/event",
      "@type": "Event",
      "uid": "2a358cee-6489-4f14-a57f-c104db4dc2f2",
      "updated": "2020-01-09T14:32:01Z",
@@ -1443,7 +2012,7 @@ Table of Contents
      }
    }
 
-                          Figure 11: Event example
+                          Figure 14: Event example
 
    The event object includes a calendarIds property, which links it to
    the calendar collection it belongs to.
@@ -1456,10 +2025,149 @@ Table of Contents
    If a system exports events belonging to calendars, it SHOULD also
    export the referenced Calendar objects.
 
+   myRights uses the same JSON object structure as in the Address Book
+   schema, but the set of rights is defined by JMAP Calendars rather
+   than JMAP Contacts, so the property names differ.
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/calendar",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Calendar Collection",
+  "description": "A Calendar collection object as defined in JMAP for Calendars (draft-ietf-jmap-calendars).",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "name"],
+  "$defs": {
+    "calendarRights": {
+      "description": "CalendarRights object as defined in JMAP for Calendars",
+      "type": "object",
+      "properties": {
+        "mayReadFreeBusy":   { "type": "boolean" },
+        "mayReadItems":      { "type": "boolean" },
+        "mayWriteAll":       { "type": "boolean" },
+        "mayWriteOwn":       { "type": "boolean" },
+        "mayUpdatePrivate":  { "type": "boolean" },
+        "mayRSVP":           { "type": "boolean" },
+        "mayShare":          { "type": "boolean" },
+        "mayDelete":         { "type": "boolean" }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": ["@type", "trigger"],
+      "properties": {
+        "@type": { "type": "string", "const": "Alert" },
+        "trigger": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["@type", "offset"],
+              "properties": {
+                "@type":      { "type": "string", "const": "OffsetTrigger" },
+                "offset":     { "type": "string" },
+                "relativeTo": { "type": "string", "enum": ["start", "end"] }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["@type", "when"],
+              "properties": {
+                "@type": { "type": "string", "const": "AbsoluteTrigger" },
+                "when":  { "type": "string", "format": "date-time" }
+              }
+            }
+          ]
+        },
+        "acknowledged": { "type": "string", "format": "date-time" },
+        "action": { "type": "string", "enum": ["display", "email", "uri"] }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Calendar"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the calendar; referenced by Event calendarIds",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the calendar",
+      "type": "string"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 255
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "color": {
+      "description": "CSS color value used to distinguish the calendar visually",
+      "type": "string"
+    },
+    "sortOrder": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "isDefault": {
+      "type": "boolean"
+    },
+    "isSubscribed": {
+      "type": "boolean"
+    },
+    "isVisible": {
+      "type": "boolean"
+    },
+    "includeInAvailability": {
+      "description": "Which events contribute to free/busy availability",
+      "type": "string",
+      "enum": ["all", "attending", "none"]
+    },
+    "timeZone": {
+      "description": "IANA time zone identifier used as default for events without their own time zone",
+      "type": ["string", "null"]
+    },
+    "defaultAlertsWithTime": {
+      "description": "Default alerts applied to timed events when the event has useDefaultAlerts: true; null clears inherited defaults",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/alert"
+      }
+    },
+    "defaultAlertsWithoutTime": {
+      "description": "Default alerts applied to all-day events when the event has useDefaultAlerts: true; null clears inherited defaults",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/alert"
+      }
+    },
+    "shareWith": {
+      "description": "Maps principal IDs to their CalendarRights; null if not shared",
+      "type": ["object", "null"],
+      "additionalProperties": {
+        "$ref": "#/$defs/calendarRights"
+      }
+    },
+    "myRights": {
+      "$ref": "#/$defs/calendarRights"
+    }
+  }
+}
+
+              Figure 15: Schema for calendar collections
+
    A file with an arbitrary name, such as calendar1.json, in a directory
    (e.g., \calendars\calendar2) would contain the calendar's metadata:
 
    {
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/calendar",
      "@type": "Calendar",
      "uid": "062adcfa-105d-455c-bc60-6db68b69c3f3",
      "updated": "2020-01-09T14:32:01Z",
@@ -1469,14 +2177,18 @@ Table of Contents
      "isDefault": true,
      "isSubscribed": true,
      "myRights": {
-       "mayRead": true,
-       "mayWrite": true,
+       "mayReadFreeBusy": true,
+       "mayReadItems": true,
+       "mayWriteAll": true,
+       "mayWriteOwn": true,
+       "mayUpdatePrivate": true,
+       "mayRSVP": true,
        "mayShare": true,
        "mayDelete": false
      }
    }
 
-                        Figure 12: Calendar example
+                        Figure 16: Calendar example
 
    The uid value here corresponds to the ID used in the calendarIds
    property of the individual event item.
@@ -1489,19 +2201,314 @@ Table of Contents
    As with events, tasks MUST include the uid and updated fields to
    support synchronization.
 
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/task",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Task",
+  "description": "A JSCalendar Task object as defined in RFC 8984.",
+  "type": "object",
+  "required": ["@type", "uid", "updated"],
+  "$defs": {
+    "LocalDateTime": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}$",
+      "$comment": "ISO 8601 date-time with no UTC offset; interpreted in the timeZone property"
+    },
+    "participant": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "const": "Participant" },
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "sendTo": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "kind": {
+          "type": "string",
+          "enum": ["individual", "group", "resource", "location"]
+        },
+        "roles": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "participationStatus": {
+          "type": "string",
+          "enum": ["needs-action", "accepted", "declined", "tentative", "delegated"]
+        },
+        "participationComment": { "type": "string" },
+        "expectReply": { "type": "boolean" }
+      }
+    },
+    "link": {
+      "type": "object",
+      "required": ["href"],
+      "properties": {
+        "@type": { "type": "string", "const": "Link" },
+        "href": { "type": "string", "format": "uri" },
+        "cid": { "type": "string" },
+        "contentType": { "type": "string" },
+        "size": { "type": "integer", "minimum": 0 },
+        "rel": { "type": "string" },
+        "display": {
+          "type": "string",
+          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
+        },
+        "title": { "type": "string" }
+      }
+    },
+    "alert": {
+      "type": "object",
+      "required": ["@type", "trigger"],
+      "properties": {
+        "@type": { "type": "string", "const": "Alert" },
+        "trigger": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": ["@type", "offset"],
+              "properties": {
+                "@type": { "type": "string", "const": "OffsetTrigger" },
+                "offset": { "type": "string" },
+                "relativeTo": { "type": "string", "enum": ["start", "end"] }
+              }
+            },
+            {
+              "type": "object",
+              "required": ["@type", "when"],
+              "properties": {
+                "@type": { "type": "string", "const": "AbsoluteTrigger" },
+                "when": { "type": "string", "format": "date-time" }
+              }
+            }
+          ]
+        },
+        "acknowledged": { "type": "string", "format": "date-time" },
+        "action": { "type": "string", "enum": ["display", "email", "uri"] }
+      }
+    },
+    "location": {
+      "type": "object",
+      "properties": {
+        "@type": { "type": "string", "const": "Location" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "coordinates": {
+          "description": "Geo URI as defined in RFC 5870",
+          "type": "string",
+          "format": "uri"
+        },
+        "timeZone": { "type": "string" },
+        "relativeTo": { "type": "string", "enum": ["start", "end"] },
+        "links": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/link" }
+        }
+      }
+    },
+    "recurrenceRule": {
+      "type": "object",
+      "required": ["frequency"],
+      "properties": {
+        "@type": { "type": "string", "const": "RecurrenceRule" },
+        "frequency": {
+          "type": "string",
+          "enum": ["secondly", "minutely", "hourly", "daily", "weekly", "monthly", "yearly"]
+        },
+        "interval": { "type": "integer", "minimum": 1 },
+        "firstDayOfWeek": {
+          "type": "string",
+          "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+        },
+        "byDay": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["day"],
+            "properties": {
+              "@type": { "type": "string", "const": "NDay" },
+              "day": {
+                "type": "string",
+                "enum": ["mo", "tu", "we", "th", "fr", "sa", "su"]
+              },
+              "nthOfPeriod": { "type": "integer" }
+            }
+          }
+        },
+        "byMonthDay": { "type": "array", "items": { "type": "integer" } },
+        "byMonth": { "type": "array", "items": { "type": "string" } },
+        "count": { "type": "integer", "minimum": 1 },
+        "until": {
+          "description": "LocalDateTime giving the last allowed occurrence",
+          "$ref": "#/$defs/LocalDateTime"
+        }
+      }
+    }
+  },
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Task"
+    },
+    "uid": {
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP server-set ID for the task",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "description": "Last-modified timestamp; MUST be included for synchronization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "prodId": {
+      "type": "string"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "title": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "descriptionContentType": {
+      "type": "string"
+    },
+    "start": {
+      "$ref": "#/$defs/LocalDateTime"
+    },
+    "due": {
+      "$ref": "#/$defs/LocalDateTime"
+    },
+    "timeZone": {
+      "description": "IANA time zone identifier for the start and due times",
+      "type": "string"
+    },
+    "estimatedDuration": {
+      "description": "ISO 8601 duration string estimating time to complete",
+      "type": "string"
+    },
+    "percentComplete": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "progress": {
+      "description": "Task progress status per RFC 8984",
+      "type": "string",
+      "enum": ["needs-action", "in-progress", "completed", "failed", "cancelled"]
+    },
+    "progressUpdated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9
+    },
+    "privacy": {
+      "type": "string",
+      "enum": ["public", "private", "secret"]
+    },
+    "color": {
+      "type": "string"
+    },
+    "participants": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/participant" }
+    },
+    "locations": {
+      "description": "Maps location IDs to Location objects",
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/location" }
+    },
+    "virtualLocations": {
+      "description": "Maps virtual location IDs to VirtualLocation objects (e.g. video conference links)",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "VirtualLocation" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "uri": { "type": "string", "format": "uri" }
+        }
+      }
+    },
+    "relatedTo": {
+      "description": "Maps related object UIDs to Relation objects describing the relationship",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "Relation" },
+          "relation": {
+            "description": "Maps relation type (e.g. parent, child, first, next) to true",
+            "type": "object",
+            "additionalProperties": { "type": "boolean" }
+          }
+        }
+      }
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/link" }
+    },
+    "keywords": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "categories": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "alerts": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/alert" }
+    },
+    "useDefaultAlerts": {
+      "type": "boolean"
+    },
+    "recurrenceRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/recurrenceRule" }
+    },
+    "excludedRecurrenceRules": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/recurrenceRule" }
+    },
+    "recurrenceOverrides": {
+      "type": "object",
+      "additionalProperties": { "type": "object" }
+    }
+  }
+}
+
+                     Figure 17: Schema for tasks
+
    For example, a file called task1.json could contain:
 
    {
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/task",
      "@type": "Task",
      "uid": "7b0f69a6-6e3e-4f1b-85d8-c89b43d2f2a1",
      "updated": "2022-11-23T15:01:32Z",
      "title": "Submit Quarterly Report",
-     "status": "in-progress",
+     "progress": "in-progress",
      "priority": 1,
-     "due": "2024-12-31T23:59:59Z"
+     "due": "2024-12-31T23:59:59"
    }
 
-                          Figure 13: Task example
+                          Figure 18: Task example
 
 6.3.6.  Notes
 
@@ -1908,6 +2915,10 @@ Table of Contents
               us/openspecs/office_file_formats/ms-pst/141923d5-15ab-
               4ef1-a524-6dce75aae546>.
 
+   [RFC822]   Crocker, D., "STANDARD FOR THE FORMAT OF ARPA INTERNET
+              TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC822,
+              August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
+
    [RFC2822]  Resnick, P., Ed., "Internet Message Format", RFC 2822,
               DOI 10.17487/RFC2822, April 2001,
               <https://www.rfc-editor.org/rfc/rfc2822>.
@@ -1935,10 +2946,6 @@ Table of Contents
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/rfc/rfc7942>.
 
-   [RFC822]   Crocker, D., "STANDARD FOR THE FORMAT OF ARPA INTERNET
-              TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC0822,
-              August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
-
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
@@ -1954,20 +2961,176 @@ Table of Contents
               DOI 10.17487/RFC6350, August 2011,
               <https://www.rfc-editor.org/rfc/rfc6350>.
 
+Appendix A.  Base Contact Schema
+
+   A JSContact Card is not always exported as a standalone PDPArchive
+   Contact item.  The same Card structure is sometimes found embedded
+   within another object (for example, a domain name registration
+   record) and in that context it has neither a globally unique uid nor
+   an addressBookIds value.  For that reason this specification defines
+   a base Card schema intended to be consistent with JSContact in
+   broader contexts.
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for a JSContact Card",
+  "description": "Base fields for a JSContact Card, usable on its own for Card objects embedded in other data (e.g. a registrant Card inside a domain registration record) where a `uid` and `addressBookIds` are not necessarily present. See pdpa-contact-schema.json, which extends this schema with the fields required for a Card to be exported as a standalone PDPArchive Contact item.",
+  "type": "object",
+  "required": ["@type", "version"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Card"
+    },
+    "version": {
+      "type": "string"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the contact",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP ID for the contact",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rev": {
+      "description": "Revision timestamp from vCard RFC6350; may be included alongside updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["individual", "group", "org", "location", "device", "application"]
+    },
+    "addressBookIds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "full": {
+          "type": "string"
+        },
+        "defaultSeparator": {
+          "type": "string"
+        },
+        "isOrdered": {
+          "type": "boolean"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["title", "given", "given2", "surname", "surname2",
+                         "generation", "credential", "separator"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "phonetic": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "members": {
+      "description": "For group contacts; maps member UIDs to true",
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "relatedTo": {
+      "description": "Maps UIDs of related contacts to relation objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "description": "Maps note IDs to note objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "note": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+             Figure 19: Base schema for a JSContact Card
+
+   The PDPArchive Contact item schema in Figure 7 extends this base
+   schema.
+
 Acknowledgments
 
    TODO acknowledge.
 
+Changes
+
+Changes in draft-ietf-mailmaint-pdparchive-01
+
+   *  Added JSON Schema (draft 2020-12) files for all defined data
+      types: folder, archive, contact, address book, calendar, event,
+      and task.
+
+   *  Added a folder tombstone mechanism to support incremental exports
+      that delete previously exported folders.
+
 Authors' Addresses
-
-   Lisa Dusseault
-   Data Transfer Initiative
-   Email: lisa@dtinit.org
-
 
    Hans-Joerg Happel
    audriga
    Email: hans-joerg@audriga.com
+
+
+   Lisa Dusseault
+   Data Transfer Initiative
+   Email: lisa@dtinit.org
 
 
    Alexey Melnikov
