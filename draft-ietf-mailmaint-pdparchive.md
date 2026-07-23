@@ -528,30 +528,31 @@ explains how to use the fields and structures of those specifications within a P
 
 Individual contact items build on {{RFC9610}} and {{JSContact}} which build on {{vCard}}.
 
-* The globally unique `uid` property is mandatory in JSContact and MUST be included in PDP archive.
-* The `updated` property is optional in JSContact but MUST be included in PDP archive.
-* The `rev` property defined in {{vCard}}, which is not included in {{JSContact}},
-may already be available in implementations.  It MAY also be included as a field on a contact,
-in which case it is a simple value field holding a timestamp.
-
 * The `@type` property should be "Card" because {{JSContact}} uses a value
 of "Card" for @type and registers that in https://www.iana.org/assignments/jscontact/jscontact.xhtml.
 JMAP for Contacts uses "ContactCard" and registers that in
 https://www.iana.org/assignments/jmap/jmap.xhtml but does not use that as a `@type` value directly.
+* The `rev` property defined in {{vCard}}, which is not included in {{JSContact}},
+may already be available in implementations.  It MAY also be included as a field on a contact,
+in which case it is a simple value field holding a timestamp.
 
+When a Card is exported as a standalone Contact item in PDP Archive, it MUST meet
+an extended schema, compared to other contexts where JSON Card data may be found.
+Unique `uid` and `updated` MUST be included.  This specification extends
+the base schema (see {{contact-schema-appendix}}) to require `uid`, `updated`, and a
+non-empty `addressBookIds`.
 
 ~~~
-{::include ./schemas/contact-schema.json}
+{::include ./schemas/pdpa-contact-schema.json}
 ~~~
-{: #contact-schema title="Schema for contacts"}
+{: #pdpa-contact-schema title="Schema for a standalone PDPArchive Contact item, extending the base Card schema"}
 
-We make some specific requirements on the `updated` value so that it can be
-useful for synchronization.  See the section on `updated` and `uid` specifically {{uid-updated}}.
+Synchronization requirements for the `updated` and `uid` values apply to Contact items too (see {{uid-updated}}).
 Cards can also have an `id` value; nevertheless `uid` is required by this specification
 for consistency of identifying different kinds of objects.  See also how {{RFC9610}} contrasts
 `id` with `uid`.
 
-When the structured data is prepared, a contact can be exported in a file with an arbitrary name
+A contact can be exported in a file with an arbitrary name
 using a limited set of characters suitable for interoperability across filesystems.
 
 For example, a file called 'contact1.json' could contain:
@@ -909,6 +910,20 @@ Register .pdpa?
 
 
 --- back
+
+# Base Contact Schema {#contact-schema-appendix}
+
+A JSContact Card is not always exported as a standalone PDPArchive Contact item.  The same
+Card structure is sometimes found embedded within another object (for example, a domain name registration record) and in that context it has neither
+a globally unique `uid` nor an `addressBookIds` value.  For that reason this specification defines a base
+Card schema intended to be consistent with JSContact in broader contexts.
+
+~~~
+{::include ./schemas/contact-schema.json}
+~~~
+{: #contact-schema title="Base schema for a JSContact Card"}
+
+The PDPArchive Contact item schema in {{pdpa-contact-schema}} extends this base schema.
 
 # Acknowledgments
 {:numbered="false"}

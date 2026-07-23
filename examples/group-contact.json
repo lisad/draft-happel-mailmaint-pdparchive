@@ -1,5 +1,5 @@
 {
-   "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+   "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
    "@type": "Card",
    "version": "1.0",
    "kind": "group",
@@ -8,6 +8,9 @@
    },
    "uid": "urn:uuid:ab4310aa-fa43-11e9-8f0b-362b9e155667",
    "updated": "2021-10-31T22:27:10Z",
+   "addressBookIds": {
+      "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+   },
    "members": {
      "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af": true,
      "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519": true
