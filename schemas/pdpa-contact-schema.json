@@ -1,0 +1,18 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Contact",
+  "description": "Extends the base JSContact Card schema (contact-schema.json) with the `uid`, `updated`, and `addressBookIds` values required when a Card is exported as a standalone PDPArchive Contact item, as opposed to a Card embedded in some other object.",
+  "allOf": [
+    { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/contact" },
+    {
+      "type": "object",
+      "required": ["uid", "updated", "addressBookIds"],
+      "properties": {
+        "addressBookIds": {
+          "minProperties": 1
+        }
+      }
+    }
+  ]
+}

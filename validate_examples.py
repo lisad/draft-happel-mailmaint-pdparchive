@@ -7,6 +7,7 @@ from pathlib import Path
 
 try:
     import jsonschema
+    from referencing import Registry, Resource
 except ImportError:
     print("ERROR: jsonschema not installed. Run: pip install jsonschema")
     sys.exit(1)
@@ -17,7 +18,9 @@ SCHEMAS_DIR = ROOT / "schemas"
 
 
 def load_schemas():
+    """Load every schema, and build a Registry so schemas can $ref each other by $id."""
     schemas = {}
+    resources = []
     for path in sorted(SCHEMAS_DIR.glob("*.json")):
         try:
             data = json.loads(path.read_text())
@@ -27,13 +30,15 @@ def load_schemas():
         schema_id = data.get("$id")
         if schema_id:
             schemas[schema_id] = (data, path.name)
+            resources.append((schema_id, Resource.from_contents(data)))
         else:
             print(f"SCHEMA WARNING: {path.name} has no $id, skipping")
-    return schemas
+    registry = Registry().with_resources(resources)
+    return schemas, registry
 
 
 def main():
-    schemas = load_schemas()
+    schemas, registry = load_schemas()
 
     passed = failed = skipped = 0
 
@@ -59,7 +64,8 @@ def main():
 
         schema, schema_name = schemas[schema_ref]
         try:
-            jsonschema.validate(instance=example, schema=schema)
+            validator = jsonschema.Draft202012Validator(schema, registry=registry)
+            validator.validate(example)
             print(f"PASS:         {name}")
             passed += 1
         except jsonschema.ValidationError as e:
