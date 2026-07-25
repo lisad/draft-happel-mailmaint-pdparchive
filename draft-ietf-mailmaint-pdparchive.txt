@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 18 December 2026                       Data Transfer Initiative
+Expires: 26 January 2027                        Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                            16 June 2026
+                                                            25 July 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 December 2026.
+   This Internet-Draft will expire on 26 January 2027.
 
 Copyright Notice
 
@@ -123,6 +123,7 @@ Table of Contents
    12. References
      12.1.  Normative References
      12.2.  Informative References
+   Appendix A.  Base Contact Schema
    Acknowledgments
    Changes
      Changes in draft-ietf-mailmaint-pdparchive-01
@@ -1188,17 +1189,6 @@ Table of Contents
    Individual contact items build on [RFC9610] and [JSContact] which
    build on [vCard].
 
-   *  The globally unique uid property is mandatory in JSContact and
-      MUST be included in PDP archive.
-
-   *  The updated property is optional in JSContact but MUST be included
-      in PDP archive.
-
-   *  The rev property defined in [vCard], which is not included in
-      [JSContact], may already be available in implementations.  It MAY
-      also be included as a field on a contact, in which case it is a
-      simple value field holding a timestamp.
-
    *  The @type property should be "Card" because [JSContact] uses a
       value of "Card" for @type and registers that in
       https://www.iana.org/assignments/jscontact/jscontact.xhtml.  JMAP
@@ -1206,152 +1196,53 @@ Table of Contents
       https://www.iana.org/assignments/jmap/jmap.xhtml but does not use
       that as a @type value directly.
 
+   *  The rev property defined in [vCard], which is not included in
+      [JSContact], may already be available in implementations.  It MAY
+      also be included as a field on a contact, in which case it is a
+      simple value field holding a timestamp.
+
+   When a Card is exported as a standalone Contact item in PDP Archive,
+   it MUST meet an extended schema, compared to other contexts where
+   JSON Card data may be found.  Unique uid and updated MUST be
+   included.  This specification extends the base schema (see
+   Appendix A) to require uid, updated, and a non-empty addressBookIds.
+
 {
-  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "Schema for Personal Data Portability Archive (pdparchive) Contact",
-  "type": "object",
-  "required": ["@type", "version", "uid", "updated"],
-  "properties": {
-    "@type": {
-      "type": "string",
-      "const": "Card"
-    },
-    "version": {
-      "type": "string"
-    },
-    "uid": {
-      "description": "Globally unique identifier for the contact",
-      "type": "string"
-    },
-    "id": {
-      "description": "JMAP ID for the contact",
-      "type": "string"
-    },
-    "created": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "updated": {
-      "type": "string",
-      "format": "date-time"
-    },
-    "rev": {
-      "description": "Revision timestamp from vCard RFC6350; may be included alongside updated",
-      "type": "string",
-      "format": "date-time"
-    },
-    "kind": {
-      "type": "string",
-      "enum": ["individual", "group", "org", "location", "device", "application"]
-    },
-    "addressBookIds": {
+  "description": "Extends the base JSContact Card schema (contact-schema.json) with the `uid`, `updated`, and `addressBookIds` values required when a Card is exported as a standalone PDPArchive Contact item, as opposed to a Card embedded in some other object.",
+  "allOf": [
+    { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/contact" },
+    {
       "type": "object",
-      "additionalProperties": {
-        "type": "boolean"
-      }
-    },
-    "name": {
-      "type": "object",
+      "required": ["uid", "updated", "addressBookIds"],
       "properties": {
-        "full": {
-          "type": "string"
-        },
-        "defaultSeparator": {
-          "type": "string"
-        },
-        "isOrdered": {
-          "type": "boolean"
-        },
-        "components": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["kind", "value"],
-            "properties": {
-              "kind": {
-                "type": "string",
-                "enum": ["title", "given", "given2", "surname", "surname2",
-                         "generation", "credential", "separator"]
-              },
-              "value": {
-                "type": "string"
-              },
-              "phonetic": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      }
-    },
-    "members": {
-      "description": "For group contacts; maps member UIDs to true",
-      "type": "object",
-      "additionalProperties": {
-        "type": "boolean"
-      }
-    },
-    "relatedTo": {
-      "description": "Maps UIDs of related contacts to relation objects",
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "relation": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "boolean"
-            }
-          }
-        }
-      }
-    },
-    "notes": {
-      "description": "Maps note IDs to note objects",
-      "type": "object",
-      "additionalProperties": {
-        "type": "object",
-        "required": ["note"],
-        "properties": {
-          "note": {
-            "type": "string"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "author": {
-            "type": "object",
-            "properties": {
-              "name": {
-                "type": "string"
-              }
-            }
-          }
+        "addressBookIds": {
+          "minProperties": 1
         }
       }
     }
-  }
+  ]
 }
 
-                    Figure 7: Schema for contacts
+      Figure 7: Schema for a standalone PDPArchive Contact item,
+                    extending the base Card schema
 
-   We make some specific requirements on the updated value so that it
-   can be useful for synchronization.  See the section on updated and
-   uid specifically Section 6.4.1.  Cards can also have an id value;
-   nevertheless uid is required by this specification for consistency of
-   identifying different kinds of objects.  See also how [RFC9610]
-   contrasts id with uid.
+   Synchronization requirements for the updated and uid values apply to
+   Contact items too (see Section 6.4.1).  Cards can also have an id
+   value; nevertheless uid is required by this specification for
+   consistency of identifying different kinds of objects.  See also how
+   [RFC9610] contrasts id with uid.
 
-   When the structured data is prepared, a contact can be exported in a
-   file with an arbitrary name using a limited set of characters
-   suitable for interoperability across filesystems.
+   A contact can be exported in a file with an arbitrary name using a
+   limited set of characters suitable for interoperability across
+   filesystems.
 
    For example, a file called 'contact1.json' could contain:
 
    {
-     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
       "@type": "Card",
       "version": "1.0",
       "uid": "22B2C7DF-9120-4969-8460-05956FE6B065",
@@ -1420,7 +1311,7 @@ Table of Contents
    an arbitrary name like "contact2.json" could include:
 
    {
-      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
       "@type": "Card",
       "version": "1.0",
       "kind": "group",
@@ -1429,6 +1320,9 @@ Table of Contents
       },
       "uid": "urn:uuid:ab4310aa-fa43-11e9-8f0b-362b9e155667",
       "updated": "2021-10-31T22:27:10Z",
+      "addressBookIds": {
+         "062adcfa-105d-455c-bc60-6db68b69c3f3": true
+      },
       "members": {
         "urn:uuid:03a0e51f-d1aa-4385-8a53-e29025acd8af": true,
         "urn:uuid:b8767877-b4a1-4c70-9acc-505d3819e519": true
@@ -3021,6 +2915,10 @@ Table of Contents
               us/openspecs/office_file_formats/ms-pst/141923d5-15ab-
               4ef1-a524-6dce75aae546>.
 
+   [RFC822]   Crocker, D., "STANDARD FOR THE FORMAT OF ARPA INTERNET
+              TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC822,
+              August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
+
    [RFC2822]  Resnick, P., Ed., "Internet Message Format", RFC 2822,
               DOI 10.17487/RFC2822, April 2001,
               <https://www.rfc-editor.org/rfc/rfc2822>.
@@ -3048,10 +2946,6 @@ Table of Contents
               RFC 7942, DOI 10.17487/RFC7942, July 2016,
               <https://www.rfc-editor.org/rfc/rfc7942>.
 
-   [RFC822]   Crocker, D., "STANDARD FOR THE FORMAT OF ARPA INTERNET
-              TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC0822,
-              August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
-
    [RFC8610]  Birkholz, H., Vigano, C., and C. Bormann, "Concise Data
               Definition Language (CDDL): A Notational Convention to
               Express Concise Binary Object Representation (CBOR) and
@@ -3066,6 +2960,151 @@ Table of Contents
    [vCard]    Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
               <https://www.rfc-editor.org/rfc/rfc6350>.
+
+Appendix A.  Base Contact Schema
+
+   A JSContact Card is not always exported as a standalone PDPArchive
+   Contact item.  The same Card structure is sometimes found embedded
+   within another object (for example, a domain name registration
+   record) and in that context it has neither a globally unique uid nor
+   an addressBookIds value.  For that reason this specification defines
+   a base Card schema intended to be consistent with JSContact in
+   broader contexts.
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/contact",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for a JSContact Card",
+  "description": "Base fields for a JSContact Card, usable on its own for Card objects embedded in other data (e.g. a registrant Card inside a domain registration record) where a `uid` and `addressBookIds` are not necessarily present. See pdpa-contact-schema.json, which extends this schema with the fields required for a Card to be exported as a standalone PDPArchive Contact item.",
+  "type": "object",
+  "required": ["@type", "version"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Card"
+    },
+    "version": {
+      "type": "string"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the contact",
+      "type": "string"
+    },
+    "id": {
+      "description": "JMAP ID for the contact",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "rev": {
+      "description": "Revision timestamp from vCard RFC6350; may be included alongside updated",
+      "type": "string",
+      "format": "date-time"
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["individual", "group", "org", "location", "device", "application"]
+    },
+    "addressBookIds": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "name": {
+      "type": "object",
+      "properties": {
+        "full": {
+          "type": "string"
+        },
+        "defaultSeparator": {
+          "type": "string"
+        },
+        "isOrdered": {
+          "type": "boolean"
+        },
+        "components": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["kind", "value"],
+            "properties": {
+              "kind": {
+                "type": "string",
+                "enum": ["title", "given", "given2", "surname", "surname2",
+                         "generation", "credential", "separator"]
+              },
+              "value": {
+                "type": "string"
+              },
+              "phonetic": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "members": {
+      "description": "For group contacts; maps member UIDs to true",
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "relatedTo": {
+      "description": "Maps UIDs of related contacts to relation objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "relation": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    },
+    "notes": {
+      "description": "Maps note IDs to note objects",
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["note"],
+        "properties": {
+          "note": {
+            "type": "string"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "author": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+             Figure 19: Base schema for a JSContact Card
+
+   The PDPArchive Contact item schema in Figure 7 extends this base
+   schema.
 
 Acknowledgments
 
