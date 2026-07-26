@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-23T00:39:45.839428+00:00",
+  "timestamp": "2026-07-26T00:42:51.365844+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -434,6 +434,42 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 12,
+      "id": "PR_kwDOQr7OuM71RUwz",
+      "title": "Updates contact schema to split into base (appendix) and PDPArchive-specific schema",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/12",
+      "state": "MERGED",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "As Robert pointed out, 'uid' is not required in all places where JSContact may be used. \r\nHopefully this approach is even more useful than having just one schema for all contexts.  \r\n\r\n@rsto I would love your review of this",
+      "createdAt": "2026-07-23T08:33:19Z",
+      "updatedAt": "2026-07-25T14:32:36Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "424e4aca7b3e9f6a9dfd19086f5a6d3a9c9df6b4",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "breakout-base-contact",
+      "headRefOid": "08c4c2f814710fcf286fc95777ab5684beb285f8",
+      "closedAt": "2026-07-25T14:32:36Z",
+      "mergedAt": "2026-07-25T14:32:36Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "58f4d485168b7853004d1e72680ba6b93d9b771d"
+      },
+      "comments": [
+        {
+          "author": "rsto",
+          "authorAssociation": "NONE",
+          "body": "> @rsto I would love your review of this\r\n\r\nI think this is the right choice. The base jscontact file can model RFC 9553 (and updates), whereas other profiles then can embed this core schema for JMAP Contacts et al.",
+          "createdAt": "2026-07-23T11:10:10Z",
+          "updatedAt": "2026-07-23T11:10:10Z"
+        }
+      ],
       "reviews": []
     }
   ]
