@@ -1,0 +1,18 @@
+{
+   "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+   "@type": "Card",
+   "version": "1.0",
+   "uid": "9c2e6b7a-1f3d-4a5e-8b6c-2d4e6f8a0b1c",
+   "updated": "2024-03-01T12:00:00Z",
+   "addressBookIds": {
+      "a3d1f7e2-4b6a-4c9e-9f21-7e6d5c4b3a20": true,
+      "f9b6c2d4-8e1a-4f3b-9c5d-6a7b8c9d0e1f": true
+   },
+   "name": {
+       "components": [
+         { "kind": "given", "value": "Marianne" },
+         { "kind": "surname", "value": "Dashwood" }
+       ],
+       "isOrdered": true
+   }
+}
