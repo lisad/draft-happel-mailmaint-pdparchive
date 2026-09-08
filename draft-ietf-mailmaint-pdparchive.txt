@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 26 January 2027                        Data Transfer Initiative
+Expires: 12 March 2027                          Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                            25 July 2026
+                                                        8 September 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 January 2027.
+   This Internet-Draft will expire on 12 March 2027.
 
 Copyright Notice
 
@@ -109,9 +109,8 @@ Table of Contents
        6.3.8.  Other
      6.4.  Synchronization requirements
        6.4.1.  Always include 'uid' and 'updated'
-       6.4.2.  Synchronizing address books
-       6.4.3.  Synchronizing mailbox folders
-       6.4.4.  Blobs and files?
+       6.4.2.  Synchronizing mailbox folders
+       6.4.3.  Blobs and files?
    7.  Open issues
      7.1.  Container format
      7.2.  Encryption
@@ -124,6 +123,7 @@ Table of Contents
      12.1.  Normative References
      12.2.  Informative References
    Appendix A.  Base Contact Schema
+   Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
    Acknowledgments
    Changes
      Changes in draft-ietf-mailmaint-pdparchive-01
@@ -728,16 +728,15 @@ Table of Contents
 
 6.2.  Folder structure
 
-   Rather than have deeply nested JSON with folder information inside
-   folder information inside archive index JSON files, this approach
-   uses file system directory structure with separate files for archive
-   metadata and folder metadata as well as item data.
+   Folder structure of source data is expressed in exported data using a
+   mirrored structure in the file system directory.  Folders hold
+   archive metadata, folder metadata, item data and nested folders.
+   This makes an export that can reasonably (not necessarily "easily")
+   be navigated by a user interacting with their exported data via the
+   file system.
 
    *  Folders can be nested.  Any kind of content here can be within
-      nested folders -- this is a necessary feature for email, but
-      extends to content like contacts that aren't always represented in
-      nested folders.  (TODO: elsewhere, describe the requirements for
-      an importing system to preserve folders or not.)
+      nested folders.  Support for IMAP/JMAP requires nested folders.
 
    *  Names of files do not have to be globally unique.  Indexes and
       folder contents listings can name files relatively to their
@@ -750,6 +749,8 @@ Table of Contents
       JSON stream including all objects) but as an archive format, the
       individual files allow more clarity in individual handling,
       transactions and errors.
+
+   Example overall archive structure
 
    archive.json
    /mail/
@@ -788,11 +789,37 @@ Table of Contents
         ...
    /calendars/
        /calendar2/
+           calendar1.json
            event1.json
            event2.json
    /sieve/
    /blob/
        ...?
+
+   Folder structure in the export is generally meaningful, not just an
+   arbitrary way to paginate data.
+
+   When an explicit ID mechanism exists for indicating containers/
+   collections, the explicit ID mechanism takes precedence over folder
+   nesting.  Using AddressBookIds in contacts data means the individual
+   contact item may show up in more than one AddressBook item.  The
+   exporter can choose how to export contacts to folders within the
+   export, but it is RECOMMENDED that the exporter only include one copy
+   of a given item rather than one copy per collection it should appear
+   in.  This precedence rule applies also to other kinds of data with
+   collection IDs.
+
+   For example, a user might keep her sister Marianne's contact
+   information in both her "Favorites" and "Family" address books.  The
+   exporter places marianne-dashwood.json under only one of the two
+   corresponding folders in the export, rather than duplicating the
+   file, because the addressBookIds field on the contact itself -- not
+   its location in the export -- is what tells an importer which address
+   books it belongs to.  See Appendix B for the full worked example.
+
+   Folders MUST be nested when the source data has nested folders.  A
+   user mailbox with nested folders cannot be accurately copied unless
+   folder structure can also be copied.
 
 6.2.1.  File and folder names
 
@@ -822,8 +849,8 @@ Table of Contents
    represented as "mail/Archive/2024/2024-12".  Folder names are encoded
    in UTF-8.
 
-   Each folder metatadata is described by "folder.json" (this name is
-   REQUIRED), which has the following fields:
+   Each email folder's metatadata is described by "folder.json" (this
+   name is REQUIRED), which has the following fields:
 
    +==================+=============+============+=====================+
    | Attribute Name   |     Type    | Mandatory? | Comment             |
@@ -915,8 +942,10 @@ Table of Contents
    value.
 
    The folder.json format can be defined generally as follows.  Note
-   that this covers folders containing tasks, notes, contacts or emails,
-   so the fields that are specific to IMAP folders are not required.
+   that this covers folders containing tasks, notes or emails, so the
+   fields that are specific to IMAP folders are not required.  The
+   folder.json format is NOT used for calendars or address books, which
+   already have their own JSON format defined.
 
 {
   "$id": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
@@ -1543,7 +1572,9 @@ Table of Contents
 
    *  The calendarIds field defined in JMAP Calendars is REQUIRED in
       order to match up events to the calendar they are supposed to
-      appear in.
+      appear in.  As with addressBookIds for contacts, this explicit ID
+      mechanism takes precedence over any folder nesting in the export;
+      see Section 6.2.
 
 {
   "$id": "https://id.schemas.pub/o/DTI/PDPArchive/event",
@@ -2015,7 +2046,7 @@ Table of Contents
                           Figure 14: Event example
 
    The event object includes a calendarIds property, which links it to
-   the calendar collection it belongs to.
+   the calendar collections it belongs to.
 
 6.3.5.  Calendar Collection Items
 
@@ -2164,7 +2195,7 @@ Table of Contents
               Figure 15: Schema for calendar collections
 
    A file with an arbitrary name, such as calendar1.json, in a directory
-   (e.g., \calendars\calendar2) would contain the calendar's metadata:
+   (e.g., /calendars/calendar2/) would contain the calendar's metadata:
 
    {
      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/calendar",
@@ -2192,8 +2223,6 @@ Table of Contents
 
    The uid value here corresponds to the ID used in the calendarIds
    property of the individual event item.
-
-   TODO: fix the relationship between folder.json and calendar metadata
 
 6.3.5.1.  Tasks
 
@@ -2686,29 +2715,38 @@ Table of Contents
    feasible solution.
 
    Nevertheless, we believe some of the use cases in our use case
-   section (use_cases) motivate not only including calendar data in
-   these archives for backup purposes, but also for partial updates.
-   This works the same way it does for JSContact and JSCard objects.
+   section (use_cases) motivate not only including calendar data from
+   CalDAV servers in these archives for backup purposes, but also for
+   partial updates.  An export from a CalDAV server can follow all the
+   requirements of this specification, and will in fact be more limited
+   (for example, CalDAV does not allow events to appear in multiple
+   calendars, while this export format does).
 
-6.4.2.  Synchronizing address books
-
-   Build on [RFC9610]
-
-6.4.3.  Synchronizing mailbox folders
+6.4.2.  Synchronizing mailbox folders
 
    Because servers may differ in which characters they support in folder
    names, how many levels deep folders may be created, and even in what
    separator character is used to indicate folder hierarchy,
-   difficulties in synchronizing folder names will definitely arise.
-   Folder names that are not likely to be widely supported in other
-   systems should be translated for export, because if the exporting
-   system has a consistent translation algorithm, then even if the
-   mailbox name looks different in the importing system it will still be
-   imported consistently.
+   difficulties in synchronizing folder names will definitely arise.  If
+   an exporter encounters folder names that are not likely to be widely
+   supported in other systems, it SHOULD translate those for export
+   using a consistent mapping algorithm, such that the folder has the
+   same mapped name every time it is exported.  The goal is to choose a
+   mapping that allows another system importing the data repeated to
+   recognize foldrs it has imported before.  A reversible mapping would
+   also help the exporter be able to import its own data if necessary,
+   without duplicating folders erroneously.
 
    Systems that support mailbox IDs MUST include them in exports.
    Systems that do not (though it's strongly encouraged) SHOULD use the
    full mailbox name as the unique identifier value.
+
+   Systems importing data in order to port a user's account to a new
+   service MUST preserve the nesting structure of folders.  Other kinds
+   of importers may not preserve folder structure (for example, mail may
+   be imported into a database for searching, for legal discovery
+   purposes, or for compliance records and these databases need not
+   maintain folder nesting).
 
       TODO: Also it would be good to include a "display name" in case
       the server has had to translate the mailbox name for
@@ -2718,7 +2756,7 @@ Table of Contents
       _pc_L33T_pc_ or another set of safe characters and include a
       display name of "%L33T%" for reference and debugging.
 
-6.4.4.  Blobs and files?
+6.4.3.  Blobs and files?
 
    Reference [RFC9404]?
 
@@ -3105,6 +3143,80 @@ Appendix A.  Base Contact Schema
 
    The PDPArchive Contact item schema in Figure 7 extends this base
    schema.
+
+Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
+
+   Section 6.2 explains that when an explicit ID mechanism exists for
+   indicating containers or collections, that mechanism takes precedence
+   over folder nesting in the export.  This appendix works through a
+   full example of that principle using addressBookIds.
+
+   Suppose Elinor keeps her sister's contact information in both her
+   "Favorites" and "Family" address books.  The exporter places
+   marianne-dashwood.json under only one of the two corresponding
+   folders in the export -- it does not also create a duplicate copy
+   under the other:
+
+   /contacts/
+       favorites.json
+       family.json
+       Family/
+           marianne-dashwood.json
+
+       Figure 20: One physical file for a contact that belongs to two
+                               address books
+
+   The two AddressBook objects are flat files; their uid values, not
+   their location in the export, are what matters:
+
+   {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
+      "@type": "AddressBook",
+      "uid": "a3d1f7e2-4b6a-4c9e-9f21-7e6d5c4b3a20",
+      "updated": "2024-03-01T12:00:00Z",
+      "name": "Favorites"
+   }
+
+                         Figure 21: favorites.json
+
+   {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
+      "@type": "AddressBook",
+      "uid": "f9b6c2d4-8e1a-4f3b-9c5d-6a7b8c9d0e1f",
+      "updated": "2024-03-01T12:00:00Z",
+      "name": "Family"
+   }
+
+                           Figure 22: family.json
+
+   Marianne's contact item declares membership in both address books via
+   addressBookIds, regardless of which single folder holds the file:
+
+   {
+      "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/pdpa-contact",
+      "@type": "Card",
+      "version": "1.0",
+      "uid": "9c2e6b7a-1f3d-4a5e-8b6c-2d4e6f8a0b1c",
+      "updated": "2024-03-01T12:00:00Z",
+      "addressBookIds": {
+         "a3d1f7e2-4b6a-4c9e-9f21-7e6d5c4b3a20": true,
+         "f9b6c2d4-8e1a-4f3b-9c5d-6a7b8c9d0e1f": true
+      },
+      "name": {
+          "components": [
+            { "kind": "given", "value": "Marianne" },
+            { "kind": "surname", "value": "Dashwood" }
+          ],
+          "isOrdered": true
+      }
+   }
+
+                  Figure 23: Family/marianne-dashwood.json
+
+   An importer MUST NOT infer that Marianne belongs only to "Family"
+   because that's where her file happens to live; it MUST add her to
+   both address books indicated by addressBookIds if it maintains
+   address books.
 
 Acknowledgments
 
