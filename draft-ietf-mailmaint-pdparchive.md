@@ -369,17 +369,24 @@ Example of archive.json (full export):
 
 
 
+## Folder structure {#folder-structure}
 
-## Folder structure
+Folder structure of source data is expressed in exported data using a
+mirrored structure in the file system directory.
+Folders hold archive metadata, folder metadata, item data and nested folders.
+This makes an export that can reasonably (not necessarily "easily")
+be navigated by a user interacting with their exported data via the file system.
 
-Rather than have deeply nested JSON with folder information inside folder
-information inside archive index JSON files, this approach uses file system
-directory structure with separate files for archive metadata and folder
-metadata as well as item data.
+* Folders can be nested.  Any kind of content here can be within nested folders.
+  Support for IMAP/JMAP requires nested folders.
 
-* Folders can be nested.  Any kind of content here can be within nested folders -- this is a necessary feature for email, but extends to content like contacts that aren't always represented in nested folders.   (TODO: elsewhere, describe the requirements for an importing system to preserve folders or not.)
-* Names of files do not have to be globally unique.   Indexes and folder contents listings can name files relatively to their location in the archive structure, which means that references may not be resolvable if that context is lost.
+* Names of files do not have to be globally unique.   Indexes and folder contents listings
+  can name files relatively to their location in the archive structure, which means that
+  references may not be resolvable if that context is lost.
+
 * Individual content items are individual files.  This may not always be the easiest choice for exporters who must generate a large number of files for individually small items (contrast to a JSON stream including all objects) but as an archive format, the individual files allow more clarity in individual handling, transactions and errors.
+
+Example overall archive structure
 
 ~~~
 
@@ -420,6 +427,7 @@ archive.json
      ...
 /calendars/
     /calendar2/
+        calendar1.json
         event1.json
         event2.json
 /sieve/
@@ -427,6 +435,28 @@ archive.json
     ...?
 ~~~
 
+
+Folder structure in the export is generally meaningful, not just an arbitrary way
+to paginate data.
+
+When an explicit ID mechanism exists for indicating containers/collections, the
+explicit ID mechanism takes precedence over folder nesting. Using
+AddressBookIds in contacts data means the individual contact item may show up in
+more than one AddressBook item.  The exporter can choose how to export contacts
+to folders within the export, but it is RECOMMENDED that the exporter only include
+one copy of a given item rather than one copy per collection it should appear in.
+This precedence rule applies also to other kinds of data with collection IDs.
+
+For example, a user might keep her sister Marianne's contact
+information in both her "Favorites" and "Family" address books.  The exporter
+places `marianne-dashwood.json` under only one of the two corresponding
+folders in the export, rather than duplicating the file, because the
+`addressBookIds` field on the contact itself -- not its location in the
+export -- is what tells an importer which address books it belongs to.  See
+{{folder-vs-collection-example}} for the full worked example.
+
+Folders MUST be nested when the source data has nested folders.  A user mailbox
+with nested folders cannot be accurately copied unless folder structure can also be copied.
 
 
 ### File and folder names
@@ -447,7 +477,7 @@ example, the folder INBOX would be represented as "mail/INBOX", and the
 folder "Archive/2024/2024-12" would be represented
 as "mail/Archive/2024/2024-12". Folder names are encoded in UTF-8.
 
-Each folder metatadata is described by "folder.json" (this name is REQUIRED),
+Each email folder's metatadata is described by "folder.json" (this name is REQUIRED),
 which has the following fields:
 
 | Attribute Name    | Type     | Mandatory? | Comment |
@@ -475,8 +505,9 @@ period elapsed, so it could have removed messages and flags as well as be a tomb
 A full archive or snapshot SHOULD NOT include deleted folders with the deleted_at value.
 
 The folder.json format can be defined generally as follows.  Note that this
-covers folders containing tasks, notes, contacts or emails, so the fields that
-are specific to IMAP folders are not required.
+covers folders containing tasks, notes or emails, so the fields that
+are specific to IMAP folders are not required.  The folder.json format is NOT
+used for calendars or address books, which already have their own JSON format defined.
 
 ~~~~~~~~~~
 {::include ./schemas/folder-schema.json}
@@ -688,7 +719,9 @@ multiple recurrences of the same underlying event.
 or user request that the
 destination for the data wants expanded recurrences within a specific time period.
 * The `calendarIds` field defined in JMAP Calendars is REQUIRED in order to match up
-events to the calendar they are supposed to appear in.
+events to the calendar they are supposed to appear in.  As with `addressBookIds` for
+contacts, this explicit ID mechanism takes precedence over any folder nesting in the
+export; see {{folder-structure}}.
 
 ~~~
 {::include ./schemas/event-schema.json}
@@ -704,7 +737,8 @@ For example, a file called event1.json could contain:
 {: #example-event1 title="Event example"}
 
 
-The event object includes a calendarIds property, which links it to the calendar collection it belongs to.
+The event object includes a calendarIds property, which links it to the calendar
+collections it belongs to.
 
 ### Calendar Collection Items
 
@@ -719,7 +753,7 @@ If a system exports events belonging to calendars, it SHOULD also export the ref
 ~~~
 {: #calendar-schema title="Schema for calendar collections"}
 
-A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \calendars\calendar2\) would contain the calendar's metadata:
+A file with an arbitrary name, such as calendar1.json, in a directory (e.g., /calendars/calendar2/) would contain the calendar's metadata:
 
 
 ~~~
@@ -729,8 +763,6 @@ A file with an arbitrary name, such as calendar1.json, in a directory (e.g., \ca
 
 
 The `uid` value here corresponds to the ID used in the calendarIds property of the individual event item.
-
-TODO: fix the relationship between folder.json and calendar metadata
 
 #### Tasks
 
@@ -816,17 +848,36 @@ We recognize that this understanding of 'updated' is highly judgement-dependent.
 
  {{CalDAV}} uses URLs, ETags and UIDs for synchronizing changes between two systems reliably, but it relies upon client-server architecture, where the server is the "source of truth" and the client must manage its local history and decide which things to update from the server and which things to tell the server to update.  If a user is setting up synchronization or an implementor is building a system that involves synchronization, it may be best to use CalDAV if that is a feasible solution.
 
-Nevertheless, we believe some of the use cases in our [use case section](use_cases) motivate not only including calendar data in these archives for backup purposes, but also for partial updates.  This works the same way it does for JSContact and JSCard objects.
+Nevertheless, we believe some of the use cases in our
+[use case section](use_cases) motivate not only including calendar data from CalDAV servers in these
+archives for backup purposes, but also for partial updates.  An export from a
+CalDAV server can follow all the requirements of this specification, and will
+in fact be more limited (for example, CalDAV does not allow events to appear
+in multiple calendars, while this export format does).
 
-### Synchronizing address books
-
-Build on {{RFC9610}}
 
 ### Synchronizing mailbox folders
 
-Because servers may differ in which characters they support in folder names, how many levels deep folders may be created, and even in what separator character is used to indicate folder hierarchy, difficulties in synchronizing folder names will definitely arise.  Folder names that are not likely to be widely supported in other systems should be translated for export, because if the exporting system has a consistent translation algorithm, then even if the mailbox name looks different in the importing system it will still be imported consistently.
+Because servers may differ in which characters they support in folder names,
+how many levels deep folders may be created, and even in what separator character
+is used to indicate folder hierarchy, difficulties in synchronizing folder
+names will definitely arise.  If an exporter encounters folder names that are
+not likely to be widely supported in other systems, it SHOULD translate those
+for export using a consistent mapping algorithm, such that the folder has the same
+mapped name every time it is exported.  The goal is to choose a mapping
+that allows another system importing the data repeated to recognize foldrs it has
+imported before.  A reversible mapping would also help the exporter be able to
+import its own data if necessary, without duplicating folders erroneously.
 
-Systems that support mailbox IDs MUST include them in exports.  Systems that do not (though it's strongly encouraged) SHOULD use the full mailbox name as the unique identifier value.
+Systems that support mailbox IDs MUST include them in exports.  Systems that do not
+(though it's strongly encouraged) SHOULD use the full mailbox name as the unique
+identifier value.
+
+Systems importing data in order to port a user's account to a new service MUST preserve
+the nesting structure of folders.  Other kinds of importers may not preserve folder
+structure (for example, mail may be imported into a database for searching, for
+legal discovery purposes, or for compliance records and these databases need not
+maintain folder nesting).
 
 > TODO: Also it would be good to include a "display name" in case the server has had to translate the mailbox name for compatibility.  E.g. a server that has a mailbox named "%L33T%", but knows the "%" should not be exported because many servers forbid the "%", would translate the name consistently to _pc_L33T_pc_ or another set of safe characters and include a display name of "%L33T%" for reference and debugging.
 
@@ -924,6 +975,52 @@ Card schema intended to be consistent with JSContact in broader contexts.
 {: #contact-schema title="Base schema for a JSContact Card"}
 
 The PDPArchive Contact item schema in {{pdpa-contact-schema}} extends this base schema.
+
+# Extended Example: Folder Nesting vs. Collection IDs {#folder-vs-collection-example}
+
+{{folder-structure}} explains that when an explicit ID mechanism exists for
+indicating containers or collections, that mechanism takes precedence over
+folder nesting in the export.  This appendix works through a full example of
+that principle using `addressBookIds`.
+
+Suppose Elinor keeps her sister's contact information in
+both her "Favorites" and "Family" address books.  The exporter places
+`marianne-dashwood.json` under only one of the two corresponding folders in
+the export -- it does not also create a duplicate copy under the other:
+
+~~~
+/contacts/
+    favorites.json
+    family.json
+    Family/
+        marianne-dashwood.json
+~~~
+{: #example-addressbook-precedence-tree title="One physical file for a contact that belongs to two address books"}
+
+The two AddressBook objects are flat files; their `uid` values, not their
+location in the export, are what matters:
+
+~~~
+{::include ./examples/favorites.json}
+~~~
+{: #example-addressbook-favorites title="favorites.json"}
+
+~~~
+{::include ./examples/family.json}
+~~~
+{: #example-addressbook-family title="family.json"}
+
+Marianne's contact item declares membership in both address books via
+`addressBookIds`, regardless of which single folder holds the file:
+
+~~~
+{::include ./examples/marianne-dashwood.json}
+~~~
+{: #example-addressbook-precedence-contact title="Family/marianne-dashwood.json"}
+
+An importer MUST NOT infer that Marianne belongs only to "Family" because
+that's where her file happens to live; it MUST add her to both address books
+indicated by `addressBookIds` if it maintains address books.
 
 # Acknowledgments
 {:numbered="false"}
