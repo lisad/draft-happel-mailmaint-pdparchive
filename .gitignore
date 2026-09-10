@@ -20,5 +20,6 @@ Gemfile.lock
 draft-happel-mailmaint-pdparchive.xml
 package-lock.json
 report.xml
+.mcp.json
 !requirements.txt
 CLAUDE.md

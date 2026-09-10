@@ -37,23 +37,6 @@
         "expectReply": { "type": "boolean" }
       }
     },
-    "link": {
-      "type": "object",
-      "required": ["href"],
-      "properties": {
-        "@type": { "type": "string", "const": "Link" },
-        "href": { "type": "string", "format": "uri" },
-        "cid": { "type": "string" },
-        "contentType": { "type": "string" },
-        "size": { "type": "integer", "minimum": 0 },
-        "rel": { "type": "string" },
-        "display": {
-          "type": "string",
-          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
-        },
-        "title": { "type": "string" }
-      }
-    },
     "alert": {
       "type": "object",
       "required": ["@type", "trigger"],
@@ -99,7 +82,7 @@
         "relativeTo": { "type": "string", "enum": ["start", "end"] },
         "links": {
           "type": "object",
-          "additionalProperties": { "$ref": "#/$defs/link" }
+          "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
         }
       }
     },
@@ -258,7 +241,7 @@
     },
     "links": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/$defs/link" }
+      "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
     },
     "keywords": {
       "type": "object",
