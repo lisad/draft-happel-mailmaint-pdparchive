@@ -61,6 +61,8 @@ normative:
 
   RFC9051:
 
+  JMAPCalendars: I-D.ietf-jmap-calendars
+
 informative:
 
   RFC822:
@@ -88,8 +90,6 @@ informative:
   RFC7942:
 
   RFC8610:
-
-  RFC9404:
 
   PST:
     title: "[MS-PST]: Outlook Personal Folders (.pst) File Format"
@@ -691,7 +691,7 @@ object referred to by this Principal ID is not itself given representation in th
 
 {{JSCalendar}} is the basis for representing events, tasks and groups in JSON.
 This section explains how to export individual events and tasks within an archive.
-JMAP for Calendars (https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/)
+JMAP for Calendars ({{JMAPCalendars}})
 does provide some additional considerations when producing calendar data from a JMAP
 system or to be consumed by a JMAP system, so it is also a normative reference.
 
@@ -710,7 +710,7 @@ this specification does not include any requirements for ETags.
 Notes on specific fields:
 
 * The globally unique `uid` property is mandatory in JSCalendar and MUST be included.
-See JMAP Calendars draft-ietf-jmap-calendars-26 section 1.4.1 for when the `uid` property can appear the same for
+See Section 1.4.1 of {{JMAPCalendars}} for when the `uid` property can appear the same for
 multiple recurrences of the same underlying event.
 * The `updated` property is mandatory in JSCalendar and MUST be included.
 * The `sequence` value is optional in JSCalendar but SHOULD be included if available.
@@ -742,7 +742,7 @@ collections it belongs to.
 
 ### Calendar Collection Items
 
-Calendar collection items are built using JMAP for Calendars (draft-ietf-jmap-calendars-26).
+Calendar collection items are built using JMAP for Calendars ({{JMAPCalendars}}).
 
 If a system exports events belonging to calendars, it SHOULD also export the referenced Calendar objects.
 
@@ -786,19 +786,75 @@ For example, a file called task1.json could contain:
 
 ### Notes
 
-* VJournal is first defined in {{iCalendar}}.
-* VJournal also used in  {{CalDAV}}.
-* However, they are NOT used in https://jmap.io/spec-calendars.html
+Notes are simple, free-form text or documents, typically attached to a task,
+contact, or event, or kept standalone (e.g. a personal notebook). VJournal,
+first defined in {{iCalendar}} and also used by {{CalDAV}}, was not carried
+forward into {{JSCalendar}} (see https://jmap.io/spec-calendars.html), so
+there is no existing JSON format for notes to build on.
 
-Do we even have a JSON format for notes defined?
+This specification therefore defines a minimal, PDPArchive-specific Note
+schema, following the same `uid`/`updated` conventions used elsewhere for
+synchronization (see {{uid-updated}}).
 
-### Files
+~~~
+{::include ./schemas/note-schema.json}
+~~~
+{: #note-schema title="Schema for notes"}
 
-TODO
+For example, a file called note1.json could contain:
 
-### Other
+~~~
+{::include ./examples/note1.json}
+~~~
+{: #example-note1 title="Note example"}
 
-(LMD Note: I think this might better fit in an out of scope section - I think out of scope sections are useful for statements that explain why scope is limited.  that's assuming we all agree that groups, freebusy and timezones are left out.)
+The `contentType` field indicates how to interpret `body`; if `contentType` is absent, `body` is plain text. An exporter that only has an HTML-formatted note SHOULD set `contentType` to "text/html" rather than attempt a lossy conversion to plain text.
+
+A note that has attachments can reference them using `links` (see {{files-attachments}}).
+
+### Attachments {#files-attachments}
+
+An attachment MAY be stored as a separate file with the filename used as the `blobId`,
+as opposed to inline or referenced externally.  This section explains how to
+handle enclosed or included attachments that are not inline.
+
+This proposal follows the lead of {{JMAPCalendars}}, using the `links` field on
+objects that have attachments.  The `links` field holds Link Objects, defined
+in {{JSCalendar}}, which uses `href` and requires a URI value. Using `href` is problematic: it is defined
+to have a URI value, but no commonly used URI supports partial
+local file paths or unique file names.  The {{JMAPCalendars}} spec, to deal with this,
+adds `blobId` to identify the attachment.  This can work OK in a structured file export,
+because it is possible for software importing or working with the export files to look
+through the various sub-directories until it finds the file named with the exact `blobId` value.
+Although this pattern is copied from JMAP, it should not be necessary to implement JMAP to
+assign blobs a blobId that is unique within an export, and use that blobId value in link object
+data.
+
+The `blobId` values assigned MUST be unique across the export.
+
+The location of attachments within folders or sub-folders in the export is defined
+by the exporting service.  Software generating PDPArchives MAY put attachments in a
+single folder, multiple folders, or nested folders. Software importing or interpreting
+PDPArchives MUST be prepared to search through the archive folders to find the correct
+attachment with matching blobId name.
+
+NOTE: This offers no explicit support for exported files that are standalone and
+not attachments.  While those kinds of files could always just be part of the export, there's nothing
+in this specification to say where those would be listed or what role they would serve.
+
+The Link object is shared by the Note, Task, and Event schemas ({{note-schema}}, {{task-schema}}, {{event-schema}}), so it is defined once here:
+
+~~~
+{::include ./schemas/link-schema.json}
+~~~
+{: #link-schema title="Schema for Link objects (attachments and references)"}
+
+If the value of "rel" for the link object is "enclosure", then the attachment SHOULD
+be included in the PDPArchive. If the value of "rel" is another value, the target
+or attachment MAY be included in the PDPArchive export.
+
+
+### Out of Scope
 
 Groups as defined in JSCalendar are NOT part of this archive format.  Groups in JSCalendar can combine events and tasks in a container.  This specification, for consistency and simplicity, uses folders and requires individual objects to be in separate files.
 
@@ -881,9 +937,9 @@ maintain folder nesting).
 
 > TODO: Also it would be good to include a "display name" in case the server has had to translate the mailbox name for compatibility.  E.g. a server that has a mailbox named "%L33T%", but knows the "%" should not be exported because many servers forbid the "%", would translate the name consistently to _pc_L33T_pc_ or another set of safe characters and include a display name of "%L33T%" for reference and debugging.
 
-### Blobs and files?
+### Synchronizing files and attachments
 
-Reference {{RFC9404}}?
+`blobId` values (see {{files-attachments}}) SHOULD remain stable across repeated exports of the same underlying binary content, so that importers can recognize an attachment they have already synchronized and avoid re-transferring it. This mirrors the `uid` stability requirement in {{uid-updated}}, applied to attachments and their `blobId`.
 
 # Open issues
 

@@ -1,0 +1,43 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/note",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Note",
+  "description": "A minimal note format defined by this specification. Neither JSContact nor JSCalendar define a JSON note type; iCalendar's VJOURNAL was not carried forward into JSCalendar (RFC 8984).",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "body"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Note"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the note",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "description": "Last-modified timestamp; MUST be included for synchronization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "description": "The note's content",
+      "type": "string"
+    },
+    "contentType": {
+      "description": "MIME type of body; body is plain text if this is absent",
+      "type": "string",
+      "enum": ["text/plain", "text/html", "text/markdown"]
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
+    }
+  }
+}
