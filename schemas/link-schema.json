@@ -1,0 +1,32 @@
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/link",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Link",
+  "description": "The Link object from RFC 8984 (JSCalendar), shared by the Note, Task, and Event schemas. A Link is a general-purpose reference and is not necessarily an attachment; `rel` set to \"enclosure\" is what marks a Link as an attachment, following draft-ietf-jmap-calendars. Following that same precedent, `blobId` MAY be used instead of `href` on an attachment Link, to reference binary content stored as a file elsewhere in the archive rather than at a URI.",
+  "type": "object",
+  "anyOf": [
+    { "required": ["href"] },
+    { "required": ["blobId"] }
+  ],
+  "properties": {
+    "@type": { "type": "string", "const": "Link" },
+    "href": { "type": "string", "format": "uri" },
+    "blobId": {
+      "description": "The filename of this attachment's binary content, used instead of href when the content is stored as a file in the archive rather than at a URI. Not necessarily a path relative to the archive root: the exporter may place the file in any folder, so an importer locates it by searching the archive for a file named with this exact value. Named after the JMAP blobId (RFC 9404) and used the way draft-ietf-jmap-calendars uses it for CalendarEvent attachments, but here it directly names a file within the archive rather than a handle resolved via Blob/get against a live server.",
+      "type": "string"
+    },
+    "cid": { "type": "string" },
+    "contentType": { "type": "string" },
+    "size": { "type": "integer", "minimum": 0 },
+    "rel": {
+      "type": "string",
+      "description": "Relationship of the link's target to the containing object, as in RFC 8984. \"enclosure\" marks the Link as an attachment (following draft-ietf-jmap-calendars); other values MAY be used for links that are not attachments, such as references to related resources.",
+      "examples": ["enclosure"]
+    },
+    "display": {
+      "type": "string",
+      "enum": ["badge", "graphic", "fullsize", "thumbnail"]
+    },
+    "title": { "type": "string" }
+  }
+}

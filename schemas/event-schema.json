@@ -99,42 +99,8 @@
         "links": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/$defs/link"
+            "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link"
           }
-        }
-      }
-    },
-    "link": {
-      "type": "object",
-      "required": ["href"],
-      "properties": {
-        "@type": {
-          "type": "string",
-          "const": "Link"
-        },
-        "href": {
-          "type": "string",
-          "format": "uri"
-        },
-        "cid": {
-          "type": "string"
-        },
-        "contentType": {
-          "type": "string"
-        },
-        "size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "rel": {
-          "type": "string"
-        },
-        "display": {
-          "type": "string",
-          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
-        },
-        "title": {
-          "type": "string"
         }
       }
     },
@@ -389,7 +355,7 @@
       "description": "Maps link IDs to Link objects (attachments, references)",
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/$defs/link"
+        "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link"
       }
     },
     "keywords": {

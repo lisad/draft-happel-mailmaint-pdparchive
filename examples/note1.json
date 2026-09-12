@@ -1,0 +1,20 @@
+{
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/note",
+  "@type": "Note",
+  "uid": "9f1c1e3a-2b34-4b8e-8b70-5e6f2f6b9a11",
+  "created": "2024-02-14T09:05:00Z",
+  "updated": "2024-03-02T18:22:00Z",
+  "title": "Garden plan",
+  "body": "California wildflowers - ORDERED, poppies - have seed.",
+  "contentType": "text/plain",
+  "links": {
+    "1": {
+      "@type": "Link",
+      "rel": "enclosure",
+      "blobId": "e612afe4-2962-42f1-bcd1-073368274c24",
+      "contentType": "image/png",
+      "size": 84213,
+      "title": "garden-sketch.png"
+    }
+  }
+}
