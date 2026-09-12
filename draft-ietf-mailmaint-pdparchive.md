@@ -63,6 +63,8 @@ normative:
 
   JMAPCalendars: I-D.ietf-jmap-calendars
 
+  IJSON: RFC7493
+
 informative:
 
   RFC822:
@@ -103,6 +105,13 @@ informative:
     target: https://takeout.google.com/settings/takeout
     author:
      - org: Google
+    date: false
+
+  ZIPAES:
+    title: "AES Encryption Information"
+    target: https://www.winzip.com/en/support/aes-encryption/
+    author:
+     - org: WinZip Computing
     date: false
 
 
@@ -367,6 +376,8 @@ Example of archive.json (full export):
 ~~~~~~~~~~
 {: #archive-example title="A basic archive.json example"}
 
+PDPArchive generators MUST use {{IJSON}} to more safely generate this and other
+JSON outputs.
 
 
 ## Folder structure {#folder-structure}
@@ -686,6 +697,9 @@ However, it may not be useful in other administrative domains where the same con
 does not allow the Principal ID to be resolved against the correct account.  In any case, the
 object referred to by this Principal ID is not itself given representation in the PDP Archive export.
 
+See also {{security-considerations}} on trusting sharing information in exported
+data.
+
 
 ### Calendar events, tasks and groups
 
@@ -999,13 +1013,123 @@ This section records the status of known implementations of the protocol defined
 According to {{RFC7942}}, "this will allow reviewers and working groups to assign due consideration to documents that have the benefit of running code, which may serve as evidence of valuable experimentation and feedback that have made the implemented protocols more mature. It is up to the individual working groups to use this information as they see fit".
 
 
-# Security Considerations
+# Security Considerations {#security-considerations}
 
-TODO Security
+Privacy of personal information is important, and an archive can provide a
+convenient way to exfiltrate large amounts of private data.  Several cautions
+and remediations are advised below.  In addition some protections are REQUIRED:
 
-# Privacy considerations
+* A producer of PDPArchive exports MUST conform with {{IJSON}} requirements.
 
-tbd.
+Authors of protocols or other standards that are defined to create PDPArchive
+exports or gate access to PDPArchive exports (such as JMAP or CalDAV extensions
+or OAuth scopes) will have to consider appropriate privacy and authorization
+protections specific to their purpose and context.
+
+## Threat model
+
+Making something convenient is often great for users, but also often creates an
+attractive target for attackers.  Even if a service does not experience
+organized attacks at one point, convenience and time may lead to coordinated
+attacks.
+
+Large amounts of information also create risks just by aggregating.  With a
+large amount of information, correlating to discover private information not
+directly in the export may be possible.  In particular, these personal data
+exports contain PII - information about people invited to meetings or in address
+books - who did not consent to an export.
+
+Many attacks involve gaining account access. Others do not require taking
+control of the account but instead rely on deceiving the account holder or
+authorized agent.
+
+Access controls implemented at the data source might not transfer reliably with
+the data.  Access controls may be implied by `shareWith` or by roles and
+participation status data that is part of this export, or be provided in custom
+fields extending these formats.  An importing service should note whether it is
+making decisions to allow access based on trusted role or access information
+provided during an import, or untrusted (could be tampered with, including by
+the user providing an upload).
+
+Data retention rules that services or organizations attempt to follow may find
+that extra copies of exported data violate those rules.
+
+## Suggested privacy protections
+
+It is not expected that services would implement all of these mitigations and
+partial protections at all times, but consider the applicability for each
+situation.
+
+* Use appropriate authentication and authorization.  In addition, services might
+ask for a quick reconfirmation of identity, authentication or authorization
+before sending new private data.  The service might ask for a password to
+be re-entered, a one-time-password to be provided, or email re-confirmed.
+
+* Services might notify or inform users of significant data access.  Some
+existing platforms send an email to the account to make sure that the account
+holder knows of the transfer.  A history of data transfers might be available in
+account information.
+
+* Transport encryption is advised when sending archive files.
+
+* A service may encrypt an archive file intended for download, using existing
+password/encryption approaches, such as a ZIP archive encrypted with AES-256
+{{ZIPAES}} (a convention with broad tool support).  The service may use a
+side-channel to communicate with the account owner or ask them to choose a
+password when setting up the export.
+
+* If interacting directly with the user, either because the user has initiated
+an export or has been prompted to approve one via flows like OAuth, the service
+may provide GUI to offer filtering personal data before exporting.  For example,
+a user authorizing transfer of a photo album may be offered a chance to filter
+out document scans. Because email is routinely used to send password reset links
+or login links, email is especially vulnerable to accidental export of more
+sensitive data/access than was intended.
+
+* Verify the identity of third-party data requestors.  This can be applied if
+there are any third-party data request mechanisms outside the scope of
+PDPArchive, implemented for example with GUI to generate authorization keys or
+capability URLs, and then providing those keys/URLs to a third-party in
+configuration data or third-party GUI.  Source services routinely check for
+impersonation through third-party API keys and vetting processes to obtain those
+keys.
+
+* Exporters should be wary of deserializers, especially generic object
+deserializers.  Fields to be exported should be specified or allow-listed rather
+than default to export.  Exporters should take extra care not to export
+credentials, access tokens, or other secrets.
+
+## Considerations for importers
+
+Software importing data have rather different considerations than exporters, but
+these also matter to security and privacy.
+
+* Importing services should consider appropriate safety checking before handling
+JSON files.  Differences in JSON parsing (such as how to handle multiple
+instances of the same key in the same location) can open avenues ot "smuggling"
+bugs.  An export that does not meet {{IJSON}} requirements MAY be rejected.
+
+* Importing services handling cross-references should scope these
+cross-references within the appropriate folder context.  Other cross-referencing
+risks should be considered, such as references that trigger fetching new content
+over the network, or using relative paths improperly.
+
+* Importers may be vulnerable to resource exhaustion through mechanisms like
+unbounded calendar recurrence expansion or oversized inline data.
+
+* Generic object polymorphic deserialization can be a code-execution bug vector.
+
+* Checking the size of blobs and attachments against their metadata might be
+useful.
+
+* Keep IDs as strings rather than convert to numbers.
+
+## Other
+
+Exporting services should plan for appropriate throttling to protect their own
+resources.  Though the exact protocols by which third parties or users may
+request exports are undefined in this specification, download/export links in
+Web pages may lead to large amounts of traffic that need management.
 
 
 # IANA Considerations
