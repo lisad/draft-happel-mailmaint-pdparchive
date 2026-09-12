@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 12 March 2027                          Data Transfer Initiative
+Expires: 16 March 2027                          Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                        8 September 2026
+                                                       12 September 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 March 2027.
+   This Internet-Draft will expire on 16 March 2027.
 
 Copyright Notice
 
@@ -105,12 +105,12 @@ Table of Contents
        6.3.4.  Calendar events, tasks and groups
        6.3.5.  Calendar Collection Items
        6.3.6.  Notes
-       6.3.7.  Files
-       6.3.8.  Other
+       6.3.7.  Attachments
+       6.3.8.  Out of Scope
      6.4.  Synchronization requirements
        6.4.1.  Always include 'uid' and 'updated'
        6.4.2.  Synchronizing mailbox folders
-       6.4.3.  Blobs and files?
+       6.4.3.  Synchronizing files and attachments
    7.  Open issues
      7.1.  Container format
      7.2.  Encryption
@@ -1528,8 +1528,7 @@ Table of Contents
 
    [JSCalendar] is the basis for representing events, tasks and groups
    in JSON.  This section explains how to export individual events and
-   tasks within an archive.  JMAP for Calendars
-   (https://datatracker.ietf.org/doc/draft-ietf-jmap-calendars/) does
+   tasks within an archive.  JMAP for Calendars ([JMAPCalendars]) does
    provide some additional considerations when producing calendar data
    from a JMAP system or to be consumed by a JMAP system, so it is also
    a normative reference.
@@ -1553,9 +1552,9 @@ Table of Contents
    Notes on specific fields:
 
    *  The globally unique uid property is mandatory in JSCalendar and
-      MUST be included.  See JMAP Calendars draft-ietf-jmap-calendars-26
-      section 1.4.1 for when the uid property can appear the same for
-      multiple recurrences of the same underlying event.
+      MUST be included.  See Section 1.4.1 of [JMAPCalendars] for when
+      the uid property can appear the same for multiple recurrences of
+      the same underlying event.
 
    *  The updated property is mandatory in JSCalendar and MUST be
       included.
@@ -1677,42 +1676,8 @@ Table of Contents
         "links": {
           "type": "object",
           "additionalProperties": {
-            "$ref": "#/$defs/link"
+            "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link"
           }
-        }
-      }
-    },
-    "link": {
-      "type": "object",
-      "required": ["href"],
-      "properties": {
-        "@type": {
-          "type": "string",
-          "const": "Link"
-        },
-        "href": {
-          "type": "string",
-          "format": "uri"
-        },
-        "cid": {
-          "type": "string"
-        },
-        "contentType": {
-          "type": "string"
-        },
-        "size": {
-          "type": "integer",
-          "minimum": 0
-        },
-        "rel": {
-          "type": "string"
-        },
-        "display": {
-          "type": "string",
-          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
-        },
-        "title": {
-          "type": "string"
         }
       }
     },
@@ -1967,7 +1932,7 @@ Table of Contents
       "description": "Maps link IDs to Link objects (attachments, references)",
       "type": "object",
       "additionalProperties": {
-        "$ref": "#/$defs/link"
+        "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link"
       }
     },
     "keywords": {
@@ -2050,8 +2015,8 @@ Table of Contents
 
 6.3.5.  Calendar Collection Items
 
-   Calendar collection items are built using JMAP for Calendars (draft-
-   ietf-jmap-calendars-26).
+   Calendar collection items are built using JMAP for Calendars
+   ([JMAPCalendars]).
 
    If a system exports events belonging to calendars, it SHOULD also
    export the referenced Calendar objects.
@@ -2269,23 +2234,6 @@ Table of Contents
         "expectReply": { "type": "boolean" }
       }
     },
-    "link": {
-      "type": "object",
-      "required": ["href"],
-      "properties": {
-        "@type": { "type": "string", "const": "Link" },
-        "href": { "type": "string", "format": "uri" },
-        "cid": { "type": "string" },
-        "contentType": { "type": "string" },
-        "size": { "type": "integer", "minimum": 0 },
-        "rel": { "type": "string" },
-        "display": {
-          "type": "string",
-          "enum": ["badge", "graphic", "fullsize", "thumbnail"]
-        },
-        "title": { "type": "string" }
-      }
-    },
     "alert": {
       "type": "object",
       "required": ["@type", "trigger"],
@@ -2331,7 +2279,7 @@ Table of Contents
         "relativeTo": { "type": "string", "enum": ["start", "end"] },
         "links": {
           "type": "object",
-          "additionalProperties": { "$ref": "#/$defs/link" }
+          "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
         }
       }
     },
@@ -2490,7 +2438,7 @@ Table of Contents
     },
     "links": {
       "type": "object",
-      "additionalProperties": { "$ref": "#/$defs/link" }
+      "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
     },
     "keywords": {
       "type": "object",
@@ -2541,24 +2489,176 @@ Table of Contents
 
 6.3.6.  Notes
 
-   *  VJournal is first defined in [iCalendar].
+   Notes are simple, free-form text or documents, typically attached to
+   a task, contact, or event, or kept standalone (e.g. a personal
+   notebook).  VJournal, first defined in [iCalendar] and also used by
+   [CalDAV], was not carried forward into [JSCalendar] (see
+   https://jmap.io/spec-calendars.html), so there is no existing JSON
+   format for notes to build on.
 
-   *  VJournal also used in [CalDAV].
+   This specification therefore defines a minimal, PDPArchive-specific
+   Note schema, following the same uid/updated conventions used
+   elsewhere for synchronization (see Section 6.4.1).
 
-   *  However, they are NOT used in https://jmap.io/spec-calendars.html
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/note",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Note",
+  "description": "A minimal note format defined by this specification. Neither JSContact nor JSCalendar define a JSON note type; iCalendar's VJOURNAL was not carried forward into JSCalendar (RFC 8984).",
+  "type": "object",
+  "required": ["@type", "uid", "updated", "body"],
+  "properties": {
+    "@type": {
+      "type": "string",
+      "const": "Note"
+    },
+    "uid": {
+      "description": "Globally unique identifier for the note",
+      "type": "string"
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated": {
+      "description": "Last-modified timestamp; MUST be included for synchronization",
+      "type": "string",
+      "format": "date-time"
+    },
+    "title": {
+      "type": "string"
+    },
+    "body": {
+      "description": "The note's content",
+      "type": "string"
+    },
+    "contentType": {
+      "description": "MIME type of body; body is plain text if this is absent",
+      "type": "string",
+      "enum": ["text/plain", "text/html", "text/markdown"]
+    },
+    "links": {
+      "type": "object",
+      "additionalProperties": { "$ref": "https://id.schemas.pub/o/DTI/PDPArchive/link" }
+    }
+  }
+}
 
-   Do we even have a JSON format for notes defined?
+                     Figure 19: Schema for notes
 
-6.3.7.  Files
+   For example, a file called note1.json could contain:
 
-   TODO
+   {
+     "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/note",
+     "@type": "Note",
+     "uid": "9f1c1e3a-2b34-4b8e-8b70-5e6f2f6b9a11",
+     "created": "2024-02-14T09:05:00Z",
+     "updated": "2024-03-02T18:22:00Z",
+     "title": "Garden plan",
+     "body": "California wildflowers - ORDERED, poppies - have seed.",
+     "contentType": "text/plain",
+     "links": {
+       "1": {
+         "@type": "Link",
+         "rel": "enclosure",
+         "blobId": "e612afe4-2962-42f1-bcd1-073368274c24",
+         "contentType": "image/png",
+         "size": 84213,
+         "title": "garden-sketch.png"
+       }
+     }
+   }
 
-6.3.8.  Other
+                          Figure 20: Note example
 
-   (LMD Note: I think this might better fit in an out of scope section -
-   I think out of scope sections are useful for statements that explain
-   why scope is limited.  that's assuming we all agree that groups,
-   freebusy and timezones are left out.)
+   The contentType field indicates how to interpret body; if contentType
+   is absent, body is plain text.  An exporter that only has an HTML-
+   formatted note SHOULD set contentType to "text/html" rather than
+   attempt a lossy conversion to plain text.
+
+   A note that has attachments can reference them using links (see
+   Section 6.3.7).
+
+6.3.7.  Attachments
+
+   An attachment MAY be stored as a separate file with the filename used
+   as the blobId, as opposed to inline or referenced externally.  This
+   section explains how to handle enclosed or included attachments that
+   are not inline.
+
+   This proposal follows the lead of [JMAPCalendars], using the links
+   field on objects that have attachments.  The links field holds Link
+   Objects, defined in [JSCalendar], which uses href and requires a URI
+   value.  Using href is problematic: it is defined to have a URI value,
+   but no commonly used URI supports partial local file paths or unique
+   file names.  The [JMAPCalendars] spec, to deal with this, adds blobId
+   to identify the attachment.  This can work OK in a structured file
+   export, because it is possible for software importing or working with
+   the export files to look through the various sub-directories until it
+   finds the file named with the exact blobId value.  Although this
+   pattern is copied from JMAP, it should not be necessary to implement
+   JMAP to assign blobs a blobId that is unique within an export, and
+   use that blobId value in link object data.
+
+   The blobId values assigned MUST be unique across the export.
+
+   The location of attachments within folders or sub-folders in the
+   export is defined by the exporting service.  Software generating
+   PDPArchives MAY put attachments in a single folder, multiple folders,
+   or nested folders.  Software importing or interpreting PDPArchives
+   MUST be prepared to search through the archive folders to find the
+   correct attachment with matching blobId name.
+
+   NOTE: This offers no explicit support for exported files that are
+   standalone and not attachments.  While those kinds of files could
+   always just be part of the export, there's nothing in this
+   specification to say where those would be listed or what role they
+   would serve.
+
+   The Link object is shared by the Note, Task, and Event schemas
+   (Figure 19, Figure 17, Figure 13), so it is defined once here:
+
+{
+  "$id": "https://id.schemas.pub/o/DTI/PDPArchive/link",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Schema for Personal Data Portability Archive (pdparchive) Link",
+  "description": "The Link object from RFC 8984 (JSCalendar), shared by the Note, Task, and Event schemas. A Link is a general-purpose reference and is not necessarily an attachment; `rel` set to \"enclosure\" is what marks a Link as an attachment, following draft-ietf-jmap-calendars. Following that same precedent, `blobId` MAY be used instead of `href` on an attachment Link, to reference binary content stored as a file elsewhere in the archive rather than at a URI.",
+  "type": "object",
+  "anyOf": [
+    { "required": ["href"] },
+    { "required": ["blobId"] }
+  ],
+  "properties": {
+    "@type": { "type": "string", "const": "Link" },
+    "href": { "type": "string", "format": "uri" },
+    "blobId": {
+      "description": "The filename of this attachment's binary content, used instead of href when the content is stored as a file in the archive rather than at a URI. Not necessarily a path relative to the archive root: the exporter may place the file in any folder, so an importer locates it by searching the archive for a file named with this exact value. Named after the JMAP blobId (RFC 9404) and used the way draft-ietf-jmap-calendars uses it for CalendarEvent attachments, but here it directly names a file within the archive rather than a handle resolved via Blob/get against a live server.",
+      "type": "string"
+    },
+    "cid": { "type": "string" },
+    "contentType": { "type": "string" },
+    "size": { "type": "integer", "minimum": 0 },
+    "rel": {
+      "type": "string",
+      "description": "Relationship of the link's target to the containing object, as in RFC 8984. \"enclosure\" marks the Link as an attachment (following draft-ietf-jmap-calendars); other values MAY be used for links that are not attachments, such as references to related resources.",
+      "examples": ["enclosure"]
+    },
+    "display": {
+      "type": "string",
+      "enum": ["badge", "graphic", "fullsize", "thumbnail"]
+    },
+    "title": { "type": "string" }
+  }
+}
+
+   Figure 21: Schema for Link objects (attachments and references)
+
+   If the value of "rel" for the link object is "enclosure", then the
+   attachment SHOULD be included in the PDPArchive.  If the value of
+   "rel" is another value, the target or attachment MAY be included in
+   the PDPArchive export.
+
+6.3.8.  Out of Scope
 
    Groups as defined in JSCalendar are NOT part of this archive format.
    Groups in JSCalendar can combine events and tasks in a container.
@@ -2756,9 +2856,14 @@ Table of Contents
       _pc_L33T_pc_ or another set of safe characters and include a
       display name of "%L33T%" for reference and debugging.
 
-6.4.3.  Blobs and files?
+6.4.3.  Synchronizing files and attachments
 
-   Reference [RFC9404]?
+   blobId values (see Section 6.3.7) SHOULD remain stable across
+   repeated exports of the same underlying binary content, so that
+   importers can recognize an attachment they have already synchronized
+   and avoid re-transferring it.  This mirrors the uid stability
+   requirement in Section 6.4.1, applied to attachments and their
+   blobId.
 
 7.  Open issues
 
@@ -2885,6 +2990,13 @@ Table of Contents
               Protocol (JMAP) for Mail", RFC 8621, DOI 10.17487/RFC8621,
               August 2019, <https://www.rfc-editor.org/rfc/rfc8621>.
 
+   [JMAPCalendars]
+              Jenkins, N. and M. Douglass, "JSON Meta Application
+              Protocol (JMAP) for Calendars", Work in Progress,
+              Internet-Draft, draft-ietf-jmap-calendars-28, 12 August
+              2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
+              jmap-calendars-28>.
+
    [JSCalendar]
               Jenkins, N. and R. Stepanek, "JSCalendar: A JSON
               Representation of Calendar Data", RFC 8984,
@@ -2989,11 +3101,6 @@ Table of Contents
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
-
-   [RFC9404]  Gondwana, B., Ed., "JSON Meta Application Protocol (JMAP)
-              Blob Management Extension", RFC 9404,
-              DOI 10.17487/RFC9404, August 2023,
-              <https://www.rfc-editor.org/rfc/rfc9404>.
 
    [vCard]    Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
@@ -3139,7 +3246,7 @@ Appendix A.  Base Contact Schema
   }
 }
 
-             Figure 19: Base schema for a JSContact Card
+             Figure 22: Base schema for a JSContact Card
 
    The PDPArchive Contact item schema in Figure 7 extends this base
    schema.
@@ -3163,7 +3270,7 @@ Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
        Family/
            marianne-dashwood.json
 
-       Figure 20: One physical file for a contact that belongs to two
+       Figure 23: One physical file for a contact that belongs to two
                                address books
 
    The two AddressBook objects are flat files; their uid values, not
@@ -3177,7 +3284,7 @@ Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
       "name": "Favorites"
    }
 
-                         Figure 21: favorites.json
+                         Figure 24: favorites.json
 
    {
       "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/address-book",
@@ -3187,7 +3294,7 @@ Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
       "name": "Family"
    }
 
-                           Figure 22: family.json
+                           Figure 25: family.json
 
    Marianne's contact item declares membership in both address books via
    addressBookIds, regardless of which single folder holds the file:
@@ -3211,7 +3318,7 @@ Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
       }
    }
 
-                  Figure 23: Family/marianne-dashwood.json
+                  Figure 26: Family/marianne-dashwood.json
 
    An importer MUST NOT infer that Marianne belongs only to "Family"
    because that's where her file happens to live; it MUST add her to
