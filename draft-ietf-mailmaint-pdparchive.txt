@@ -129,6 +129,7 @@ Table of Contents
    Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
    Acknowledgments
    Changes
+     Changes in draft-ietf-mailmaint-pdparchive-02
      Changes in draft-ietf-mailmaint-pdparchive-01
    Authors' Addresses
 
@@ -3470,6 +3471,19 @@ Acknowledgments
    TODO acknowledge.
 
 Changes
+
+Changes in draft-ietf-mailmaint-pdparchive-02
+
+   *  Restructed the contact schema to allow direct use of base schema
+      in cases where UID is not a required field
+
+   *  Proposed how collection ID and folder nesting work together
+
+   *  Proposed how references to other objects work generally
+
+   *  Proposed how attachments and blobs work specifically
+
+   *  Drafted Security Considerations including privacy
 
 Changes in draft-ietf-mailmaint-pdparchive-01
 
