@@ -1086,6 +1086,15 @@ TODO acknowledge.
 # Changes
 {:numbered="false"}
 
+## Changes in draft-ietf-mailmaint-pdparchive-02
+{:numbered="false"}
+
+* Restructed the contact schema to allow direct use of base schema in cases where UID is not a required field
+* Proposed how collection ID and folder nesting work together
+* Proposed how references to other objects work generally
+* Proposed how attachments and blobs work specifically
+* Drafted Security Considerations including privacy
+
 ## Changes in draft-ietf-mailmaint-pdparchive-01
 {:numbered="false"}
 
