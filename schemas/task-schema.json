@@ -27,6 +27,7 @@
         },
         "roles": {
           "type": "object",
+          "minProperties": 1,
           "additionalProperties": { "type": "boolean" }
         },
         "participationStatus": {
