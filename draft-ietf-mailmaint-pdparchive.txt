@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 18 March 2027                          Data Transfer Initiative
+Expires: 19 April 2027                          Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                       14 September 2026
+                                                         16 October 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 March 2027.
+   This Internet-Draft will expire on 19 April 2027.
 
 Copyright Notice
 
@@ -1623,6 +1623,7 @@ Table of Contents
         },
         "roles": {
           "type": "object",
+          "minProperties": 1,
           "additionalProperties": {
             "type": "boolean"
           }
@@ -2233,6 +2234,7 @@ Table of Contents
         },
         "roles": {
           "type": "object",
+          "minProperties": 1,
           "additionalProperties": { "type": "boolean" }
         },
         "participationStatus": {
@@ -3131,9 +3133,9 @@ Table of Contents
    [JMAPCalendars]
               Jenkins, N. and M. Douglass, "JSON Meta Application
               Protocol (JMAP) for Calendars", Work in Progress,
-              Internet-Draft, draft-ietf-jmap-calendars-28, 12 August
+              Internet-Draft, draft-ietf-jmap-calendars-33, 13 October
               2026, <https://datatracker.ietf.org/doc/html/draft-ietf-
-              jmap-calendars-28>.
+              jmap-calendars-33>.
 
    [JSCalendar]
               Jenkins, N. and R. Stepanek, "JSCalendar: A JSON
