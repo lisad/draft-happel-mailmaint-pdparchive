@@ -897,7 +897,7 @@ data, this specification can be extended to explain how that would work.
 
 A collection of PDPArchive files and collections
 is packaged as one or more archive files in the pax interchange
-format defined in the "pax" utility section of {{POSIX}}.  
+format defined in the "pax" utility section of {{POSIX}}.
 
 The pax format is an extension of the older ustar format, also defined in
 {{POSIX}}.  A pax archive is a ustar archive in which some entries are
