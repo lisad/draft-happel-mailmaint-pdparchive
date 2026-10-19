@@ -897,14 +897,15 @@ data, this specification can be extended to explain how that would work.
 
 A collection of PDPArchive files and collections
 is packaged as one or more archive files in the pax interchange
-format defined in the "pax" utility section of {{POSIX}}.
+format defined in the "pax" utility section of {{POSIX}}.  
 
 The pax format is an extension of the older ustar format, also defined in
 {{POSIX}}.  A pax archive is a ustar archive in which some entries are
 preceded by an extended header carrying additional attributes, including
 internationalizable path names and size metadata.  Tools that support ustar but not pax
 generally extract an unrecognized extended header as an extra small file
-rather than failing. Exporters MUST use the pax format.
+rather than failing. Exporters MUST use the pax format.  Thus, the container
+downloaded via a GUI would likely have the '.tar' file extension.
 
 Archive entries in the container MUST be regular files or directories.  Exporters MUST NOT
 include symbolic links, hard links, device files, or other special entry types.
