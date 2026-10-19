@@ -3970,7 +3970,8 @@ format defined in the "pax" utility section of <span>[<a href="#POSIX" class="ci
 preceded by an extended header carrying additional attributes, including
 internationalizable path names and size metadata.  Tools that support ustar but not pax
 generally extract an unrecognized extended header as an extra small file
-rather than failing. Exporters <span class="bcp14">MUST</span> use the pax format.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
+rather than failing. Exporters <span class="bcp14">MUST</span> use the pax format.  Thus, the container
+downloaded via a GUI would likely have the '.tar' file extension.<a href="#section-6.4-2" class="pilcrow">¶</a></p>
 <p id="section-6.4-3">Archive entries in the container <span class="bcp14">MUST</span> be regular files or directories.  Exporters <span class="bcp14">MUST NOT</span>
 include symbolic links, hard links, device files, or other special entry types.<a href="#section-6.4-3" class="pilcrow">¶</a></p>
 <p id="section-6.4-4">Entry names are the file paths described in <a href="#folder-structure" class="auto internal xref">Section 6.2</a>, using "/" as

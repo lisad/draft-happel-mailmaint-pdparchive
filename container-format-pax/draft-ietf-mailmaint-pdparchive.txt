@@ -2701,7 +2701,8 @@ Table of Contents
    attributes, including internationalizable path names and size
    metadata.  Tools that support ustar but not pax generally extract an
    unrecognized extended header as an extra small file rather than
-   failing.  Exporters MUST use the pax format.
+   failing.  Exporters MUST use the pax format.  Thus, the container
+   downloaded via a GUI would likely have the '.tar' file extension.
 
    Archive entries in the container MUST be regular files or
    directories.  Exporters MUST NOT include symbolic links, hard links,
