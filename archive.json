@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-18T03:24:43.418493+00:00",
+  "timestamp": "2026-10-20T03:47:10.594322+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -631,6 +631,32 @@
       "mergeCommit": {
         "oid": "0fd7a0bfb78801c7020b306eb5f41f7bd670dc60"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOQr7OuM8AAAABJZY2tg",
+      "title": "Adds requirements for POSIX pax as container format",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/18",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Not finished with this but it's taking shape -- note the TODO about how having the \"archive.json\" metadata file for the whole archive interacts with having multiple parts, multiple containers, and how compression will interact with containers, I'd like to address those too next",
+      "createdAt": "2026-10-19T18:32:31Z",
+      "updatedAt": "2026-10-19T19:40:20Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "0fd7a0bfb78801c7020b306eb5f41f7bd670dc60",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "container-format-pax",
+      "headRefOid": "3b125e64bbc92c7b8b19de82ce36824e4f92e66d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
