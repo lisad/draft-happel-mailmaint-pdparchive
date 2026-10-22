@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 19 April 2027                          Data Transfer Initiative
+Expires: 25 April 2027                          Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                         16 October 2026
+                                                         22 October 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2027.
+   This Internet-Draft will expire on 25 April 2027.
 
 Copyright Notice
 
@@ -107,12 +107,13 @@ Table of Contents
        6.3.6.  Notes
        6.3.7.  Attachments
        6.3.8.  Out of Scope
-     6.4.  Synchronization requirements
-       6.4.1.  Always include 'uid' and 'updated'
-       6.4.2.  Synchronizing mailbox folders
-       6.4.3.  Synchronizing files and attachments
+     6.4.  Container format
+     6.5.  Synchronization requirements
+       6.5.1.  Always include 'uid' and 'updated'
+       6.5.2.  Synchronizing mailbox folders
+       6.5.3.  Synchronizing files and attachments
    7.  Open issues
-     7.1.  Container format
+     7.1.  Compression
      7.2.  Encryption
    8.  Implementation status
    9.  Security Considerations
@@ -553,9 +554,9 @@ Table of Contents
 
 6.  File format
 
-   This section describes the internal "raw" file format of a personal
-   data portability archive.  For discussion about a surrounding
-   container format, see section "open issues".
+   This section describes the file format of a personal data portability
+   archive before packaging.  The packaging of these files into a
+   container is described in Section 6.4.
 
    PDPArchive in general consists of:
 
@@ -563,8 +564,10 @@ Table of Contents
 
    *  Top-level folders for each data type ("/mail")
 
-   *  Subfolders representing actual collections of individual data
-      items plus additional metadata files
+   *  Subfolders mapping to actual collections of individual data items
+      plus additional metadata files
+
+   *  Contents of top-level and sub-folders are individual data items
 
 6.1.  Archive metadata file
 
@@ -1266,7 +1269,7 @@ Table of Contents
                     extending the base Card schema
 
    Synchronization requirements for the updated and uid values apply to
-   Contact items too (see Section 6.4.1).  Cards can also have an id
+   Contact items too (see Section 6.5.1).  Cards can also have an id
    value; nevertheless uid is required by this specification for
    consistency of identifying different kinds of objects.  See also how
    [RFC9610] contrasts id with uid.
@@ -2509,7 +2512,7 @@ Table of Contents
 
    This specification therefore defines a minimal, PDPArchive-specific
    Note schema, following the same uid/updated conventions used
-   elsewhere for synchronization (see Section 6.4.1).
+   elsewhere for synchronization (see Section 6.5.1).
 
 {
   "$id": "https://id.schemas.pub/o/DTI/PDPArchive/note",
@@ -2688,7 +2691,47 @@ Table of Contents
    for timezones as personal data, this specification can be extended to
    explain how that would work.
 
-6.4.  Synchronization requirements
+6.4.  Container format
+
+   A collection of PDPArchive files and collections is packaged as one
+   or more archive files in the pax interchange format defined in the
+   "pax" utility section of [POSIX].
+
+   The pax format is an extension of the older ustar format, also
+   defined in [POSIX].  A pax archive is a ustar archive in which some
+   entries are preceded by an extended header carrying additional
+   attributes, including internationalizable path names and size
+   metadata.  Tools that support ustar but not pax generally extract an
+   unrecognized extended header as an extra small file rather than
+   failing.  Exporters MUST use the pax format.  Thus, the container
+   downloaded via a GUI would likely have the '.tar' file extension.
+
+   Archive entries in the container MUST be regular files or
+   directories.  Exporters MUST NOT include symbolic links, hard links,
+   device files, or other special entry types.
+
+   Entry names are the file paths described in Section 6.2, using "/" as
+   the separator.  Entry names MUST be valid UTF-8, MUST NOT be absolute
+   paths, MUST NOT contain "." or ".." path segments, and MUST be unique
+   within an archive file.  Because exporters generate file names (see
+   Section 6.2.1), they can always meet these requirements.
+
+   An exporter MAY split one export into several archive files, for
+   example to stay under file size limits or to reduce the cost of a
+   failed download.  Each archive file MUST be complete and
+   independently readable.  Each part MUST carry its own archive.json.
+
+   TODO: does archive.json need a "part N of M" property?
+
+   Other specifications MAY extend this specification to require or
+   permit different container or compression formats.  Unless otherwise
+   specified, the contents of the archive (the metadata files, folder
+   structure, and data formats defined in this document) remain the same
+   no matter which container is used.  An extending specification needs
+   to say how a recipient recognizes the format in use, such as by media
+   type or file extension.
+
+6.5.  Synchronization requirements
 
    This section describes the requirements to achieve repeated one-way
    synchronization via export/import operations between software by
@@ -2711,7 +2754,7 @@ Table of Contents
    although some of those use cases could be solved much better with
    direct negotiation of features.
 
-6.4.1.  Always include 'uid' and 'updated'
+6.5.1.  Always include 'uid' and 'updated'
 
    These requirements apply to [JSContact], JSTask and [JSCalendar]
    objects when exported or imported using the formats in this
@@ -2814,7 +2857,7 @@ Table of Contents
    the definition is so wobbly.  We'd love to know of better solutions
    that work with the status quo.
 
-6.4.1.1.  Synchronizing from and to CalDAV servers
+6.5.1.1.  Synchronizing from and to CalDAV servers
 
    [CalDAV] uses URLs, ETags and UIDs for synchronizing changes between
    two systems reliably, but it relies upon client-server architecture,
@@ -2833,7 +2876,7 @@ Table of Contents
    (for example, CalDAV does not allow events to appear in multiple
    calendars, while this export format does).
 
-6.4.2.  Synchronizing mailbox folders
+6.5.2.  Synchronizing mailbox folders
 
    Because servers may differ in which characters they support in folder
    names, how many levels deep folders may be created, and even in what
@@ -2867,67 +2910,23 @@ Table of Contents
       _pc_L33T_pc_ or another set of safe characters and include a
       display name of "%L33T%" for reference and debugging.
 
-6.4.3.  Synchronizing files and attachments
+6.5.3.  Synchronizing files and attachments
 
    blobId values (see Section 6.3.7) SHOULD remain stable across
    repeated exports of the same underlying binary content, so that
    importers can recognize an attachment they have already synchronized
    and avoid re-transferring it.  This mirrors the uid stability
-   requirement in Section 6.4.1, applied to attachments and their
+   requirement in Section 6.5.1, applied to attachments and their
    blobId.
 
 7.  Open issues
 
-7.1.  Container format
+7.1.  Compression
 
-   This document leverages existing data formats and adds certain files
-   for representing metadata.  While one may work with this raw data,
-   most import/export scenarios will rather require the bundling of
-   individual data items into one or few container files.
-
-   This document does not strive to invent its own container format, but
-   may refer to existing ones.
-
-   High level options would be:
-
-   *  Recommend using a container format without preferring a particular
-      one
-
-   *  Mandating a specific format
-
-   *  ...?
-
-   Actual container formats likely differ in various dimensions:
-
-   *  Ease of adding incremental data
-
-   *  Ease of updating existing data
-
-   *  Ease of accessing files
-
-   *  Support for compression
-
-   *  Support for data streaming
-
-   *  Availability of library/tool support across platforms
-
-   *  Internal file references
-
-   *  Open standard
-
-   *  ...?
-
-   Candidates
-
-   *  tar/gz
-
-   *  zip
-
-   *  7z
-
-   *  zpaq
-
-   *  ...?
+   Section 6.4 defines an uncompressed container.  Whether the base
+   specification should require or allow a compression format applied to
+   the whole archive file (such as gzip [RFC1952] or Zstandard
+   [RFC8878]), and how importers would recognize it, is still open.
 
    See https://github.com/hhappel/draft-happel-mailmaint-pdparchive/
    issues/13
@@ -3099,6 +3098,11 @@ Table of Contents
 
    *  Keep IDs as strings rather than convert to numbers.
 
+   *  Importers MUST validate archive entry names before writing them to
+      a file system, rejecting absolute paths, ".." segments, and entry
+      types other than regular files and directories, to protect against
+      path traversal.
+
 9.4.  Other
 
    Exporting services should plan for appropriate throttling to protect
@@ -3148,6 +3152,11 @@ Table of Contents
               Representation of Contact Data", RFC 9553,
               DOI 10.17487/RFC9553, May 2024,
               <https://www.rfc-editor.org/rfc/rfc9553>.
+
+   [POSIX]    IEEE and The Open Group, "IEEE Standard for Information
+              Technology--Portable Operating System Interface (POSIX)
+              Base Specifications, Issue 8", IEEE Std 1003.1-2024, 2024,
+              <https://pubs.opengroup.org/onlinepubs/9799919799/>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -3209,6 +3218,10 @@ Table of Contents
               TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC822,
               August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
 
+   [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
+              RFC 1952, DOI 10.17487/RFC1952, May 1996,
+              <https://www.rfc-editor.org/rfc/rfc1952>.
+
    [RFC2822]  Resnick, P., Ed., "Internet Message Format", RFC 2822,
               DOI 10.17487/RFC2822, April 2001,
               <https://www.rfc-editor.org/rfc/rfc2822>.
@@ -3241,6 +3254,11 @@ Table of Contents
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
+
+   [RFC8878]  Collet, Y. and M. Kucherawy, Ed., "Zstandard Compression
+              and the 'application/zstd' Media Type", RFC 8878,
+              DOI 10.17487/RFC8878, February 2021,
+              <https://www.rfc-editor.org/rfc/rfc8878>.
 
    [vCard]    Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
