@@ -74,11 +74,11 @@ normative:
      - org: IEEE and The Open Group
     date: 2024
 
-informative:
-
   RFC1952:
 
   RFC8878:
+
+informative:
 
   RFC822:
 
@@ -916,12 +916,40 @@ MUST NOT contain "." or ".." path segments, and MUST be unique within an
 archive file.  Because exporters generate file names (see
 {{file-and-folder-names}}), they can always meet these requirements.
 
+Names that are distinct in the archive can still collide when extracted.
+Many file systems are case-insensitive, so "Inbox" and "INBOX" become the
+same file.  Some file systems also normalize Unicode, so names that differ
+only in normalization form (for example, "é" as one precomposed character
+versus "e" plus a combining accent) can also map to the same file.  Exporters
+MUST attempt to generate names that remain distinct under case folding and Unicode
+normalization.  Since file names in the archive are under the control of
+the exporter, even similar collections like "Nowhere" and "nowHere"
+can be made distinct in the archive, by exporting one of them as
+"nowhere-2".  Note also that some end-user file systems reject a small list of
+names like "NUL", so exporters are RECOMMENDED to choose a broadly
+interoperable file name for the object (with the understanding that it's hard
+to make a complete cross-system list of forbidden file names).  In either case, the object's
+case-sensitive display name of "nowHere" or "NUL" can be in the folder.json metadata.
+
+Importers SHOULD reject an archive containing duplicate named items rather than
+losing one of the items as the importer processes the archive.
+
 An exporter MAY split one export into several archive files, for example to
 stay under file size limits or to reduce the cost of a failed download.  Each
 archive file MUST be complete and independently readable.  Each part MUST carry
-its own archive.json.
+its own archive.json.  Unique naming applies to the combination of all files
+in one logical archive.
 
 TODO: does archive.json need a "part N of M" property?
+
+An archive file MAY be compressed as a whole with gzip {{RFC1952}} or
+Zstandard {{RFC8878}}, or left uncompressed.  No other compression is defined
+by this specification.  The choice between these is left to the user (for
+example, in a GUI-driven download) or to protocol negotiation defined
+elsewhere.  Importers MUST accept uncompressed archives and gzip-compressed
+archives, and SHOULD accept Zstandard-compressed archives.  Exporters SHOULD
+use the ".tar.gz" and ".tar.zst" file extensions for gzip-compressed and
+Zstandard-compressed archives respectively.
 
 Other specifications MAY extend this specification to require or permit
 different container or compression formats.  Unless otherwise specified,
@@ -1006,30 +1034,6 @@ maintain folder nesting).
 ### Synchronizing files and attachments
 
 `blobId` values (see {{files-attachments}}) SHOULD remain stable across repeated exports of the same underlying binary content, so that importers can recognize an attachment they have already synchronized and avoid re-transferring it. This mirrors the `uid` stability requirement in {{uid-updated}}, applied to attachments and their `blobId`.
-
-# Open issues
-
-## Compression
-
-{{container-format}} defines an uncompressed container.  Whether the base
-specification should require or allow a compression format applied to the
-whole archive file (such as gzip {{RFC1952}} or Zstandard {{RFC8878}}), and
-how importers would recognize it, is still open.
-
-See https://github.com/hhappel/draft-happel-mailmaint-pdparchive/issues/13
-
-
-## Encryption
-
-Support for encryption of any kind is so far no requirement in the draft. However, an increasing number of services offers forms of data encryption. Implications for this draft may be considered.
-
-"Encryption" might refer to various aspects:
-
-- Existing encryption of individual files in the export
-- Encrypting the complete export (incl. metadata?)
-- ...?
-
-See https://github.com/hhappel/draft-happel-mailmaint-pdparchive/issues/14
 
 # Implementation status
 
@@ -1133,7 +1137,7 @@ these also matter to security and privacy.
 
 * Importing services should consider appropriate safety checking before handling
 JSON files.  Differences in JSON parsing (such as how to handle multiple
-instances of the same key in the same location) can open avenues ot "smuggling"
+instances of the same key in the same location) can open avenues to "smuggling"
 bugs.  An export that does not meet {{IJSON}} requirements MAY be rejected.
 
 * Importing services handling cross-references should scope these
@@ -1142,7 +1146,10 @@ risks should be considered, such as references that trigger fetching new content
 over the network, or using relative paths improperly.
 
 * Importers may be vulnerable to resource exhaustion through mechanisms like
-unbounded calendar recurrence expansion or oversized inline data.
+unbounded calendar recurrence expansion or oversized inline data.  Archive and
+compression logic could also introduce resource exhaustion, and importers should
+consider total decompressed size, entry count, and per-entry size while
+implementing archive and compression handling.
 
 * Generic object polymorphic deserialization can be a code-execution bug vector.
 
@@ -1154,6 +1161,10 @@ useful.
 * Importers MUST validate archive entry names before writing them to a file
   system, rejecting absolute paths, ".." segments, and entry types other than
   regular files and directories, to protect against path traversal.
+
+* Importers MUST NOT apply mode bits, ownership, extended attributes, or
+  access control lists (ACLs) from the archive, and MUST create files with the
+  importer's own defaults.
 
 ## Other
 
@@ -1167,7 +1178,9 @@ Web pages may lead to large amounts of traffic that need management.
 
 ## File extension
 
-Register .pdpa?
+> TBD: whether PDPArchive needs its own file extension (such as ".pdpa"), or
+> whether archives use only the packaging and compression extensions given in
+> {{container-format}} (".tar", ".tar.gz", ".tar.zst").
 
 
 
