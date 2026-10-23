@@ -921,8 +921,15 @@ Many file systems are case-insensitive, so "Inbox" and "INBOX" become the
 same file.  Some file systems also normalize Unicode, so names that differ
 only in normalization form (for example, "é" as one precomposed character
 versus "e" plus a combining accent) can also map to the same file.  Exporters
-SHOULD generate names that remain distinct under case folding and Unicode
-normalization.
+MUST attempt to generate names that remain distinct under case folding and Unicode
+normalization.  Since file names in the archive are under the control of
+the exporter, even similar collections like "Nowhere" and "nowHere"
+can be made distinct in the archive, by exporting one of them as
+"nowhere-2".  Note also that some end-user file systems reject a small list of
+names like "NUL", so exporters are RECOMMENDED to choose a broadly
+interoperable file name for the object (with the understanding that it's hard
+to make a complete cross-system list of forbidden file names).  In either case, the object's
+case-sensitive display name of "nowHere" or "NUL" can be in the folder.json metadata.
 
 Importers SHOULD reject an archive containing duplicate named items rather than
 losing one of the items as the importer processes the archive.
