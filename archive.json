@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-22T03:37:41.329942+00:00",
+  "timestamp": "2026-10-25T03:33:56.289558+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -639,26 +639,95 @@
       "id": "PR_kwDOQr7OuM8AAAABJZY2tg",
       "title": "Adds requirements for POSIX pax as container format",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/18",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Not finished with this but it's taking shape -- note the TODO about how having the \"archive.json\" metadata file for the whole archive interacts with having multiple parts, multiple containers, and how compression will interact with containers, I'd like to address those too next",
       "createdAt": "2026-10-19T18:32:31Z",
-      "updatedAt": "2026-10-19T19:40:20Z",
+      "updatedAt": "2026-10-22T16:25:37Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "0fd7a0bfb78801c7020b306eb5f41f7bd670dc60",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "container-format-pax",
       "headRefOid": "3b125e64bbc92c7b8b19de82ce36824e4f92e66d",
+      "closedAt": "2026-10-22T16:25:12Z",
+      "mergedAt": "2026-10-22T16:25:12Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "941c92ecbdfcd84e3354a78a118a8e5a9b711ba8"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 19,
+      "id": "PR_kwDOQr7OuM8AAAABKEn1gg",
+      "title": "Adds requirements on compression and decompression and security considerations thereof",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/19",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Also deleted the Open Issues section - of course there may be new open issues but we can assess against this as a stake in the ground",
+      "createdAt": "2026-10-22T16:44:35Z",
+      "updatedAt": "2026-10-23T16:54:28Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "941c92ecbdfcd84e3354a78a118a8e5a9b711ba8",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "compression",
+      "headRefOid": "673abd0c52ccdce35cd24e93c03697e844e3c113",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOQr7OuM8AAAABT3cLAw",
+          "commit": {
+            "abbreviatedOid": "ec30f97"
+          },
+          "author": "aamelnikov",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-23T12:25:15Z",
+          "updatedAt": "2026-10-23T12:25:15Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "What would be a good reason to violate the SHOULD? IMAP servers that don't normalize Unicode folder names?",
+              "createdAt": "2026-10-23T12:25:15Z",
+              "updatedAt": "2026-10-23T12:25:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOQr7OuM8AAAABT6yVTg",
+          "commit": {
+            "abbreviatedOid": "ec30f97"
+          },
+          "author": "lisad",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-10-23T16:54:27Z",
+          "updatedAt": "2026-10-23T16:54:28Z",
+          "comments": [
+            {
+              "originalPosition": 24,
+              "body": "Good point; I tried to provide more guidance.",
+              "createdAt": "2026-10-23T16:54:27Z",
+              "updatedAt": "2026-10-23T16:54:28Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
