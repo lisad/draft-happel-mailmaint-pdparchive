@@ -1,0 +1,20 @@
+{
+  "$schema": "https://id.schemas.pub/o/DTI/PDPArchive/folder",
+  "name": "Archive",
+  "uid": "M1a2b3c4d5e6f70",
+  "last_uid": 50,
+  "uidvalidity": 1107190787,
+  "is_subscribed": true,
+  "items": [
+    {
+      "uid": "1",
+      "filename": "m1.eml",
+      "flags": ["$seen"]
+    },
+    {
+      "uid": "50",
+      "filename": "m50.eml",
+      "flags": ["$seen", "$flagged"]
+    }
+  ]
+}
