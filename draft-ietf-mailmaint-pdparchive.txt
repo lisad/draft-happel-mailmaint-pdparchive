@@ -5,10 +5,10 @@
 mailmaint                                                   H. J. Happel
 Internet-Draft                                                   audriga
 Intended status: Standards Track                            L. Dusseault
-Expires: 25 April 2027                          Data Transfer Initiative
+Expires: 29 April 2027                          Data Transfer Initiative
                                                              A. Melnikov
                                                                Isode Ltd
-                                                         22 October 2026
+                                                         26 October 2026
 
 
                    Personal Data Portability Archive
@@ -53,7 +53,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 April 2027.
+   This Internet-Draft will expire on 29 April 2027.
 
 Copyright Notice
 
@@ -112,20 +112,17 @@ Table of Contents
        6.5.1.  Always include 'uid' and 'updated'
        6.5.2.  Synchronizing mailbox folders
        6.5.3.  Synchronizing files and attachments
-   7.  Open issues
-     7.1.  Compression
-     7.2.  Encryption
-   8.  Implementation status
-   9.  Security Considerations
-     9.1.  Threat model
-     9.2.  Suggested privacy protections
-     9.3.  Considerations for importers
-     9.4.  Other
-   10. IANA Considerations
-     10.1.  File extension
-   11. References
-     11.1.  Normative References
-     11.2.  Informative References
+   7.  Implementation status
+   8.  Security Considerations
+     8.1.  Threat model
+     8.2.  Suggested privacy protections
+     8.3.  Considerations for importers
+     8.4.  Other
+   9.  IANA Considerations
+     9.1.  File extension
+   10. References
+     10.1.  Normative References
+     10.2.  Informative References
    Appendix A.  Base Contact Schema
    Appendix B.  Extended Example: Folder Nesting vs. Collection IDs
    Acknowledgments
@@ -1534,7 +1531,7 @@ Table of Contents
    In any case, the object referred to by this Principal ID is not
    itself given representation in the PDP Archive export.
 
-   See also Section 9 on trusting sharing information in exported data.
+   See also Section 8 on trusting sharing information in exported data.
 
 6.3.4.  Calendar events, tasks and groups
 
@@ -2716,12 +2713,46 @@ Table of Contents
    within an archive file.  Because exporters generate file names (see
    Section 6.2.1), they can always meet these requirements.
 
+   Names that are distinct in the archive can still collide when
+   extracted.  Many file systems are case-insensitive, so "Inbox" and
+   "INBOX" become the same file.  Some file systems also normalize
+   Unicode, so names that differ only in normalization form (for
+   example, "é" as one precomposed character versus "e" plus a combining
+   accent) can also map to the same file.  Exporters MUST attempt to
+   generate names that remain distinct under case folding and Unicode
+   normalization.  Since file names in the archive are under the control
+   of the exporter, even similar collections like "Nowhere" and
+   "nowHere" can be made distinct in the archive, by exporting one of
+   them as "nowhere-2".  Note also that some end-user file systems
+   reject a small list of names like "NUL", so exporters are RECOMMENDED
+   to choose a broadly interoperable file name for the object (with the
+   understanding that it's hard to make a complete cross-system list of
+   forbidden file names).  In either case, the object's case-sensitive
+   display name of "nowHere" or "NUL" can be in the folder.json
+   metadata.
+
+   Importers SHOULD reject an archive containing duplicate named items
+   rather than losing one of the items as the importer processes the
+   archive.
+
    An exporter MAY split one export into several archive files, for
    example to stay under file size limits or to reduce the cost of a
    failed download.  Each archive file MUST be complete and
    independently readable.  Each part MUST carry its own archive.json.
+   Unique naming applies to the combination of all files in one logical
+   archive.
 
    TODO: does archive.json need a "part N of M" property?
+
+   An archive file MAY be compressed as a whole with gzip [RFC1952] or
+   Zstandard [RFC8878], or left uncompressed.  No other compression is
+   defined by this specification.  The choice between these is left to
+   the user (for example, in a GUI-driven download) or to protocol
+   negotiation defined elsewhere.  Importers MUST accept uncompressed
+   archives and gzip-compressed archives, and SHOULD accept Zstandard-
+   compressed archives.  Exporters SHOULD use the ".tar.gz" and
+   ".tar.zst" file extensions for gzip-compressed and Zstandard-
+   compressed archives respectively.
 
    Other specifications MAY extend this specification to require or
    permit different container or compression formats.  Unless otherwise
@@ -2919,36 +2950,7 @@ Table of Contents
    requirement in Section 6.5.1, applied to attachments and their
    blobId.
 
-7.  Open issues
-
-7.1.  Compression
-
-   Section 6.4 defines an uncompressed container.  Whether the base
-   specification should require or allow a compression format applied to
-   the whole archive file (such as gzip [RFC1952] or Zstandard
-   [RFC8878]), and how importers would recognize it, is still open.
-
-   See https://github.com/hhappel/draft-happel-mailmaint-pdparchive/
-   issues/13
-
-7.2.  Encryption
-
-   Support for encryption of any kind is so far no requirement in the
-   draft.  However, an increasing number of services offers forms of
-   data encryption.  Implications for this draft may be considered.
-
-   "Encryption" might refer to various aspects:
-
-   *  Existing encryption of individual files in the export
-
-   *  Encrypting the complete export (incl. metadata?)
-
-   *  ...?
-
-   See https://github.com/hhappel/draft-happel-mailmaint-pdparchive/
-   issues/14
-
-8.  Implementation status
+7.  Implementation status
 
    < RFC Editor: before publication please remove this section and the
    reference to [RFC7942] >
@@ -2973,7 +2975,7 @@ Table of Contents
    It is up to the individual working groups to use this information as
    they see fit".
 
-9.  Security Considerations
+8.  Security Considerations
 
    Privacy of personal information is important, and an archive can
    provide a convenient way to exfiltrate large amounts of private data.
@@ -2989,7 +2991,7 @@ Table of Contents
    appropriate privacy and authorization protections specific to their
    purpose and context.
 
-9.1.  Threat model
+8.1.  Threat model
 
    Making something convenient is often great for users, but also often
    creates an attractive target for attackers.  Even if a service does
@@ -3019,7 +3021,7 @@ Table of Contents
    Data retention rules that services or organizations attempt to follow
    may find that extra copies of exported data violate those rules.
 
-9.2.  Suggested privacy protections
+8.2.  Suggested privacy protections
 
    It is not expected that services would implement all of these
    mitigations and partial protections at all times, but consider the
@@ -3069,7 +3071,7 @@ Table of Contents
       take extra care not to export credentials, access tokens, or other
       secrets.
 
-9.3.  Considerations for importers
+8.3.  Considerations for importers
 
    Software importing data have rather different considerations than
    exporters, but these also matter to security and privacy.
@@ -3077,7 +3079,7 @@ Table of Contents
    *  Importing services should consider appropriate safety checking
       before handling JSON files.  Differences in JSON parsing (such as
       how to handle multiple instances of the same key in the same
-      location) can open avenues ot "smuggling" bugs.  An export that
+      location) can open avenues to "smuggling" bugs.  An export that
       does not meet [IJSON] requirements MAY be rejected.
 
    *  Importing services handling cross-references should scope these
@@ -3088,7 +3090,10 @@ Table of Contents
 
    *  Importers may be vulnerable to resource exhaustion through
       mechanisms like unbounded calendar recurrence expansion or
-      oversized inline data.
+      oversized inline data.  Archive and compression logic could also
+      introduce resource exhaustion, and importers should consider total
+      decompressed size, entry count, and per-entry size while
+      implementing archive and compression handling.
 
    *  Generic object polymorphic deserialization can be a code-execution
       bug vector.
@@ -3103,7 +3108,11 @@ Table of Contents
       types other than regular files and directories, to protect against
       path traversal.
 
-9.4.  Other
+   *  Importers MUST NOT apply mode bits, ownership, extended
+      attributes, or access control lists (ACLs) from the archive, and
+      MUST create files with the importer's own defaults.
+
+8.4.  Other
 
    Exporting services should plan for appropriate throttling to protect
    their own resources.  Though the exact protocols by which third
@@ -3111,15 +3120,18 @@ Table of Contents
    specification, download/export links in Web pages may lead to large
    amounts of traffic that need management.
 
-10.  IANA Considerations
+9.  IANA Considerations
 
-10.1.  File extension
+9.1.  File extension
 
-   Register .pdpa?
+      TBD: whether PDPArchive needs its own file extension (such as
+      ".pdpa"), or whether archives use only the packaging and
+      compression extensions given in Section 6.4 (".tar", ".tar.gz",
+      ".tar.zst").
 
-11.  References
+10.  References
 
-11.1.  Normative References
+10.1.  Normative References
 
    [CardDAV]  Daboo, C., "CardDAV: vCard Extensions to Web Distributed
               Authoring and Versioning (WebDAV)", RFC 6352,
@@ -3158,6 +3170,10 @@ Table of Contents
               Base Specifications, Issue 8", IEEE Std 1003.1-2024, 2024,
               <https://pubs.opengroup.org/onlinepubs/9799919799/>.
 
+   [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
+              RFC 1952, DOI 10.17487/RFC1952, May 1996,
+              <https://www.rfc-editor.org/rfc/rfc1952>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -3175,6 +3191,11 @@ Table of Contents
               Identifiers", RFC 8474, DOI 10.17487/RFC8474, September
               2018, <https://www.rfc-editor.org/rfc/rfc8474>.
 
+   [RFC8878]  Collet, Y. and M. Kucherawy, Ed., "Zstandard Compression
+              and the 'application/zstd' Media Type", RFC 8878,
+              DOI 10.17487/RFC8878, February 2021,
+              <https://www.rfc-editor.org/rfc/rfc8878>.
+
    [RFC9051]  Melnikov, A., Ed. and B. Leiba, Ed., "Internet Message
               Access Protocol (IMAP) - Version 4rev2", RFC 9051,
               DOI 10.17487/RFC9051, August 2021,
@@ -3184,7 +3205,7 @@ Table of Contents
               for Contacts", RFC 9610, DOI 10.17487/RFC9610, December
               2024, <https://www.rfc-editor.org/rfc/rfc9610>.
 
-11.2.  Informative References
+10.2.  Informative References
 
    [CalDAV]   Daboo, C., Desruisseaux, B., and L. Dusseault,
               "Calendaring Extensions to WebDAV (CalDAV)", RFC 4791,
@@ -3218,10 +3239,6 @@ Table of Contents
               TEXT MESSAGES", STD 11, RFC 822, DOI 10.17487/RFC822,
               August 1982, <https://www.rfc-editor.org/rfc/rfc822>.
 
-   [RFC1952]  Deutsch, P., "GZIP file format specification version 4.3",
-              RFC 1952, DOI 10.17487/RFC1952, May 1996,
-              <https://www.rfc-editor.org/rfc/rfc1952>.
-
    [RFC2822]  Resnick, P., Ed., "Internet Message Format", RFC 2822,
               DOI 10.17487/RFC2822, April 2001,
               <https://www.rfc-editor.org/rfc/rfc2822>.
@@ -3254,11 +3271,6 @@ Table of Contents
               Express Concise Binary Object Representation (CBOR) and
               JSON Data Structures", RFC 8610, DOI 10.17487/RFC8610,
               June 2019, <https://www.rfc-editor.org/rfc/rfc8610>.
-
-   [RFC8878]  Collet, Y. and M. Kucherawy, Ed., "Zstandard Compression
-              and the 'application/zstd' Media Type", RFC 8878,
-              DOI 10.17487/RFC8878, February 2021,
-              <https://www.rfc-editor.org/rfc/rfc8878>.
 
    [vCard]    Perreault, S., "vCard Format Specification", RFC 6350,
               DOI 10.17487/RFC6350, August 2011,
