@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-10-25T03:33:56.289558+00:00",
+  "timestamp": "2026-10-27T04:01:16.202843+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -667,24 +667,26 @@
       "id": "PR_kwDOQr7OuM8AAAABKEn1gg",
       "title": "Adds requirements on compression and decompression and security considerations thereof",
       "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/19",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "lisad",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Also deleted the Open Issues section - of course there may be new open issues but we can assess against this as a stake in the ground",
       "createdAt": "2026-10-22T16:44:35Z",
-      "updatedAt": "2026-10-23T16:54:28Z",
+      "updatedAt": "2026-10-26T21:09:55Z",
       "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "baseRefName": "main",
       "baseRefOid": "941c92ecbdfcd84e3354a78a118a8e5a9b711ba8",
       "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
       "headRefName": "compression",
       "headRefOid": "673abd0c52ccdce35cd24e93c03697e844e3c113",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-10-26T21:09:55Z",
+      "mergedAt": "2026-10-26T21:09:55Z",
+      "mergedBy": "lisad",
+      "mergeCommit": {
+        "oid": "25d3359f22bc6c5daf15bc505c1677eb046fdbc2"
+      },
       "comments": [],
       "reviews": [
         {
@@ -728,6 +730,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 20,
+      "id": "PR_kwDOQr7OuM8AAAABK4iPQg",
+      "title": "Adds example and details for how to split a folder across archive files",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/pull/20",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-10-26T22:04:24Z",
+      "updatedAt": "2026-10-26T22:04:24Z",
+      "baseRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "baseRefName": "main",
+      "baseRefOid": "25d3359f22bc6c5daf15bc505c1677eb046fdbc2",
+      "headRepository": "lisad/draft-happel-mailmaint-pdparchive",
+      "headRefName": "split-folder-details",
+      "headRefOid": "5aba78aec05cb15bbbcc1771bb17b801c5f78aee",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
