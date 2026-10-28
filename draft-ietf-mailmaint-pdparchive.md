@@ -1329,6 +1329,15 @@ as would both parts of "Archive/2024".
 # Changes
 {:numbered="false"}
 
+## Changes in draft-ietf-mailmaint-pdparchive-03
+{:numbered="false"}
+
+* Specified POSIX pax (tar) as the container format
+* Allowed gzip or Zstandard compression of archive files
+* Allowed exporters to split large folders across multiple archive files, and clarified
+  how unique naming and UIDs and metadata files interact with that choice
+* Added security considerations for the importer based on above choices
+
 ## Changes in draft-ietf-mailmaint-pdparchive-02
 {:numbered="false"}
 
