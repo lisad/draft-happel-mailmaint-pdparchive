@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-11-15T05:13:07.883008+00:00",
+  "timestamp": "2026-11-17T06:55:04.053930+00:00",
   "repo": "lisad/draft-happel-mailmaint-pdparchive",
   "labels": [
     {
@@ -49,7 +49,96 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 22,
+      "id": "I_kwDOQr7OuM8AAAABfyoWpw",
+      "title": "Do we include sieve data in base PDPArchive or defer to an extension?",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/issues/22",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-11-16T18:57:25Z",
+      "updatedAt": "2026-11-16T18:58:29Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "lisad",
+          "authorAssociation": "OWNER",
+          "body": "See https://coffeylabs.org/specs/account-export/ includes sieve scripts\n\nManageSieve interactions? ",
+          "createdAt": "2026-11-16T18:58:29Z",
+          "updatedAt": "2026-11-16T18:58:29Z"
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "I_kwDOQr7OuM8AAAABfzs5Zw",
+      "title": "Specify enough about preferences and identities for better interoperability",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/issues/23",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Global (or multi-folder) preferences should go at a global location\nspecify how to do vendor extensions",
+      "createdAt": "2026-11-16T19:58:42Z",
+      "updatedAt": "2026-11-16T19:58:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOQr7OuM8AAAABfztbrA",
+      "title": "Review and improve incremental update, deleted messages as well as deleted folders, folder names",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/issues/24",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "\nProbably for alexey ",
+      "createdAt": "2026-11-16T19:59:11Z",
+      "updatedAt": "2026-11-16T19:59:56Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOQr7OuM8AAAABfzvAGg",
+      "title": "Gmail style exports - labels over folder membership",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/issues/25",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Hans-Joerg volunteered to look at this",
+      "createdAt": "2026-11-16T20:00:38Z",
+      "updatedAt": "2026-11-16T20:00:38Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOQr7OuM8AAAABfzwmyg",
+      "title": "Encrypted messages",
+      "url": "https://github.com/lisad/draft-happel-mailmaint-pdparchive/issues/26",
+      "state": "OPEN",
+      "author": "lisad",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Do these need a different top-level folder ? regualr EML files should be under the fixed-name \"mail\" folder and encrypted messages under \"encrypted-mail\"? \nWhat metadata do we need to help the user decrypt things that only the user can decrypt? ",
+      "createdAt": "2026-11-16T20:02:05Z",
+      "updatedAt": "2026-11-16T20:02:05Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
