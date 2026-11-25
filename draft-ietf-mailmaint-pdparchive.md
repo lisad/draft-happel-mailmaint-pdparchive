@@ -727,9 +727,9 @@ See also {{security-considerations}} on trusting sharing information in exported
 data.
 
 
-### Calendar events, tasks and groups
+### Calendar events and tasks
 
-{{JSCalendar}} is the basis for representing events, tasks and groups in JSON.
+{{JSCalendar}} is the basis for representing events and tasks in JSON.
 This section explains how to export individual events and tasks within an archive.
 JMAP for Calendars ({{JMAPCalendars}})
 does provide some additional considerations when producing calendar data from a JMAP
@@ -754,7 +754,8 @@ See Section 1.4.1 of {{JMAPCalendars}} for when the `uid` property can appear th
 multiple recurrences of the same underlying event.
 * The `updated` property is mandatory in JSCalendar and MUST be included.
 * The `sequence` value is optional in JSCalendar but SHOULD be included if available.
-* The `@type` property for one of these items MUST be "Event", "Task" or "Group".
+* The `@type` property for one of these items MUST be "Event" or "Task".  JSCalendar
+Groups are out of scope; see {{out-of-scope}}.
 * Recurrence rules SHOULD be fully exported, unless it's clear from the use case
 or user request that the
 destination for the data wants expanded recurrences within a specific time period.
@@ -894,7 +895,7 @@ be included in the PDPArchive. If the value of "rel" is another value, the targe
 or attachment MAY be included in the PDPArchive export.
 
 
-### Out of Scope
+### Out of Scope {#out-of-scope}
 
 Groups as defined in JSCalendar are NOT part of this archive format.  Groups in JSCalendar can combine events and tasks in a container.  This specification, for consistency and simplicity, uses folders and requires individual objects to be in separate files.
 
