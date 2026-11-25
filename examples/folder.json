@@ -16,17 +16,23 @@
     {
       "uid": "1",
       "filename": "msg-1.eml",
-      "flags": ["$seen"]
+      "flags": ["$seen"],
+      "received_at": "2025-11-03T08:14:02Z",
+      "email_id": "M5a1f0c9e7d2b"
     },
     {
       "uid": "3", 
       "filename": "msg-3.eml",
-      "flags": ["$seen", "$flagged"]
+      "flags": ["$seen", "$flagged"],
+      "received_at": "2025-11-03T09:40:51Z",
+      "email_id": "M8c33e1d04af7"
     },
     {
       "uid": "15",
       "filename": "imported-ABC.eml",
-      "flags": ["$answered", "$forwarded"]
+      "flags": ["$answered", "$forwarded"],
+      "received_at": "2025-11-04T17:02:10Z",
+      "email_id": "M02b9e64c5d18"
     }
   ]
 }

@@ -111,6 +111,15 @@
             "items": {
               "type": "string"
             }
+          },
+          "received_at": {
+            "description": "When the message arrived in the account (IMAP INTERNALDATE or JMAP receivedAt), in UTC",
+            "type": "string",
+            "format": "date-time"
+          },
+          "email_id": {
+            "description": "EMAILID (RFC 8474) or JMAP Email id; items with the same email_id are copies of one message",
+            "type": "string"
           }
         }
       }

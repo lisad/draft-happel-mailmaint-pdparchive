@@ -537,6 +537,29 @@ which has the following fields:
 
 The uid for a folder SHOULD be present.  For IMAP folders, this SHOULD be the OBJECTID defined by {{RFC8474}}.
 
+Each entry in "items" describes one message file in the folder:
+
+| Attribute Name    | Type     | Mandatory? | Comment |
+| ----------------- | :------: | ---------- | ------- |
+| uid | string | Yes | UID of the message in this folder |
+| filename | string | Yes | Name of the message file in this folder's directory |
+| flags | array of strings | No | IMAP flags and keywords {{IMAP4}} |
+| received_at | string (timestamp) | No | When the message arrived in the account: IMAP INTERNALDATE {{IMAP4}} or JMAP receivedAt {{JMAP}}, in UTC |
+| email_id | string | No | EMAILID {{RFC8474}} or JMAP Email id {{JMAP}} |
+
+Exporters SHOULD include received_at when the source system records it.  The
+Date header field of the message is not a substitute: the sender sets it, and it
+can be wrong or forged.  Clients sort and search by the received date, so losing
+it changes how an account looks after a move.
+
+Exporters SHOULD include email_id when the source system assigns one.  Items with
+the same email_id in the same archive are copies of one message, whether in one
+folder or several.  An importer that can keep one message in several folders
+SHOULD import it once and place it in each of them.  When email_id is absent, an
+importer MAY treat byte-identical files as one message, but that is a guess:
+two distinct messages can be byte-identical, and copies of one message can differ
+if the server changed header fields when delivering the second copy.
+
 In an incremental update, a folder can both have items added/removed and be deleted in the time
 period elapsed, so it could have removed messages and flags as well as be a tombstone.
 A full archive or snapshot SHOULD NOT include deleted folders with the deleted_at value.
