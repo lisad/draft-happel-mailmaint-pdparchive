@@ -519,12 +519,13 @@ which has the following fields:
 
 | Attribute Name    | Type     | Mandatory? | Comment |
 | ----------------- | :------: | ---------- | ------- |
+| name | string | Yes | Folder name shown to users; see {{synchronizing-mailbox-folders}} |
 | allowed_keywords | array of strings (IMAP keywords) | No |PERMANENTFLAGS minus "\\*" {{IMAP4}}
 | uid | string | SHOULD* | Use OBJECTID from {{RFC8474}}
-| last_uid | unsigned 32 bit integer | Yes | Last UID assigned in the folder. It is UIDNEXT value minus 1 {{IMAP4}}|
+| last_uid | unsigned 32 bit integer | Email folders | Last UID assigned in the folder. It is UIDNEXT value minus 1 {{IMAP4}}|
 | recent_uid | unsigned 32 bit integer | No | Lowest UID of a message with the \Recent flag {{IMAP4}}|
-| uidvalidity | unsigned 32 bit integer | Yes | UIDVALIDITY value {{IMAP4}}|
-| is_subscribed | boolean | Yes | Is the folder returned by IMAP LSUB? {{IMAP4}} |
+| uidvalidity | unsigned 32 bit integer | Email folders | UIDVALIDITY value {{IMAP4}}|
+| is_subscribed | boolean | Email folders | Is the folder returned by IMAP LSUB? {{IMAP4}} |
 | deleted_at | string (timestamp) or null | No | Folder has been DELETED - this is a tombstone |
 | myrights | string | No |See Section 3.5 of {{RFC4314}}. For example "rwiptsldaex"|
 | highest_modseq | unsigned 64 bit integer | No |HIGHESTMODSEQ value {{RFC7162}}|
@@ -533,7 +534,11 @@ which has the following fields:
 | items | array of content item names and flags | Yes | Mapping from UIDs to corresponding message files included in the archive|
 | original_name | string | No |Original folder name (relative to its parent, if any) if the name can't be represented in filesystem, e.g. if it includes special characters|
 | comment | string | No |Can include information about partial export or filter used in human readable UTF-8 text|
-| removed | array of unsigned 32 bit integers | No |List of messages (UIDs) removed since the last export |
+| removed | array of strings | No |List of messages (UIDs) removed since the last export |
+
+Fields marked "Email folders" are REQUIRED in folders that hold email.  Folders of
+tasks or notes can leave them out, which is why the schema below requires only
+name and items.
 
 The uid for a folder SHOULD be present.  For IMAP folders, this SHOULD be the OBJECTID defined by {{RFC8474}}.
 
@@ -1034,7 +1039,7 @@ in fact be more limited (for example, CalDAV does not allow events to appear
 in multiple calendars, while this export format does).
 
 
-### Synchronizing mailbox folders
+### Synchronizing mailbox folders {#synchronizing-mailbox-folders}
 
 Because servers may differ in which characters they support in folder names,
 how many levels deep folders may be created, and even in what separator character
